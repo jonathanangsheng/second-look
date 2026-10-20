@@ -1,0 +1,7 @@
+.planning/
+.denylist.local
+.gstack/
+.env
+__pycache__/
+.venv/
+node_modules/
