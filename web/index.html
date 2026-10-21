@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Second Look</title>
+    <meta name="description" content="An AI sceptic for football: three agents argue about the stat on screen." />
+  </head>
+  <body>
+    <div id="root">
+      <!-- Static shell: visible before JS loads or while the server wakes up. React replaces it. -->
+      <div class="stage">
+        <div class="frame">
+          <header class="strip"><p class="headline">The stat on screen is lying.</p></header>
+          <main class="picture">
+            <svg class="pitch" viewBox="0 0 105 68" aria-hidden="true">
+              <rect width="105" height="68" fill="#1F5130" />
+              <g fill="none" stroke="rgba(232,240,233,.6)" stroke-width=".3">
+                <rect x=".5" y=".5" width="104" height="67" /><line x1="52.5" y1=".5" x2="52.5" y2="67.5" />
+                <circle cx="52.5" cy="34" r="9.15" /><rect x=".5" y="13.84" width="16.5" height="40.32" />
+                <rect x="88" y="13.84" width="16.5" height="40.32" />
+              </g>
+            </svg>
+            <div class="scorebug skeleton"></div>
+          </main>
+          <div class="timeline"></div>
+        </div>
+        <footer class="disclaimer">Fictional teams inspired by public playing-style analysis. Not affiliated with or endorsed by the Premier League or any club.</footer>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -13,7 +13,8 @@ An AI sceptic for football: deterministic detectors find where a headline stat m
   - `uv sync` — install
   - `uv run pytest -q` — all tests (must exit 0 before any commit)
   - `uv run second-look-sim --help` — simulator CLI (from planning #3)
-- Web: React 18 + Vite + TypeScript in `web/` (`npm install`, `npm run dev`, `npm run build`).
+- Web: React 19 + Vite + TypeScript in `web/` (`npm install`, `npm run dev` with the API running, `npm run build`).
+- API: `uv run uvicorn second_look.api:app --port 8000` serves `/api/*` and, once built, `web/dist` at `/`.
 - Docker: `docker compose up` serves replay mode on http://localhost:8000 with no `.env`.
 
 ## Layout (11 modules, do not add more without a reason)
