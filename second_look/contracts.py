@@ -137,6 +137,6 @@ class Card(_Strict):
         return self
 
 
-def card_path(root: Path, seed: str, mode: CacheMode, window: int) -> Path:
-    """Cache location for one card."""
-    return root / seed / mode / f"{window:02d}.json"
+def card_path(root: Path, seed: str, mode: CacheMode, window: int, kind: str) -> Path:
+    """Cache location for one card. A debate and an outcome card can share a window."""
+    return root / seed / mode / f"{window:02d}-{kind}.json"

@@ -1,0 +1,105 @@
+{
+  "seed": "demo",
+  "window": 15,
+  "t_start": 4800.0,
+  "t_end": 4812.0,
+  "kind": "debate",
+  "contradiction_id": "c_nel_scoreline_xg_80",
+  "prediction_id": "pr_nel_80",
+  "window_from_minute": 50,
+  "lines": {
+    "hype": {
+      "en": "Yorkshire Orange Black lead and look comfortable. This one is done.",
+      "es": "Yorkshire Orange Black va por delante y parece tranquilo. Esto está hecho.",
+      "ar": "Yorkshire Orange Black متقدم ويبدو مرتاحًا. المباراة محسومة."
+    },
+    "sceptic": {
+      "en": "Since 50', North East London have 1.8 xG to 0.1. The score is lying.",
+      "es": "Desde el 50', North East London suma 1,8 xG contra 0,1. El marcador miente.",
+      "ar": "منذ الدقيقة 50، لدى North East London ‏1.8 مقابل 0.1. النتيجة تكذب."
+    },
+    "verdict": {
+      "en": "A goal is coming for North East London.",
+      "es": "Se viene un gol de North East London.",
+      "ar": "هدف قادم لفريق North East London."
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "Rolling xG since 50': 1.8 against 0.1, past the 1.0 gap.",
+      "es": "xG desde el 50': 1,8 contra 0,1, por encima de 1,0.",
+      "ar": "الأهداف المتوقعة منذ الدقيقة 50: 1.8 مقابل 0.1، فوق فارق 1.0."
+    },
+    "casual": {
+      "en": "The score says one thing. The chances say North East London will score.",
+      "es": "El marcador dice una cosa. Las ocasiones dicen que North East London marcará.",
+      "ar": "النتيجة تقول شيئًا، والفرص تقول إن North East London سيسجل."
+    }
+  },
+  "source": {
+    "hype": "template",
+    "sceptic": "template",
+    "verdict": "template",
+    "personaliser": "template",
+    "es": "template",
+    "ar": "template"
+  },
+  "evidence": {
+    "team": "nel",
+    "leader": "yob",
+    "minute": 80,
+    "window_from_minute": 50,
+    "trailer_xg_window": 1.8,
+    "leader_xg_window": 0.1,
+    "threshold": 1.0,
+    "score_home": 1,
+    "score_away": 2
+  },
+  "evidence_display": {
+    "team": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
+    "leader": {
+      "en": "Yorkshire Orange Black",
+      "es": "Yorkshire Orange Black",
+      "ar": "Yorkshire Orange Black"
+    },
+    "minute": {
+      "en": "80'",
+      "es": "80'",
+      "ar": "80"
+    },
+    "window_from_minute": {
+      "en": "50'",
+      "es": "50'",
+      "ar": "50"
+    },
+    "trailer_xg_window": {
+      "en": "1.8",
+      "es": "1,8",
+      "ar": "1.8"
+    },
+    "leader_xg_window": {
+      "en": "0.1",
+      "es": "0,1",
+      "ar": "0.1"
+    },
+    "threshold": {
+      "en": "1.0",
+      "es": "1,0",
+      "ar": "1.0"
+    },
+    "score_home": {
+      "en": "1",
+      "es": "1",
+      "ar": "1"
+    },
+    "score_away": {
+      "en": "2",
+      "es": "2",
+      "ar": "2"
+    }
+  }
+}

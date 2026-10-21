@@ -1,0 +1,63 @@
+{
+  "seed": "random1",
+  "window": 12,
+  "t_start": 3600.0,
+  "t_end": 3612.0,
+  "kind": "missed_call",
+  "contradiction_id": "c_mnb_scoreline_xg_30",
+  "prediction_id": "pr_mnb_30",
+  "window_from_minute": null,
+  "lines": {
+    "verdict": {
+      "en": "Missed: no goal for Man Blue by 55'.",
+      "es": "Fallado: ningún gol de Man Blue antes del 55'.",
+      "ar": "توقع خاطئ: لم يسجل Man Blue حتى الدقيقة 55."
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "Call made at 30', deadline 55', no goal.",
+      "es": "Pronóstico en el 30', plazo 55', sin gol.",
+      "ar": "التوقع في 30، والمهلة 55، دون هدف."
+    },
+    "casual": {
+      "en": "The sceptic got this one wrong.",
+      "es": "Esta vez el escéptico se equivocó.",
+      "ar": "أخطأ المتشكك هذه المرة."
+    }
+  },
+  "source": {
+    "verdict": "template",
+    "personaliser": "template",
+    "es": "template",
+    "ar": "template"
+  },
+  "evidence": {
+    "team": "mnb",
+    "made_at_minute": 30,
+    "by_minute": 55,
+    "minute": 60
+  },
+  "evidence_display": {
+    "team": {
+      "en": "Man Blue",
+      "es": "Man Blue",
+      "ar": "Man Blue"
+    },
+    "made_at_minute": {
+      "en": "30'",
+      "es": "30'",
+      "ar": "30"
+    },
+    "by_minute": {
+      "en": "55'",
+      "es": "55'",
+      "ar": "55"
+    },
+    "minute": {
+      "en": "60'",
+      "es": "60'",
+      "ar": "60"
+    }
+  }
+}

@@ -117,14 +117,14 @@ DEMO_SCRIPT = Script(
     goals=((22, "yob"), (51, "yob"), (78, "nel")),
     overrides=(
         Override("nel", 0, 46, {"shot_rate": 0.3, "shot_distance_mean_m": 25.0, "shot_distance_sd_m": 2.5}),
-        Override("nel", 46, 61, {"shot_rate": 0.55, "shot_distance_mean_m": 10.5, "shot_distance_sd_m": 1.5}),
+        Override("nel", 54, 61, {"shot_rate": 0.7, "shot_distance_mean_m": 10.5, "shot_distance_sd_m": 1.5}),
         Override("yob", 0, 61, {"shot_rate": 0.15, "shot_distance_mean_m": 22.0, "shot_distance_sd_m": 3.0}),
     ),
 )
 
 SEEDS: dict[str, SeedSpec] = {
     "demo": SeedSpec("nel", "yob", seed=3, script=DEMO_SCRIPT),
-    "random1": SeedSpec("nel", "yob", seed=7),
+    "random1": SeedSpec("mnb", "eat", seed=26),  # unscripted; the detector makes a call that misses
     "even": SeedSpec("mer", "mnb", seed=11),
 }
 

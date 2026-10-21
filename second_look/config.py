@@ -12,6 +12,15 @@ ProviderName = Literal["foundry", "foundry_serverless", "github"]
 PROVIDER_NAMES: tuple[ProviderName, ...] = ("foundry", "foundry_serverless", "github")
 
 GITHUB_MODELS_ENDPOINT = "https://models.github.ai/inference"
+
+# Detectors run at every WINDOW_MINUTES boundary over all events before it.
+WINDOW_MINUTES = 5
+VQ_MIN_SHOTS = 8  # volume_quality: at least this many shots...
+VQ_MAX_XG_PER_SHOT = 0.08  # ...averaging under this xG
+SX_WINDOW_MINUTES = 30  # scoreline_xg: rolling window for both teams' xG
+SX_XG_GAP = 1.0  # trailer's rolling xG must beat the leader's by this much
+DEDUP_SEVERITY_RISE = 0.25  # a (team, detector) pair resurfaces only on this severity rise...
+DEDUP_MINUTES = 15  # ...or after this many match minutes
 FOUNDRY_TOKEN_SCOPE = "https://cognitiveservices.azure.com/.default"
 
 

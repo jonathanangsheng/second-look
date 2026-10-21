@@ -86,6 +86,7 @@ export interface Card {
   evidence_display?: Record<string, LangText>;
 }
 
-export function cardPath(seed: string, mode: CacheMode, window: number): string {
-  return `${seed}/${mode}/${String(window).padStart(2, "0")}.json`;
+// A debate and an outcome card can share a window, so the kind is part of the file name.
+export function cardPath(seed: string, mode: CacheMode, window: number, kind: Card["kind"]): string {
+  return `${seed}/${mode}/${String(window).padStart(2, "0")}-${kind}.json`;
 }

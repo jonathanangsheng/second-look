@@ -1,0 +1,63 @@
+{
+  "seed": "demo",
+  "window": 17,
+  "t_start": 5400.0,
+  "t_end": 5412.0,
+  "kind": "missed_call",
+  "contradiction_id": "c_nel_scoreline_xg_80",
+  "prediction_id": "pr_nel_80",
+  "window_from_minute": null,
+  "lines": {
+    "verdict": {
+      "en": "Missed: no goal for North East London by 90'.",
+      "es": "Fallado: ningún gol de North East London antes del 90'.",
+      "ar": "توقع خاطئ: لم يسجل North East London حتى الدقيقة 90."
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "Call made at 80', deadline 90', no goal.",
+      "es": "Pronóstico en el 80', plazo 90', sin gol.",
+      "ar": "التوقع في 80، والمهلة 90، دون هدف."
+    },
+    "casual": {
+      "en": "The sceptic got this one wrong.",
+      "es": "Esta vez el escéptico se equivocó.",
+      "ar": "أخطأ المتشكك هذه المرة."
+    }
+  },
+  "source": {
+    "verdict": "template",
+    "personaliser": "template",
+    "es": "template",
+    "ar": "template"
+  },
+  "evidence": {
+    "team": "nel",
+    "made_at_minute": 80,
+    "by_minute": 90,
+    "minute": 90
+  },
+  "evidence_display": {
+    "team": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
+    "made_at_minute": {
+      "en": "80'",
+      "es": "80'",
+      "ar": "80"
+    },
+    "by_minute": {
+      "en": "90'",
+      "es": "90'",
+      "ar": "90"
+    },
+    "minute": {
+      "en": "90'",
+      "es": "90'",
+      "ar": "90"
+    }
+  }
+}

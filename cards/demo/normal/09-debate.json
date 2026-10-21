@@ -1,0 +1,105 @@
+{
+  "seed": "demo",
+  "window": 9,
+  "t_start": 3000.0,
+  "t_end": 3012.0,
+  "kind": "debate",
+  "contradiction_id": "c_nel_volume_quality_50",
+  "prediction_id": null,
+  "window_from_minute": null,
+  "lines": {
+    "hype": {
+      "en": "North East London: 13 shots already. They are all over them.",
+      "es": "North East London: ya 13 disparos. Los tienen encerrados.",
+      "ar": "North East London: 13 تسديدات حتى الآن. يحاصرون منافسهم."
+    },
+    "sceptic": {
+      "en": "13 shots at 0.032 xG each, from 25 metres on average.",
+      "es": "13 disparos de 0,032 xG cada uno, desde 25 metros de media.",
+      "ar": "13 تسديدات بمعدل 0.032 لكل منها، من 25 مترًا في المتوسط."
+    },
+    "verdict": {
+      "en": "Volume, not danger. These shots rarely score.",
+      "es": "Volumen, no peligro. Estos disparos casi nunca acaban en gol.",
+      "ar": "كمية بلا خطورة. هذه التسديدات نادرًا ما تهز الشباك."
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "13 shots at 0.032 xG per shot, under the 0.08 threshold.",
+      "es": "13 disparos a 0,032 xG por disparo, bajo el umbral de 0,08.",
+      "ar": "13 تسديدات بمعدل 0.032 للتسديدة، أقل من حد 0.08."
+    },
+    "casual": {
+      "en": "Lots of shots, almost no real chances.",
+      "es": "Muchos disparos, casi ninguna ocasión real.",
+      "ar": "تسديدات كثيرة، وفرص حقيقية شبه معدومة."
+    }
+  },
+  "source": {
+    "hype": "template",
+    "sceptic": "template",
+    "verdict": "template",
+    "personaliser": "template",
+    "es": "template",
+    "ar": "template"
+  },
+  "evidence": {
+    "team": "nel",
+    "minute": 50,
+    "shots": 13,
+    "xg_total": 0.42,
+    "xg_per_shot": 0.032,
+    "threshold": 0.08,
+    "avg_shot_distance_m": 25,
+    "score_home": 0,
+    "score_away": 1
+  },
+  "evidence_display": {
+    "team": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
+    "minute": {
+      "en": "50'",
+      "es": "50'",
+      "ar": "50"
+    },
+    "shots": {
+      "en": "13",
+      "es": "13",
+      "ar": "13"
+    },
+    "xg_total": {
+      "en": "0.42",
+      "es": "0,42",
+      "ar": "0.42"
+    },
+    "xg_per_shot": {
+      "en": "0.032",
+      "es": "0,032",
+      "ar": "0.032"
+    },
+    "threshold": {
+      "en": "0.08",
+      "es": "0,08",
+      "ar": "0.08"
+    },
+    "avg_shot_distance_m": {
+      "en": "25",
+      "es": "25",
+      "ar": "25"
+    },
+    "score_home": {
+      "en": "0",
+      "es": "0",
+      "ar": "0"
+    },
+    "score_away": {
+      "en": "1",
+      "es": "1",
+      "ar": "1"
+    }
+  }
+}

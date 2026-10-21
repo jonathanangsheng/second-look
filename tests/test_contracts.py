@@ -20,7 +20,7 @@ def test_fixture_cards_exist():
 def test_fixture_card_validates_and_sits_at_its_cache_path(path):
     card = Card.model_validate_json(path.read_text(encoding="utf-8"))
     mode = path.parent.name
-    assert card_path(FIXTURES / "cards", card.seed, mode, card.window) == path
+    assert card_path(FIXTURES / "cards", card.seed, mode, card.window, card.kind) == path
 
 
 def test_fixture_events_validate():
@@ -61,7 +61,7 @@ def test_prediction_with_wrong_deadline_is_rejected():
 
 
 def _card_dict():
-    return json.loads((FIXTURES / "cards" / "demo" / "normal" / "06.json").read_text(encoding="utf-8"))
+    return json.loads((FIXTURES / "cards" / "demo" / "normal" / "06-debate.json").read_text(encoding="utf-8"))
 
 
 def test_card_missing_a_language_is_rejected():
@@ -79,7 +79,7 @@ def test_debate_card_needs_all_three_speakers():
 
 
 def test_outcome_card_must_reference_a_prediction():
-    data = json.loads((FIXTURES / "cards" / "demo" / "normal" / "15.json").read_text(encoding="utf-8"))
+    data = json.loads((FIXTURES / "cards" / "demo" / "normal" / "15-called_it.json").read_text(encoding="utf-8"))
     data["prediction_id"] = None
     with pytest.raises(ValidationError, match="prediction"):
         Card.model_validate(data)

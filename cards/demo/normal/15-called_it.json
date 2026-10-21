@@ -1,0 +1,63 @@
+{
+  "seed": "demo",
+  "window": 15,
+  "t_start": 4719.5,
+  "t_end": 4731.5,
+  "kind": "called_it",
+  "contradiction_id": "c_nel_scoreline_xg_60",
+  "prediction_id": "pr_nel_60",
+  "window_from_minute": null,
+  "lines": {
+    "verdict": {
+      "en": "Called it at 60'. North East London score at 78'.",
+      "es": "Lo vimos en el 60'. North East London marca en el 78'.",
+      "ar": "توقعناه في الدقيقة 60. North East London يسجل في الدقيقة 78."
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "Call made at 60', goal at 78', deadline 85'.",
+      "es": "Pronóstico en el 60', gol en el 78', plazo 85'.",
+      "ar": "التوقع في 60، الهدف في 78، والمهلة 85."
+    },
+    "casual": {
+      "en": "The sceptic saw it coming.",
+      "es": "El escéptico lo vio venir.",
+      "ar": "المتشكك رآه قادمًا."
+    }
+  },
+  "source": {
+    "verdict": "template",
+    "personaliser": "template",
+    "es": "template",
+    "ar": "template"
+  },
+  "evidence": {
+    "team": "nel",
+    "made_at_minute": 60,
+    "by_minute": 85,
+    "minute": 78
+  },
+  "evidence_display": {
+    "team": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
+    "made_at_minute": {
+      "en": "60'",
+      "es": "60'",
+      "ar": "60"
+    },
+    "by_minute": {
+      "en": "85'",
+      "es": "85'",
+      "ar": "85"
+    },
+    "minute": {
+      "en": "78'",
+      "es": "78'",
+      "ar": "78"
+    }
+  }
+}

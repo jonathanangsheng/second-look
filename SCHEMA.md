@@ -14,8 +14,8 @@ Same profiles + same seed = byte-identical output.
 
 | Seed | Teams | Notes |
 |---|---|---|
-| `demo` | `nel` v `yob` | Scripted goals (`yob` ~22', 51'; `nel` 78') and per-window profile overrides: long-range volume before half time, box chances after it. Only scripted shots score. |
-| `random1` | `nel` v `yob` | Unscripted, seed 7. Goals are drawn from each shot's xG. |
+| `demo` | `nel` v `yob` | Scripted goals (`yob` ~22', 51'; `nel` 78') and per-window profile overrides: long-range volume before half time, box chances from 54'. Only scripted shots score. |
+| `random1` | `mnb` v `eat` | Unscripted, seed 26. Goals are drawn from each shot's xG; the scoreline detector makes a call here that misses. |
 | `even` | `mer` v `mnb` | Unscripted, seed 11, two evenly matched profiles. |
 
 ## Events (`data/seeds/<seed>/events.jsonl`)

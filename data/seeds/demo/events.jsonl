@@ -1024,7 +1024,7 @@
 {"id":1023,"t":2818.3,"minute":46,"period":2,"type":"pass","team":"nel","player":"p_nel_6","sequence_id":133,"x":54.3,"y":11.1,"end_x":60.6,"end_y":2.0,"outcome":"complete"}
 {"id":1024,"t":2823.2,"minute":47,"period":2,"type":"pass","team":"nel","player":"p_nel_6","sequence_id":133,"x":60.6,"y":2.0,"end_x":69.7,"end_y":8.7,"outcome":"complete"}
 {"id":1025,"t":2827.9,"minute":47,"period":2,"type":"pass","team":"nel","player":"p_nel_10","sequence_id":133,"x":69.7,"y":8.7,"end_x":82.9,"end_y":7.1,"outcome":"complete"}
-{"id":1026,"t":2832.1,"minute":47,"period":2,"type":"shot","team":"nel","player":"p_nel_8","sequence_id":133,"x":98.3,"y":39.0,"outcome":"saved","xg":0.46}
+{"id":1026,"t":2832.1,"minute":47,"period":2,"type":"shot","team":"nel","player":"p_nel_8","sequence_id":133,"x":88.7,"y":39.5,"outcome":"saved","xg":0.114}
 {"id":1027,"t":2832.1,"minute":47,"period":2,"type":"possession_end","team":"nel","sequence_id":133}
 {"id":1028,"t":2835.1,"minute":47,"period":2,"type":"possession_start","team":"yob","sequence_id":134}
 {"id":1029,"t":2838.7,"minute":47,"period":2,"type":"pass","team":"yob","player":"p_yob_5","sequence_id":134,"x":34.5,"y":26.8,"end_x":44.8,"end_y":26.9,"outcome":"complete"}
@@ -1052,7 +1052,7 @@
 {"id":1051,"t":2896.2,"minute":48,"period":2,"type":"carry","team":"nel","player":"p_nel_10","sequence_id":137,"x":57.9,"y":28.7,"end_x":66.9,"end_y":18.1,"outcome":"complete"}
 {"id":1052,"t":2902.1,"minute":48,"period":2,"type":"pass","team":"nel","player":"p_nel_5","sequence_id":137,"x":66.9,"y":18.1,"end_x":78.3,"end_y":16.4,"outcome":"complete"}
 {"id":1053,"t":2904.8,"minute":48,"period":2,"type":"pressure","team":"yob","player":"p_yob_7","sequence_id":137,"x":26.7,"y":51.6}
-{"id":1054,"t":2904.8,"minute":48,"period":2,"type":"shot","team":"nel","player":"p_nel_11","sequence_id":137,"x":95.6,"y":28.0,"outcome":"saved","xg":0.304}
+{"id":1054,"t":2904.8,"minute":48,"period":2,"type":"shot","team":"nel","player":"p_nel_11","sequence_id":137,"x":81.0,"y":28.0,"outcome":"saved","xg":0.031}
 {"id":1055,"t":2904.8,"minute":48,"period":2,"type":"possession_end","team":"nel","sequence_id":137}
 {"id":1056,"t":2905.9,"minute":48,"period":2,"type":"possession_start","team":"nel","sequence_id":138}
 {"id":1057,"t":2908.4,"minute":48,"period":2,"type":"pass","team":"nel","player":"p_nel_3","sequence_id":138,"x":22.6,"y":27.6,"end_x":30.0,"end_y":29.7,"outcome":"incomplete"}
@@ -1143,7 +1143,7 @@
 {"id":1142,"t":3115.6,"minute":51,"period":2,"type":"pressure","team":"yob","player":"p_yob_10","sequence_id":152,"x":61.9,"y":14.6}
 {"id":1143,"t":3115.6,"minute":51,"period":2,"type":"pass","team":"nel","player":"p_nel_8","sequence_id":152,"x":43.1,"y":53.4,"end_x":50.2,"end_y":41.8,"outcome":"complete"}
 {"id":1144,"t":3121.0,"minute":52,"period":2,"type":"pass","team":"nel","player":"p_nel_8","sequence_id":152,"x":50.2,"y":41.8,"end_x":75.7,"end_y":45.5,"outcome":"complete"}
-{"id":1145,"t":3125.1,"minute":52,"period":2,"type":"shot","team":"nel","player":"p_nel_8","sequence_id":152,"x":97.4,"y":28.3,"outcome":"blocked","xg":0.386}
+{"id":1145,"t":3125.1,"minute":52,"period":2,"type":"shot","team":"nel","player":"p_nel_8","sequence_id":152,"x":88.7,"y":21.8,"outcome":"blocked","xg":0.062}
 {"id":1146,"t":3125.1,"minute":52,"period":2,"type":"possession_end","team":"nel","sequence_id":152}
 {"id":1147,"t":3128.1,"minute":52,"period":2,"type":"possession_start","team":"yob","sequence_id":153}
 {"id":1148,"t":3132.0,"minute":52,"period":2,"type":"pass","team":"yob","player":"p_yob_8","sequence_id":153,"x":20.3,"y":36.8,"end_x":43.0,"end_y":41.5,"outcome":"complete"}
@@ -1161,7 +1161,7 @@
 {"id":1160,"t":3161.2,"minute":52,"period":2,"type":"pass","team":"nel","player":"p_nel_8","sequence_id":155,"x":54.7,"y":32.4,"end_x":61.1,"end_y":27.7,"outcome":"complete"}
 {"id":1161,"t":3164.9,"minute":52,"period":2,"type":"carry","team":"nel","player":"p_nel_2","sequence_id":155,"x":61.1,"y":27.7,"end_x":68.2,"end_y":21.2,"outcome":"complete"}
 {"id":1162,"t":3169.4,"minute":52,"period":2,"type":"carry","team":"nel","player":"p_nel_6","sequence_id":155,"x":68.2,"y":21.2,"end_x":78.5,"end_y":14.7,"outcome":"complete"}
-{"id":1163,"t":3174.2,"minute":52,"period":2,"type":"shot","team":"nel","player":"p_nel_7","sequence_id":155,"x":97.3,"y":31.7,"outcome":"off_target","xg":0.51}
+{"id":1163,"t":3174.2,"minute":52,"period":2,"type":"shot","team":"nel","player":"p_nel_7","sequence_id":155,"x":88.8,"y":31.7,"outcome":"off_target","xg":0.135}
 {"id":1164,"t":3174.2,"minute":52,"period":2,"type":"possession_end","team":"nel","sequence_id":155}
 {"id":1165,"t":3176.9,"minute":52,"period":2,"type":"possession_start","team":"nel","sequence_id":156}
 {"id":1166,"t":3182.5,"minute":53,"period":2,"type":"pass","team":"nel","player":"p_nel_7","sequence_id":156,"x":25.5,"y":36.5,"end_x":32.7,"end_y":27.2,"outcome":"complete"}
@@ -1170,7 +1170,7 @@
 {"id":1169,"t":3193.4,"minute":53,"period":2,"type":"pass","team":"nel","player":"p_nel_10","sequence_id":156,"x":48.0,"y":19.6,"end_x":59.9,"end_y":23.7,"outcome":"complete"}
 {"id":1170,"t":3196.3,"minute":53,"period":2,"type":"pass","team":"nel","player":"p_nel_6","sequence_id":156,"x":59.9,"y":23.7,"end_x":67.5,"end_y":27.5,"outcome":"complete"}
 {"id":1171,"t":3202.1,"minute":53,"period":2,"type":"pass","team":"nel","player":"p_nel_8","sequence_id":156,"x":67.5,"y":27.5,"end_x":79.0,"end_y":31.4,"outcome":"complete"}
-{"id":1172,"t":3205.4,"minute":53,"period":2,"type":"shot","team":"nel","player":"p_nel_10","sequence_id":156,"x":95.6,"y":38.8,"outcome":"off_target","xg":0.342}
+{"id":1172,"t":3205.4,"minute":53,"period":2,"type":"shot","team":"nel","player":"p_nel_10","sequence_id":156,"x":82.4,"y":38.8,"outcome":"off_target","xg":0.041}
 {"id":1173,"t":3205.4,"minute":53,"period":2,"type":"possession_end","team":"nel","sequence_id":156}
 {"id":1174,"t":3208.7,"minute":53,"period":2,"type":"possession_start","team":"nel","sequence_id":157}
 {"id":1175,"t":3213.1,"minute":53,"period":2,"type":"pass","team":"nel","player":"p_nel_9","sequence_id":157,"x":28.1,"y":14.5,"end_x":36.3,"end_y":18.4,"outcome":"complete"}
