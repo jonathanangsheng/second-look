@@ -58,6 +58,23 @@ def test_template_lines_fill_every_placeholder_and_stay_short(seed):
                 assert len(text.split()) <= 16, f"{lang}: {text}"
 
 
+def test_live_debate_card_swaps_english_lines_only_and_records_sources():
+    import asyncio
+    import json
+
+    from fakes import FakeLLM
+    from second_look.pipeline import live_debate_card
+
+    card = next(c for c in _cards("demo") if c.kind == "debate")
+    llm = FakeLLM().reply(json.dumps({"line": "{team}: {shots} shots!"})).timeout().reply(json.dumps({"line": "Noise."}))
+    live, flags = asyncio.run(live_debate_card(card, llm, cached=None))
+    assert live.lines["hype"]["en"] == f"North East London: {card.evidence['shots']} shots!"
+    assert live.lines["sceptic"]["en"] == card.lines["sceptic"]["en"]  # timed out: template
+    assert (live.source["hype"], live.source["sceptic"], live.source["verdict"]) == ("live", "template", "live")
+    assert live.lines["hype"]["es"] == card.lines["hype"]["es"] and live.variants == card.variants  # planning #7
+    assert flags == []
+
+
 def test_write_cards_keeps_existing_unless_forced(tmp_path):
     cards = list(_cards("demo"))
     assert write_cards(cards, "demo", root=tmp_path) == len(cards)

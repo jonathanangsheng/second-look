@@ -73,6 +73,28 @@ def _all_template(lines: dict) -> dict:
     return {**dict.fromkeys(lines, "template"), "personaliser": "template", "es": "template", "ar": "template"}
 
 
+async def live_debate_card(card: Card, llm, cached: Card | None, fail: frozenset[str] = frozenset()) -> tuple[Card, list[str]]:
+    """Replace a template debate card's English lines with the agents' (planning #6).
+
+    Each line falls back on its own to the cached card's line, else the template line, with
+    that line's true source. Spanish, Arabic and the persona variants stay template until the
+    Personaliser and Translators land (planning #7).
+    """
+    from second_look.agents import SPEAKERS, new_state, run_debate
+
+    detector = "scoreline_xg" if "_scoreline_xg_" in (card.contradiction_id or "") else "volume_quality"
+    fallback = {}
+    for s in SPEAKERS:
+        if cached and s in cached.lines:
+            fallback[s] = (cached.lines[s]["en"], "cache" if cached.source.get(s) != "template" else "template")
+        else:
+            fallback[s] = (card.lines[s]["en"], "template")
+    claim = card.lines["verdict"]["en"] if card.prediction_id else None
+    state = await run_debate(llm, new_state(detector, card.evidence, card.evidence_display, claim, fallback), fail=fail)
+    lines = {s: {**card.lines[s], "en": state.lines[s]} for s in SPEAKERS}
+    return card.model_copy(update={"lines": lines, "source": {**card.source, **state.source}}), state.flags
+
+
 def write_cards(cards: list[Card], seed: str, mode: CacheMode = "normal", root: Path = CARDS_DIR, force: bool = False) -> int:
     """Write cards to the cache. Existing files are kept unless `force` (which clears the seed/mode folder first)."""
     folder = root / seed / mode
