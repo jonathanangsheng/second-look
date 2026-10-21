@@ -1,20 +1,23 @@
-"""Acceptance test for the demo seed's two-act story (planning #3, eng-review D9).
+"""Acceptance test for the demo seed's two-act story (planning #3, eng-review D9)."""
 
-Expected to fail until second_look.sim exists. The xfail is strict: once the simulator
-lands and this passes, remove the marker.
-"""
+from functools import cache
 
-import pytest
-
-pytestmark = pytest.mark.xfail(
-    raises=(ImportError, AttributeError), strict=True, reason="simulator lands in planning #3"
-)
+from second_look.sim import simulate_seed
 
 
+@cache
 def _demo():
-    from second_look.sim import simulate_seed
+    return tuple(simulate_seed("demo"))
 
-    return simulate_seed("demo")
+
+def test_yob_possession_is_between_28_and_36_percent():
+    duration, start = {"nel": 0.0, "yob": 0.0}, {}
+    for e in _demo():
+        if e.type == "possession_start":
+            start[e.sequence_id] = e.t
+        elif e.type == "possession_end":
+            duration[e.team] += e.t - start[e.sequence_id]
+    assert 0.28 <= duration["yob"] / sum(duration.values()) <= 0.36
 
 
 def test_first_half_volume_without_quality():

@@ -12,6 +12,9 @@ dependencies = [
     "python-dotenv>=1.2.4",
 ]
 
+[project.scripts]
+second-look-sim = "second_look.sim:main"
+
 [dependency-groups]
 dev = [
     "pytest>=8",

@@ -1,0 +1,252 @@
+# Fictional team presets for the simulator. Names are regional, never club names; players
+# are generated fictional names. Values are hand-set qualitative approximations of playing
+# styles, not derived from any real match data. `nel` and `yob` are tuned for the demo seed;
+# the rest are rough.
+#
+# possession_bias      relative weight of starting a possession sequence (long-ball teams start
+#                      many short ones, so their time share is lower than this suggests)
+# pass_completion      chance a short pass completes (long passes: -0.25)
+# long_ball_pct        share of passes that are long
+# shot_rate            chance a sequence reaching the final third ends in a shot
+# shot_distance_*_m    shot distance from goal centre, normal distribution
+# pressures_per_5min   opponent-half pressing intensity
+
+[team.nwl]
+name = "North West London"
+short = "NWL"
+colors = ["#D7262E", "#FFFFFF"]
+possession_bias = 1.4
+pass_completion = 0.88
+long_ball_pct = 0.06
+shot_rate = 0.30
+shot_distance_mean_m = 16.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 9.0
+
+[team.wmv]
+name = "West Midlands Village"
+short = "WMV"
+colors = ["#6E1B3A", "#9AC8EB"]
+possession_bias = 1.0
+pass_completion = 0.82
+long_ball_pct = 0.10
+shot_rate = 0.14
+shot_distance_mean_m = 20.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 6.0
+
+[team.scr]
+name = "South Coast Red Black"
+short = "SCR"
+colors = ["#C8102E", "#111111"]
+possession_bias = 0.9
+pass_completion = 0.78
+long_ball_pct = 0.12
+shot_rate = 0.24
+shot_distance_mean_m = 18.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 13.0
+
+[team.hou]
+name = "Hounslow"
+short = "HOU"
+colors = ["#E30613", "#FFFFFF"]
+possession_bias = 0.9
+pass_completion = 0.74
+long_ball_pct = 0.20
+shot_rate = 0.24
+shot_distance_mean_m = 16.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 11.0
+
+[team.sbw]
+name = "Sussex Blue White"
+short = "SBW"
+colors = ["#0057B8", "#FFFFFF"]
+possession_bias = 1.2
+pass_completion = 0.85
+long_ball_pct = 0.05
+shot_rate = 0.25
+shot_distance_mean_m = 17.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 14.0
+
+[team.ldn]
+name = "London FC"
+short = "LDN"
+colors = ["#034694", "#FFFFFF"]
+possession_bias = 1.2
+pass_completion = 0.85
+long_ball_pct = 0.07
+shot_rate = 0.22
+shot_distance_mean_m = 18.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 7.0
+
+[team.wsb]
+name = "Warwickshire Sky Blue"
+short = "WSB"
+colors = ["#7FB2E5", "#FFFFFF"]
+possession_bias = 0.65
+pass_completion = 0.76
+long_ball_pct = 0.14
+shot_rate = 0.18
+shot_distance_mean_m = 20.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 3.0
+
+[team.snw]
+name = "South Norwood"
+short = "SNW"
+colors = ["#1B458F", "#C4122E"]
+possession_bias = 0.9
+pass_completion = 0.79
+long_ball_pct = 0.12
+shot_rate = 0.20
+shot_distance_mean_m = 19.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 6.0
+
+[team.mbl]
+name = "Merseyside Blue"
+short = "MBL"
+colors = ["#003399", "#FFFFFF"]
+possession_bias = 0.8
+pass_completion = 0.80
+long_ball_pct = 0.22
+shot_rate = 0.32
+shot_distance_mean_m = 13.0
+shot_distance_sd_m = 4.0
+pressures_per_5min = 6.0
+
+[team.wlw]
+name = "West London White"
+short = "WLW"
+colors = ["#FFFFFF", "#111111"]
+possession_bias = 1.0
+pass_completion = 0.81
+long_ball_pct = 0.08
+shot_rate = 0.22
+shot_distance_mean_m = 18.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 8.0
+
+[team.yob]
+name = "Yorkshire Orange Black"
+short = "YOB"
+colors = ["#F18A00", "#111111"]
+possession_bias = 1.8
+pass_completion = 0.72
+long_ball_pct = 0.45
+shot_rate = 0.22
+shot_distance_mean_m = 20.0
+shot_distance_sd_m = 4.0
+pressures_per_5min = 5.0
+
+[team.eat]
+name = "East Anglia Town"
+short = "EAT"
+colors = ["#0033A0", "#FFFFFF"]
+possession_bias = 0.9
+pass_completion = 0.78
+long_ball_pct = 0.15
+shot_rate = 0.16
+shot_distance_mean_m = 19.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 6.0
+
+[team.wyw]
+name = "West Yorkshire White"
+short = "WYW"
+colors = ["#FFFFFF", "#FFCD00"]
+possession_bias = 1.0
+pass_completion = 0.78
+long_ball_pct = 0.10
+shot_rate = 0.20
+shot_distance_mean_m = 18.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 13.0
+
+[team.mer]
+name = "Merseyside Red"
+short = "MER"
+colors = ["#C8102E", "#F6EB61"]
+possession_bias = 1.1
+pass_completion = 0.84
+long_ball_pct = 0.08
+shot_rate = 0.24
+shot_distance_mean_m = 16.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 10.0
+
+[team.mnb]
+name = "Man Blue"
+short = "MNB"
+colors = ["#6CABDD", "#1C2C5B"]
+possession_bias = 1.35
+pass_completion = 0.86
+long_ball_pct = 0.06
+shot_rate = 0.24
+shot_distance_mean_m = 16.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 5.0
+
+[team.mnr]
+name = "Man Red"
+short = "MNR"
+colors = ["#DA291C", "#111111"]
+possession_bias = 1.0
+pass_completion = 0.80
+long_ball_pct = 0.10
+shot_rate = 0.20
+shot_distance_mean_m = 19.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 3.0
+
+[team.tyn]
+name = "Tyneside"
+short = "TYN"
+colors = ["#111111", "#FFFFFF"]
+possession_bias = 1.0
+pass_completion = 0.81
+long_ball_pct = 0.12
+shot_rate = 0.20
+shot_distance_mean_m = 18.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 4.0
+
+[team.ntr]
+name = "Notts Reds"
+short = "NTR"
+colors = ["#DD0000", "#FFFFFF"]
+possession_bias = 0.9
+pass_completion = 0.78
+long_ball_pct = 0.12
+shot_rate = 0.40
+shot_distance_mean_m = 23.0
+shot_distance_sd_m = 4.0
+pressures_per_5min = 6.0
+
+[team.wsd]
+name = "Wearside"
+short = "WSD"
+colors = ["#EB172B", "#FFFFFF"]
+possession_bias = 0.9
+pass_completion = 0.80
+long_ball_pct = 0.10
+shot_rate = 0.20
+shot_distance_mean_m = 18.0
+shot_distance_sd_m = 5.0
+pressures_per_5min = 8.0
+
+[team.nel]
+name = "North East London"
+short = "NEL"
+colors = ["#FFFFFF", "#132257"]
+possession_bias = 1.35
+pass_completion = 0.86
+long_ball_pct = 0.05
+shot_rate = 0.35
+shot_distance_mean_m = 23.0
+shot_distance_sd_m = 4.0
+pressures_per_5min = 7.0
