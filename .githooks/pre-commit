@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Blocks commits that contain a banned term or a secret.
+# Enable once per clone: git config core.hooksPath .githooks
+set -euo pipefail
+
+echo "pre-commit: banned-term check"
+uv run pytest -q tests/test_repo_lint.py
+
+if docker info >/dev/null 2>&1; then
+  echo "pre-commit: secret scan (gitleaks, staged changes)"
+  ROOT=$(pwd -W 2>/dev/null || pwd)
+  MSYS_NO_PATHCONV=1 docker run --rm -v "$ROOT:/repo" -w /repo \
+    -e GIT_CONFIG_PARAMETERS="'safe.directory=*'" \
+    zricethezav/gitleaks:v8.30.1 git --pre-commit --staged --redact --no-banner /repo
+else
+  echo "pre-commit: WARNING docker not running, secret scan skipped" >&2
+fi

@@ -1,0 +1,7 @@
+{"id": 0, "t": 0.0, "minute": 0, "period": 1, "type": "period", "team": "nel"}
+{"id": 1, "t": 1.2, "minute": 0, "period": 1, "type": "possession_start", "team": "nel", "sequence_id": 1}
+{"id": 2, "t": 2.0, "minute": 0, "period": 1, "type": "pass", "team": "nel", "player": "p_nel_6", "sequence_id": 1, "x": 52.5, "y": 34.0, "end_x": 60.1, "end_y": 22.4, "outcome": "complete"}
+{"id": 3, "t": 4.1, "minute": 0, "period": 1, "type": "carry", "team": "nel", "player": "p_nel_8", "sequence_id": 1, "x": 60.1, "y": 22.4, "end_x": 74.0, "end_y": 25.0, "outcome": "complete"}
+{"id": 4, "t": 5.0, "minute": 0, "period": 1, "type": "pressure", "team": "yob", "player": "p_yob_4", "sequence_id": 1, "x": 31.0, "y": 43.0}
+{"id": 5, "t": 6.3, "minute": 0, "period": 1, "type": "shot", "team": "nel", "player": "p_nel_8", "sequence_id": 1, "x": 79.0, "y": 31.5, "outcome": "saved", "xg": 0.04}
+{"id": 6, "t": 6.4, "minute": 0, "period": 1, "type": "possession_end", "team": "nel", "sequence_id": 1}

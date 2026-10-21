@@ -1,0 +1,64 @@
+{
+  "seed": "demo",
+  "window": 6,
+  "t_start": 2040,
+  "t_end": 2052,
+  "kind": "debate",
+  "contradiction_id": "c_nel_volume_quality_34",
+  "prediction_id": null,
+  "window_from_minute": null,
+  "lines": {
+    "hype": {
+      "en": "North East London: 10 shots and total control out there.",
+      "es": "North East London: 10 disparos y control total.",
+      "ar": "نورث إيست لندن: 10 تسديدات وسيطرة كاملة."
+    },
+    "sceptic": {
+      "en": "10 shots at 0.05 xG each, mostly from 24 metres.",
+      "es": "10 disparos de 0,05 xG cada uno, casi todos desde 24 metros.",
+      "ar": "10 تسديدات بمعدل 0.05 لكل منها، معظمها من 24 مترًا."
+    },
+    "verdict": {
+      "en": "Volume, not danger. These shots come from places that rarely score.",
+      "es": "Volumen, no peligro. Disparan desde zonas que casi nunca marcan.",
+      "ar": "كمية بلا خطورة. التسديدات من أماكن نادرًا ما يُسجَّل منها."
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "10 shots at 0.05 xG per shot, under the 0.08 threshold.",
+      "es": "10 disparos a 0,05 xG por disparo, bajo el umbral de 0,08.",
+      "ar": "10 تسديدات بمعدل 0.05 للتسديدة، أقل من حد 0.08."
+    },
+    "casual": {
+      "en": "Lots of shots, almost no real chances.",
+      "es": "Muchos disparos, casi ninguna ocasión real.",
+      "ar": "تسديدات كثيرة، وفرص حقيقية شبه معدومة."
+    }
+  },
+  "source": {
+    "hype": "live",
+    "sceptic": "live",
+    "verdict": "live",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
+  },
+  "evidence": {
+    "team": "nel",
+    "minute": 34,
+    "shots": 10,
+    "xg_total": 0.5,
+    "xg_per_shot": 0.05,
+    "threshold": 0.08,
+    "avg_shot_distance_m": 24,
+    "score_home": 0,
+    "score_away": 1
+  },
+  "evidence_display": {
+    "shots": {"en": "10", "es": "10", "ar": "10"},
+    "xg_per_shot": {"en": "0.05", "es": "0,05", "ar": "0.05"},
+    "threshold": {"en": "0.08", "es": "0,08", "ar": "0.08"},
+    "avg_shot_distance_m": {"en": "24", "es": "24", "ar": "24"}
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "seed": "demo",
+  "window": 12,
+  "t_start": 3600,
+  "t_end": 3612,
+  "kind": "debate",
+  "contradiction_id": "c_nel_scoreline_xg_60",
+  "prediction_id": "pr_nel_60",
+  "window_from_minute": 30,
+  "lines": {
+    "hype": {
+      "en": "Yorkshire Orange Black are cruising. This one looks finished.",
+      "es": "Yorkshire Orange Black van tranquilos. Esto parece cerrado.",
+      "ar": "يوركشاير أورانج بلاك مرتاحون. المباراة تبدو محسومة."
+    },
+    "sceptic": {
+      "en": "Since 30', NEL have 1.4 xG to 0.1. The scoreline is lying.",
+      "es": "Desde el 30', NEL suma 1,4 xG contra 0,1. El marcador miente.",
+      "ar": "منذ الدقيقة 30 لدى NEL ‏1.4 مقابل 0.1. النتيجة تكذب."
+    },
+    "verdict": {
+      "en": "A goal is coming for North East London.",
+      "es": "Se viene un gol de North East London.",
+      "ar": "هدف قادم لنورث إيست لندن."
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "Rolling 30-minute xG: 1.4 against 0.1, past the 1.0 gap.",
+      "es": "xG de los últimos 30 minutos: 1,4 contra 0,1, por encima de 1,0.",
+      "ar": "الأهداف المتوقعة في آخر 30 دقيقة: 1.4 مقابل 0.1، فوق فارق 1.0."
+    },
+    "casual": {
+      "en": "The score says one thing. The chances say NEL will score.",
+      "es": "El marcador dice una cosa. Las ocasiones dicen que NEL marcará.",
+      "ar": "النتيجة تقول شيئًا، والفرص تقول إن NEL ستسجل."
+    }
+  },
+  "source": {
+    "hype": "live",
+    "sceptic": "cache",
+    "verdict": "live",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
+  },
+  "evidence": {
+    "team": "nel",
+    "minute": 60,
+    "window_from_minute": 30,
+    "nel_xg_window": 1.4,
+    "yob_xg_window": 0.1,
+    "threshold": 1.0,
+    "score_home": 0,
+    "score_away": 2
+  },
+  "evidence_display": {
+    "window_from_minute": {"en": "30'", "es": "30'", "ar": "30"},
+    "nel_xg_window": {"en": "1.4", "es": "1,4", "ar": "1.4"},
+    "yob_xg_window": {"en": "0.1", "es": "0,1", "ar": "0.1"},
+    "threshold": {"en": "1.0", "es": "1,0", "ar": "1.0"}
+  }
+}

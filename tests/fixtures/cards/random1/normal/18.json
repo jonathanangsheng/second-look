@@ -1,0 +1,45 @@
+{
+  "seed": "random1",
+  "window": 18,
+  "t_start": 5400,
+  "t_end": 5412,
+  "kind": "missed_call",
+  "contradiction_id": "c_yob_scoreline_xg_70",
+  "prediction_id": "pr_yob_70",
+  "window_from_minute": null,
+  "lines": {
+    "verdict": {
+      "en": "Missed: no goal for Yorkshire Orange Black by 90'.",
+      "es": "Fallado: ningún gol de Yorkshire Orange Black antes del 90'.",
+      "ar": "توقع خاطئ: لم يسجل يوركشاير أورانج بلاك حتى الدقيقة 90."
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "Call made at 70', deadline 90', no goal.",
+      "es": "Pronóstico en el 70', plazo 90', sin gol.",
+      "ar": "التوقع في 70، والمهلة 90، دون هدف."
+    },
+    "casual": {
+      "en": "The sceptic got this one wrong.",
+      "es": "Esta vez el escéptico se equivocó.",
+      "ar": "أخطأ المتشكك هذه المرة."
+    }
+  },
+  "source": {
+    "verdict": "template",
+    "personaliser": "template",
+    "es": "template",
+    "ar": "template"
+  },
+  "evidence": {
+    "team": "yob",
+    "made_at_minute": 70,
+    "by_minute": 90,
+    "minute": 90
+  },
+  "evidence_display": {
+    "made_at_minute": {"en": "70'", "es": "70'", "ar": "70"},
+    "by_minute": {"en": "90'", "es": "90'", "ar": "90"}
+  }
+}
