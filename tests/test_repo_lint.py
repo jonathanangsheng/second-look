@@ -18,7 +18,9 @@ def _terms() -> list[str]:
 def _tracked_files() -> list[Path]:
     out = subprocess.run(
         ["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard"],
-        cwd=ROOT, capture_output=True, check=True,
+        cwd=ROOT,
+        capture_output=True,
+        check=True,
     ).stdout
     return [ROOT / p for p in out.decode("utf-8").split("\0") if p]
 
@@ -26,7 +28,7 @@ def _tracked_files() -> list[Path]:
 def test_denylist_terms_absent_from_repo():
     terms = _terms()
     if not terms:
-        warnings.warn(".denylist.local missing or empty: banned-term check skipped")
+        warnings.warn(".denylist.local missing or empty: banned-term check skipped", stacklevel=2)
         return
     hits = []
     for path in _tracked_files():

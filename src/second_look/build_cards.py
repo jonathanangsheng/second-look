@@ -1,8 +1,8 @@
 """Build overlay cards into cards/<seed>/<mode>/.
 
-  uv run python scripts/build_cards.py                         # template cards, every seed
-  uv run python scripts/build_cards.py --source live --seed demo
-  uv run python scripts/build_cards.py --source live --seed demo --mode fail-sceptic
+  uv run second-look-cards                                     # template cards, every seed
+  uv run second-look-cards --source live --seed demo
+  uv run second-look-cards --source live --seed demo --mode fail-sceptic
 
 Template: existing cards are kept unless --force (which rebuilds the seed from scratch).
 Live (needs a model provider in .env): debate cards whose agent lines are already live are
@@ -19,13 +19,13 @@ import os
 import statistics
 import sys
 import time
-from pathlib import Path
 
 from second_look.agents import SPEAKERS
-from second_look.contracts import Card, card_path
+from second_look.config import CARDS_DIR, ROOT
+from second_look.contracts import card_path
 from second_look.llm import LLM, LLMRateLimited, LLMUnavailable
-from second_look.pipeline import CARDS_DIR, live_debate_card, template_cards, write_cards
-from second_look.sim import ROOT, SEEDS
+from second_look.pipeline import live_debate_card, read_cards, template_cards, write_cards
+from second_look.sim import SEEDS
 
 FLAGS_FILE = ROOT / "qa" / "grounding_flags.md"
 
@@ -44,34 +44,35 @@ class RateLimitWatch:
             raise
 
 
-def _read(path: Path) -> Card | None:
-    return Card.model_validate_json(path.read_text(encoding="utf-8")) if path.exists() else None
-
-
 async def build_live(seed: str, mode: str, windows: set[int] | None, force: bool, llm: RateLimitWatch) -> int:
     fail = frozenset({"sceptic"}) if mode == "fail-sceptic" else frozenset()
+    existing_cards = read_cards(seed, mode)
+    normal_cards = existing_cards if mode == "normal" else read_cards(seed, "normal")
     latencies: list[float] = []
     for card in template_cards(seed):
         if windows and card.window not in windows:
             continue
-        path = card_path(CARDS_DIR, seed, mode, card.window, card.kind)
         if card.kind != "debate":  # outcome cards are template text; fail-sceptic merges over normal
-            if mode == "normal" and not path.exists():
-                write_cards([card], seed, mode)
+            if mode == "normal":
+                write_cards([card], seed, mode)  # keeps an existing file
             continue
-        existing = _read(path)
+        existing = existing_cards.get((card.window, card.kind))
         if existing and not force and all(existing.source.get(s) == "live" for s in SPEAKERS if s not in fail):
             continue
-        cached = _read(card_path(CARDS_DIR, seed, "normal", card.window, card.kind))
+        cached = normal_cards.get((card.window, card.kind))
         started = time.perf_counter()
         live, flags = await live_debate_card(card, llm, cached, fail)
         if llm.limited:
             print(f"rate limited at window {card.window}; nothing written for it. Resume later with the same command.")
             return 1
         latencies.append(time.perf_counter() - started)
+        path = card_path(CARDS_DIR, seed, mode, card.window, card.kind)
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(live.model_dump_json(indent=2) + "\n", encoding="utf-8")
-        print(f"  {path.relative_to(ROOT).as_posix()}  {latencies[-1]:.1f}s  " + " ".join(f"{s}={live.source[s]}" for s in SPEAKERS))
+        print(
+            f"  {path.relative_to(ROOT).as_posix()}  {latencies[-1]:.1f}s  "
+            + " ".join(f"{s}={live.source[s]}" for s in SPEAKERS)
+        )
         if flags:
             FLAGS_FILE.parent.mkdir(exist_ok=True)
             with FLAGS_FILE.open("a", encoding="utf-8") as f:
@@ -83,12 +84,14 @@ async def build_live(seed: str, mode: str, windows: set[int] | None, force: bool
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap = argparse.ArgumentParser(prog="second-look-cards", description=__doc__.splitlines()[0])
     ap.add_argument("--seed", choices=sorted(SEEDS), action="append", help="repeatable; default: every seed")
     ap.add_argument("--source", choices=("template", "live"), default="template")
     ap.add_argument("--mode", choices=("normal", "fail-sceptic"), default="normal", help="live only")
     ap.add_argument("--windows", help="live only: comma-separated window numbers to rebuild, e.g. 6,11")
-    ap.add_argument("--force", action="store_true", help="template: delete cached cards first; live: rebuild live cards too")
+    ap.add_argument(
+        "--force", action="store_true", help="template: delete cached cards first; live: rebuild live cards too"
+    )
     args = ap.parse_args()
     seeds = args.seed or sorted(SEEDS)
     if args.source == "template":

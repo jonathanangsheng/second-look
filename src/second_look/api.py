@@ -9,11 +9,10 @@ from typing import Literal
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 
+from second_look.config import CARDS_DIR, WEB_DIST
 from second_look.contracts import Card
-from second_look.pipeline import CARDS_DIR, load_events
-from second_look.sim import ROOT, SEEDS, load_profiles
-
-WEB_DIST = ROOT / "web" / "dist"
+from second_look.pipeline import load_events, read_cards
+from second_look.sim import SEEDS, load_profiles
 
 app = FastAPI(title="Second Look")
 
@@ -25,9 +24,7 @@ def _events(seed: str) -> list[dict]:
 
 @cache
 def _cards(seed: str, mode: str) -> dict[tuple[int, str], Card]:
-    folder = CARDS_DIR / seed / mode
-    cards = [Card.model_validate_json(p.read_text(encoding="utf-8")) for p in sorted(folder.glob("*.json"))]
-    return {(c.window, c.kind): c for c in cards}
+    return read_cards(seed, mode, CARDS_DIR)  # explicit: tests monkeypatch api.CARDS_DIR
 
 
 def _merged(seed: str, mode: str) -> list[Card]:
@@ -67,8 +64,15 @@ def seeds() -> dict:
     for seed, label, mode, matches in CHIPS:
         cards = _cards(seed, mode).values() if mode == "normal" else _merged(seed, mode)
         if found := sorted((c for c in cards if matches(c)), key=lambda c: c.t_start):
-            chips.append({"label": label, "seed": seed, "mode": mode, "t": found[0].t_start,
-                          "minute": int(found[0].t_start // 60)})
+            chips.append(
+                {
+                    "label": label,
+                    "seed": seed,
+                    "mode": mode,
+                    "t": found[0].t_start,
+                    "minute": int(found[0].t_start // 60),
+                }
+            )
     return {
         "seeds": [{"seed": s, "home": _team(spec.home), "away": _team(spec.away)} for s, spec in SEEDS.items()],
         "chips": chips,

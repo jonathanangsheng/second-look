@@ -1,20 +1,20 @@
 """Simulator: committed seeds are reproducible, every profile runs, no real club names leak."""
 
 import re
-from pathlib import Path
 
 import pytest
 
-from second_look.sim import SEEDS, SEEDS_DIR, load_profiles, simulate, simulate_seed, xg
-
-ROOT = Path(__file__).resolve().parent.parent
+from second_look.config import ROOT, SEEDS_DIR
+from second_look.sim import SEEDS, load_profiles, simulate, simulate_seed, xg
 
 # Distinctive real club words; whole-word match so "Village" doesn't trip "Villa".
+# fmt: off
 REAL_CLUB_WORDS = (
     "arsenal", "villa", "bournemouth", "brentford", "brighton", "chelsea", "coventry", "palace",
     "everton", "fulham", "hull city", "ipswich", "leeds", "liverpool", "manchester", "man city",
     "man utd", "newcastle", "nottingham", "forest", "sunderland", "tottenham", "spurs", "hotspur",
 )
+# fmt: on
 
 
 @pytest.mark.parametrize("name", sorted(SEEDS))
@@ -44,13 +44,13 @@ def test_every_profile_simulates_with_plausible_shot_volume():
 
 def test_xg_falls_with_distance_and_stays_in_bounds():
     assert xg(6, 1.0) > xg(11, 0.6) > xg(18, 0.4) > xg(27, 0.27)
-    assert 0.01 <= xg(60, 0.0) and xg(0, 3.0) <= 0.95
+    assert xg(60, 0.0) >= 0.01 and xg(0, 3.0) <= 0.95
 
 
-def test_no_real_club_names_in_data_profiles_or_web():
+def test_no_real_club_names_in_data_profiles_web_src_or_cards():
     pattern = re.compile(r"\b(" + "|".join(re.escape(w) for w in REAL_CLUB_WORDS) + r")\b", re.I)
     hits = []
-    for folder in ("profiles", "data", "web"):
+    for folder in ("profiles", "data", "web", "src", "cards"):
         for path in (ROOT / folder).rglob("*"):
             if path.is_file() and "node_modules" not in path.parts:
                 for m in pattern.finditer(path.read_text(encoding="utf-8", errors="ignore")):

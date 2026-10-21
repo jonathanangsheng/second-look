@@ -34,7 +34,8 @@ async def main() -> int:
             continue
         ok = result.text.strip().upper().startswith("OK")
         failures += 0 if ok else 1
-        print(f"  {name:<19} {'OK  ' if ok else 'FAIL'}    model={result.model} latency={result.latency_ms}ms reply={result.text!r}")
+        status = "OK  " if ok else "FAIL"
+        print(f"  {name:<19} {status}    model={result.model} latency={result.latency_ms}ms reply={result.text!r}")
     if checked == 0:
         print("No provider configured. Copy .env.example to .env and fill in at least one provider.")
         return 1

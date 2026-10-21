@@ -16,22 +16,29 @@ def volume_quality(state: MatchState) -> list[Contradiction]:
     for t in (state.home, state.away):
         if t.shots >= config.VQ_MIN_SHOTS and t.xg_per_shot < config.VQ_MAX_XG_PER_SHOT:
             limit = config.VQ_MAX_XG_PER_SHOT
-            found.append(Contradiction(
-                id=f"c_{t.team}_volume_quality_{state.minute}",
-                detector="volume_quality",
-                team=t.team,
-                minute=state.minute,
-                surface=StatValue(label="shots", value=t.shots),
-                truth=StatValue(label="xG per shot", value=round(t.xg_per_shot, 3)),
-                evidence={
-                    "team": t.team, "minute": state.minute, "shots": t.shots,
-                    "xg_total": round(t.xg, 2), "xg_per_shot": round(t.xg_per_shot, 3),
-                    "threshold": limit, "avg_shot_distance_m": round(t.avg_shot_distance_m),
-                    "score_home": state.home.goals, "score_away": state.away.goals,
-                },
-                evidence_display={},
-                severity=round(min(1.0, (limit - t.xg_per_shot) / limit), 3),
-            ))
+            found.append(
+                Contradiction(
+                    id=f"c_{t.team}_volume_quality_{state.minute}",
+                    detector="volume_quality",
+                    team=t.team,
+                    minute=state.minute,
+                    surface=StatValue(label="shots", value=t.shots),
+                    truth=StatValue(label="xG per shot", value=round(t.xg_per_shot, 3)),
+                    evidence={
+                        "team": t.team,
+                        "minute": state.minute,
+                        "shots": t.shots,
+                        "xg_total": round(t.xg, 2),
+                        "xg_per_shot": round(t.xg_per_shot, 3),
+                        "threshold": limit,
+                        "avg_shot_distance_m": round(t.avg_shot_distance_m),
+                        "score_home": state.home.goals,
+                        "score_away": state.away.goals,
+                    },
+                    evidence_display={},
+                    severity=round(min(1.0, (limit - t.xg_per_shot) / limit), 3),
+                )
+            )
     return found
 
 
@@ -43,24 +50,30 @@ def scoreline_xg(state: MatchState) -> list[Contradiction]:
     gap = trailer.xg_window - leader.xg_window
     if gap < config.SX_XG_GAP:
         return []
-    return [Contradiction(
-        id=f"c_{trailer.team}_scoreline_xg_{state.minute}",
-        detector="scoreline_xg",
-        team=trailer.team,
-        minute=state.minute,
-        surface=StatValue(label="goal difference", value=trailer.goals - leader.goals),
-        truth=StatValue(label="xG difference since window start", value=round(gap, 2)),
-        evidence={
-            "team": trailer.team, "leader": leader.team, "minute": state.minute,
-            "window_from_minute": state.window_from_minute,
-            "trailer_xg_window": round(trailer.xg_window, 1), "leader_xg_window": round(leader.xg_window, 1),
-            "threshold": config.SX_XG_GAP,
-            "score_home": state.home.goals, "score_away": state.away.goals,
-        },
-        evidence_display={},
-        severity=round(min(1.0, (gap - config.SX_XG_GAP) / config.SX_XG_GAP), 3),
-        window_from_minute=state.window_from_minute,
-    )]
+    return [
+        Contradiction(
+            id=f"c_{trailer.team}_scoreline_xg_{state.minute}",
+            detector="scoreline_xg",
+            team=trailer.team,
+            minute=state.minute,
+            surface=StatValue(label="goal difference", value=trailer.goals - leader.goals),
+            truth=StatValue(label="xG difference since window start", value=round(gap, 2)),
+            evidence={
+                "team": trailer.team,
+                "leader": leader.team,
+                "minute": state.minute,
+                "window_from_minute": state.window_from_minute,
+                "trailer_xg_window": round(trailer.xg_window, 1),
+                "leader_xg_window": round(leader.xg_window, 1),
+                "threshold": config.SX_XG_GAP,
+                "score_home": state.home.goals,
+                "score_away": state.away.goals,
+            },
+            evidence_display={},
+            severity=round(min(1.0, (gap - config.SX_XG_GAP) / config.SX_XG_GAP), 3),
+            window_from_minute=state.window_from_minute,
+        )
+    ]
 
 
 DETECTORS: tuple[Callable[[MatchState], list[Contradiction]], ...] = (volume_quality, scoreline_xg)

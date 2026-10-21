@@ -19,8 +19,11 @@ class Ledger:
         if self.has_open(team):
             raise ValueError(f"{team} already has an open prediction")
         prediction = Prediction(
-            id=f"pr_{team}_{minute}", team=team, made_at_minute=minute,
-            by_minute=min(minute + PREDICTION_HORIZON_MIN, FULL_TIME_MINUTE), claim_text=claim_text,
+            id=f"pr_{team}_{minute}",
+            team=team,
+            made_at_minute=minute,
+            by_minute=min(minute + PREDICTION_HORIZON_MIN, FULL_TIME_MINUTE),
+            claim_text=claim_text,
         )
         self.open[team] = prediction
         return prediction

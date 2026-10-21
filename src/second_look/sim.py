@@ -16,11 +16,8 @@ import tomllib
 from dataclasses import dataclass, field, replace
 from pathlib import Path
 
+from second_look.config import PROFILES_FILE, SEEDS_DIR
 from second_look.contracts import PITCH_LENGTH_M, PITCH_WIDTH_M, Event
-
-ROOT = Path(__file__).resolve().parent.parent
-PROFILES_FILE = ROOT / "profiles" / "teams.toml"
-SEEDS_DIR = ROOT / "data" / "seeds"
 
 HALF_SECONDS = 45 * 60
 GOAL_X, GOAL_Y, GOAL_WIDTH_M = PITCH_LENGTH_M, PITCH_WIDTH_M / 2, 7.32
@@ -70,11 +67,13 @@ def _profile(tid: str, t: dict) -> Profile:
     return Profile(id=tid, colors=tuple(t["colors"]), squad=_squad(tid), **fields)
 
 
+# fmt: off
 _FIRST = ("Arlo", "Bram", "Cael", "Dario", "Emre", "Finn", "Goran", "Hale", "Idris", "Jory", "Kofi",
           "Lior", "Matti", "Nils", "Otto", "Pell", "Quin", "Rafe", "Soren", "Tavi", "Ulric", "Vasco")
 _LAST = ("Ashdown", "Brennick", "Callo", "Dunmore", "Elsby", "Farrow", "Gilchrist", "Holm", "Ingram",
          "Jessop", "Kettley", "Lomax", "Marlow", "Norland", "Oakes", "Pryce", "Quarry", "Rendell",
          "Sallow", "Tarrant", "Underwood", "Vance")
+# fmt: on
 ROLES = ("GK", "RB", "CB", "CB", "LB", "DM", "CM", "CM", "RW", "ST", "LW")
 
 
@@ -171,8 +170,17 @@ class _Match:
         return p
 
     def _emit(self, type_: str, team: str, **kw) -> None:
-        self.events.append(Event(id=len(self.events), t=round(self.t, 1), minute=self.minute,
-                                 period=self.period, type=type_, team=team, **kw))
+        self.events.append(
+            Event(
+                id=len(self.events),
+                t=round(self.t, 1),
+                minute=self.minute,
+                period=self.period,
+                type=type_,
+                team=team,
+                **kw,
+            )
+        )
 
     def _other(self, team: str) -> str:
         return self.away if team == self.home else self.home
@@ -187,7 +195,11 @@ class _Match:
             team = forced[1]
         else:
             h, a = self._profile(self.home), self._profile(self.away)
-            team = self.home if self.rng.random() < h.possession_bias / (h.possession_bias + a.possession_bias) else self.away
+            team = (
+                self.home
+                if self.rng.random() < h.possession_bias / (h.possession_bias + a.possession_bias)
+                else self.away
+            )
         p, opp = self._profile(team), self._profile(self._other(team))
         self.sequence_id += 1
         seq = self.sequence_id
@@ -197,8 +209,14 @@ class _Match:
         while True:
             self.t += self.rng.uniform(2.5, 6.0)
             if self.rng.random() < opp.pressures_per_5min * 4.0 / 300:
-                self._emit("pressure", opp.id, player=self._player(opp.id, ("ST", "LW", "RW", "CM")),
-                           sequence_id=seq, x=round(PITCH_LENGTH_M - x, 1), y=round(PITCH_WIDTH_M - y, 1))
+                self._emit(
+                    "pressure",
+                    opp.id,
+                    player=self._player(opp.id, ("ST", "LW", "RW", "CM")),
+                    sequence_id=seq,
+                    x=round(PITCH_LENGTH_M - x, 1),
+                    y=round(PITCH_WIDTH_M - y, 1),
+                )
             if x >= 70 and not shot_considered:
                 shot_considered = True
                 if forced or self.rng.random() < p.shot_rate:
@@ -210,13 +228,27 @@ class _Match:
             completion = p.pass_completion - (0.25 if long else 0.0)
             done = forced or self.rng.random() < completion
             kind = "carry" if not long and self.rng.random() < 0.25 else "pass"
-            self._emit(kind, team, player=self._player(team, ROLES[1:]), sequence_id=seq,
-                       x=round(x, 1), y=round(y, 1), end_x=round(ex, 1), end_y=round(ey, 1),
-                       outcome="complete" if done else "incomplete")
+            self._emit(
+                kind,
+                team,
+                player=self._player(team, ROLES[1:]),
+                sequence_id=seq,
+                x=round(x, 1),
+                y=round(y, 1),
+                end_x=round(ex, 1),
+                end_y=round(ey, 1),
+                outcome="complete" if done else "incomplete",
+            )
             if not done:
-                self._emit("tackle", opp.id, player=self._player(opp.id, ("CB", "DM", "CM", "RB", "LB")),
-                           sequence_id=seq, x=round(PITCH_LENGTH_M - ex, 1), y=round(PITCH_WIDTH_M - ey, 1),
-                           outcome="won")
+                self._emit(
+                    "tackle",
+                    opp.id,
+                    player=self._player(opp.id, ("CB", "DM", "CM", "RB", "LB")),
+                    sequence_id=seq,
+                    x=round(PITCH_LENGTH_M - ex, 1),
+                    y=round(PITCH_WIDTH_M - ey, 1),
+                    outcome="won",
+                )
                 break
             x, y = ex, ey
         self._emit("possession_end", team, sequence_id=seq)
@@ -233,8 +265,16 @@ class _Match:
             outcome = self.rng.choice(("saved", "off_target", "blocked"))
         else:
             outcome = "goal" if self.rng.random() < chance else self.rng.choice(("saved", "off_target", "blocked"))
-        self._emit("shot", team, player=self._player(team, ("ST", "LW", "RW", "CM")), sequence_id=seq,
-                   x=round(sx, 1), y=round(sy, 1), outcome=outcome, xg=round(chance, 3))
+        self._emit(
+            "shot",
+            team,
+            player=self._player(team, ("ST", "LW", "RW", "CM")),
+            sequence_id=seq,
+            x=round(sx, 1),
+            y=round(sy, 1),
+            outcome=outcome,
+            xg=round(chance, 3),
+        )
         if outcome == "goal":
             self._emit("goal", team, sequence_id=seq)
             if scores:

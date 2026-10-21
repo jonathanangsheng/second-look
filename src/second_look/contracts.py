@@ -17,8 +17,15 @@ Source = Literal["live", "cache", "template"]
 CacheMode = Literal["normal", "fail-sceptic"]
 
 EventType = Literal[
-    "pass", "carry", "shot", "pressure", "tackle",
-    "possession_start", "possession_end", "goal", "period",
+    "pass",
+    "carry",
+    "shot",
+    "pressure",
+    "tackle",
+    "possession_start",
+    "possession_end",
+    "goal",
+    "period",
 ]
 Outcome = Literal["complete", "incomplete", "saved", "blocked", "off_target", "goal", "won", "lost"]
 Detector = Literal["volume_quality", "possession_penetration", "scoreline_xg", "effort_game_state"]

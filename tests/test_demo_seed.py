@@ -44,8 +44,10 @@ def test_score_is_0_2_at_60_and_1_2_at_78():
     goals = [e for e in _demo() if e.type == "goal"]
 
     def score(by):
-        return (sum(1 for g in goals if g.team == "nel" and g.minute <= by),
-                sum(1 for g in goals if g.team == "yob" and g.minute <= by))
+        return (
+            sum(1 for g in goals if g.team == "nel" and g.minute <= by),
+            sum(1 for g in goals if g.team == "yob" and g.minute <= by),
+        )
 
     assert score(60) == (0, 2)
     assert score(78) == (1, 2)

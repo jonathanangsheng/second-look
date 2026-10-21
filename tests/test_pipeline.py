@@ -6,8 +6,9 @@ from functools import cache
 
 import pytest
 
+from second_look.config import CARDS_DIR
 from second_look.contracts import Card, card_path
-from second_look.pipeline import CARDS_DIR, template_cards, write_cards
+from second_look.pipeline import read_cards, template_cards, write_cards
 from second_look.sim import SEEDS
 
 
@@ -45,7 +46,9 @@ def test_random1_shows_a_genuine_missed_call():
 
 @pytest.mark.parametrize("seed", sorted(SEEDS))
 def test_no_team_detector_pair_debates_more_than_four_times(seed):
-    pairs = Counter(re.match(r"c_(\w+?)_(\w+)_\d+$", c.contradiction_id).groups() for c in _cards(seed) if c.kind == "debate")
+    pairs = Counter(
+        re.match(r"c_(\w+?)_(\w+)_\d+$", c.contradiction_id).groups() for c in _cards(seed) if c.kind == "debate"
+    )
     assert max(pairs.values(), default=0) <= 4
 
 
@@ -63,10 +66,13 @@ def test_live_debate_card_swaps_english_lines_only_and_records_sources():
     import json
 
     from fakes import FakeLLM
+
     from second_look.pipeline import live_debate_card
 
     card = next(c for c in _cards("demo") if c.kind == "debate")
-    llm = FakeLLM().reply(json.dumps({"line": "{team}: {shots} shots!"})).timeout().reply(json.dumps({"line": "Noise."}))
+    llm = (
+        FakeLLM().reply(json.dumps({"line": "{team}: {shots} shots!"})).timeout().reply(json.dumps({"line": "Noise."}))
+    )
     live, flags = asyncio.run(live_debate_card(card, llm, cached=None))
     assert live.lines["hype"]["en"] == f"North East London: {card.evidence['shots']} shots!"
     assert live.lines["sceptic"]["en"] == card.lines["sceptic"]["en"]  # timed out: template
@@ -83,6 +89,16 @@ def test_write_cards_keeps_existing_unless_forced(tmp_path):
     stale.write_text("{}")
     assert write_cards(cards, "demo", root=tmp_path, force=True) == len(cards)
     assert not stale.exists()
+
+
+def test_read_cards_skips_a_truncated_file(tmp_path):
+    cards = list(_cards("demo"))
+    write_cards(cards, "demo", root=tmp_path)
+    broken = card_path(tmp_path, "demo", "normal", cards[0].window, cards[0].kind)
+    broken.write_text(broken.read_text(encoding="utf-8")[:40], encoding="utf-8")
+    with pytest.warns(UserWarning, match="skipping unreadable card"):
+        found = read_cards("demo", "normal", tmp_path)
+    assert len(found) == len(cards) - 1 and (cards[0].window, cards[0].kind) not in found
 
 
 def test_committed_cards_are_valid_and_sit_at_their_paths():

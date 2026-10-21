@@ -3,16 +3,19 @@
 from __future__ import annotations
 
 import shutil
+import warnings
 from pathlib import Path
 
+from pydantic import ValidationError
+
 from second_look import config, templates
-from second_look.contracts import FULL_TIME_MINUTE, Card, CacheMode, Contradiction, Event, Prediction, card_path
+from second_look.config import CARDS_DIR, SEEDS_DIR
+from second_look.contracts import FULL_TIME_MINUTE, CacheMode, Card, Contradiction, Event, Prediction, card_path
 from second_look.detectors import Picker, run_all
 from second_look.ledger import Ledger
-from second_look.sim import ROOT, SEEDS, SEEDS_DIR, load_profiles
+from second_look.sim import SEEDS, load_profiles
 from second_look.stats import match_state
 
-CARDS_DIR = ROOT / "cards"
 CARD_SECONDS = 12
 
 
@@ -51,10 +54,19 @@ def template_cards(seed: str) -> list[Card]:
 def _debate_card(seed: str, c: Contradiction, prediction: Prediction | None, names: dict[str, str]) -> Card:
     lines, variants, shown = templates.render(c.detector, c.evidence, names)
     return Card(
-        seed=seed, window=c.minute // config.WINDOW_MINUTES - 1, t_start=c.minute * 60.0,
-        t_end=c.minute * 60.0 + CARD_SECONDS, kind="debate", contradiction_id=c.id,
-        prediction_id=prediction.id if prediction else None, window_from_minute=c.window_from_minute,
-        lines=lines, variants=variants, source=_all_template(lines), evidence=c.evidence, evidence_display=shown,
+        seed=seed,
+        window=c.minute // config.WINDOW_MINUTES - 1,
+        t_start=c.minute * 60.0,
+        t_end=c.minute * 60.0 + CARD_SECONDS,
+        kind="debate",
+        contradiction_id=c.id,
+        prediction_id=prediction.id if prediction else None,
+        window_from_minute=c.window_from_minute,
+        lines=lines,
+        variants=variants,
+        source=_all_template(lines),
+        evidence=c.evidence,
+        evidence_display=shown,
     )
 
 
@@ -63,9 +75,18 @@ def _outcome_card(seed: str, kind: str, p: Prediction, minute: int, t: float, na
     lines, variants, shown = templates.render(kind, evidence, names)
     window = min(minute, FULL_TIME_MINUTE - 1) // config.WINDOW_MINUTES
     return Card(
-        seed=seed, window=window, t_start=t, t_end=t + CARD_SECONDS, kind=kind,
-        contradiction_id=f"c_{p.team}_scoreline_xg_{p.made_at_minute}", prediction_id=p.id,
-        lines=lines, variants=variants, source=_all_template(lines), evidence=evidence, evidence_display=shown,
+        seed=seed,
+        window=window,
+        t_start=t,
+        t_end=t + CARD_SECONDS,
+        kind=kind,
+        contradiction_id=f"c_{p.team}_scoreline_xg_{p.made_at_minute}",
+        prediction_id=p.id,
+        lines=lines,
+        variants=variants,
+        source=_all_template(lines),
+        evidence=evidence,
+        evidence_display=shown,
     )
 
 
@@ -73,7 +94,9 @@ def _all_template(lines: dict) -> dict:
     return {**dict.fromkeys(lines, "template"), "personaliser": "template", "es": "template", "ar": "template"}
 
 
-async def live_debate_card(card: Card, llm, cached: Card | None, fail: frozenset[str] = frozenset()) -> tuple[Card, list[str]]:
+async def live_debate_card(
+    card: Card, llm, cached: Card | None, fail: frozenset[str] = frozenset()
+) -> tuple[Card, list[str]]:
     """Replace a template debate card's English lines with the agents' (planning #6).
 
     Each line falls back on its own to the cached card's line, else the template line, with
@@ -95,7 +118,25 @@ async def live_debate_card(card: Card, llm, cached: Card | None, fail: frozenset
     return card.model_copy(update={"lines": lines, "source": {**card.source, **state.source}}), state.flags
 
 
-def write_cards(cards: list[Card], seed: str, mode: CacheMode = "normal", root: Path = CARDS_DIR, force: bool = False) -> int:
+def read_cards(seed: str, mode: CacheMode, root: Path = CARDS_DIR) -> dict[tuple[int, str], Card]:
+    """Cached cards for a seed and mode, keyed by (window, kind). Empty if none are cached.
+
+    An unreadable file (e.g. cut short by an interrupted write) is skipped with a warning, so a live build redoes it.
+    """
+    cards = {}
+    for path in sorted((root / seed / mode).glob("*.json")):
+        try:
+            card = Card.model_validate_json(path.read_text(encoding="utf-8"))
+        except ValidationError as exc:
+            warnings.warn(f"skipping unreadable card {path}: {exc.error_count()} error(s)", stacklevel=2)
+            continue
+        cards[card.window, card.kind] = card
+    return cards
+
+
+def write_cards(
+    cards: list[Card], seed: str, mode: CacheMode = "normal", root: Path = CARDS_DIR, force: bool = False
+) -> int:
     """Write cards to the cache. Existing files are kept unless `force` (which clears the seed/mode folder first)."""
     folder = root / seed / mode
     if force and folder.exists():

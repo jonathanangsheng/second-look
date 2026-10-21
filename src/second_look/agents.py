@@ -42,7 +42,11 @@ class Speaker(Executor):
     def __init__(self, role: str, llm, *, last: bool = False, fail: bool = False):
         super().__init__(id=role)
         self.llm, self.last, self.fail = llm, last, fail
-        self.system = (PROMPTS / "rules.md").read_text(encoding="utf-8") + "\n" + (PROMPTS / f"{role}.md").read_text(encoding="utf-8")
+        self.system = (
+            (PROMPTS / "rules.md").read_text(encoding="utf-8")
+            + "\n"
+            + (PROMPTS / f"{role}.md").read_text(encoding="utf-8")
+        )
 
     @handler
     async def speak(self, state: DebateState, ctx: WorkflowContext[DebateState, DebateState]) -> None:
@@ -55,8 +59,12 @@ class Speaker(Executor):
             if self.fail:
                 raise LLMError("forced failure")
             raw = await self.llm.complete(
-                self.system, self._user(state), temperature=TEMPERATURE[self.id], max_tokens=80,
-                timeout_s=min(CALL_TIMEOUT_S, remaining), json=True,
+                self.system,
+                self._user(state),
+                temperature=TEMPERATURE[self.id],
+                max_tokens=80,
+                timeout_s=min(CALL_TIMEOUT_S, remaining),
+                json=True,
             )
             text = ground(str(json.loads(raw)["line"]).strip(), state.shown, "en")
         except (LLMError, TimeoutError, GroundingError, ValueError, KeyError, TypeError):
@@ -68,13 +76,16 @@ class Speaker(Executor):
         return text, "live"
 
     def _user(self, state: DebateState) -> str:
-        return json.dumps({
-            "detector": state.detector,
-            "evidence": state.evidence,
-            "placeholders": sorted(state.shown),
-            "claim": state.claim,
-            "so_far": {s: state.lines[s] for s in SPEAKERS if s in state.lines},
-        }, ensure_ascii=False)
+        return json.dumps(
+            {
+                "detector": state.detector,
+                "evidence": state.evidence,
+                "placeholders": sorted(state.shown),
+                "claim": state.claim,
+                "so_far": {s: state.lines[s] for s in SPEAKERS if s in state.lines},
+            },
+            ensure_ascii=False,
+        )
 
 
 async def run_debate(llm, state: DebateState, *, fail: frozenset[str] = frozenset()) -> DebateState:
@@ -85,6 +96,12 @@ async def run_debate(llm, state: DebateState, *, fail: frozenset[str] = frozense
     return result.get_outputs()[0]
 
 
-def new_state(detector: str, evidence: dict, shown: dict, claim: str | None,
-              fallback: dict[str, tuple[str, str]], budget_s: float = WINDOW_CAP_S) -> DebateState:
+def new_state(
+    detector: str,
+    evidence: dict,
+    shown: dict,
+    claim: str | None,
+    fallback: dict[str, tuple[str, str]],
+    budget_s: float = WINDOW_CAP_S,
+) -> DebateState:
     return DebateState(detector, evidence, shown, claim, fallback, asyncio.get_running_loop().time() + budget_s)

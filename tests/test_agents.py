@@ -4,6 +4,7 @@ import asyncio
 import json
 
 from fakes import FakeLLM
+
 from second_look.agents import CALL_TIMEOUT_S, new_state, run_debate
 
 SHOWN = {"shots": {"en": "10", "es": "10", "ar": "10"}, "team": {"en": "NEL", "es": "NEL", "ar": "NEL"}}
@@ -16,17 +17,33 @@ def line(text):
 
 def debate(llm, *, fallback=FALLBACK, claim=None, budget_s=25.0, fail=frozenset()):
     async def go():
-        return await run_debate(llm, new_state("volume_quality", {"shots": 10}, SHOWN, claim, fallback, budget_s), fail=fail)
+        return await run_debate(
+            llm, new_state("volume_quality", {"shots": 10}, SHOWN, claim, fallback, budget_s), fail=fail
+        )
+
     return asyncio.run(go())
 
 
 def test_agents_speak_in_order_and_each_hears_the_ones_before():
-    llm = FakeLLM().reply(line("{shots} shots, total control.")).reply(line("Volume, not quality.")).reply(line("Lots of noise."))
+    llm = (
+        FakeLLM()
+        .reply(line("{shots} shots, total control."))
+        .reply(line("Volume, not quality."))
+        .reply(line("Lots of noise."))
+    )
     state = debate(llm)
-    assert state.lines == {"hype": "10 shots, total control.", "sceptic": "Volume, not quality.", "verdict": "Lots of noise."}
+    assert state.lines == {
+        "hype": "10 shots, total control.",
+        "sceptic": "Volume, not quality.",
+        "verdict": "Lots of noise.",
+    }
     assert state.source == dict.fromkeys(("hype", "sceptic", "verdict"), "live")
     heard = [json.loads(c.user)["so_far"] for c in llm.calls]
-    assert heard == [{}, {"hype": "10 shots, total control."}, {"hype": "10 shots, total control.", "sceptic": "Volume, not quality."}]
+    assert heard == [
+        {},
+        {"hype": "10 shots, total control."},
+        {"hype": "10 shots, total control.", "sceptic": "Volume, not quality."},
+    ]
     assert [c.temperature for c in llm.calls] == [0.7, 0.7, 0.3] and all(c.json for c in llm.calls)
 
 

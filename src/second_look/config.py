@@ -1,15 +1,23 @@
-"""Runtime settings, read from the environment (and `.env` if present)."""
+"""Repo paths and runtime settings, read from the environment (and `.env` if present)."""
 
 from __future__ import annotations
 
 import os
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Literal
 
 from dotenv import load_dotenv
 
 ProviderName = Literal["foundry", "foundry_serverless", "github"]
 PROVIDER_NAMES: tuple[ProviderName, ...] = ("foundry", "foundry_serverless", "github")
+
+# Repo paths: code lives in src/second_look/, runtime data at the repo root.
+ROOT = Path(__file__).resolve().parents[2]
+PROFILES_FILE = ROOT / "profiles" / "teams.toml"
+SEEDS_DIR = ROOT / "data" / "seeds"
+CARDS_DIR = ROOT / "cards"
+WEB_DIST = ROOT / "web" / "dist"
 
 GITHUB_MODELS_ENDPOINT = "https://models.github.ai/inference"
 

@@ -1,6 +1,5 @@
 """Replay API: seeds and chips, events, cards with the fail-sceptic merge."""
 
-import pytest
 from fastapi.testclient import TestClient
 
 from second_look import api

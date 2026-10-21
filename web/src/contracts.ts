@@ -1,4 +1,4 @@
-// Mirror of second_look/contracts.py. Change both, plus tests/fixtures, in one commit.
+// Mirror of src/second_look/contracts.py. Change both, plus tests/fixtures, in one commit.
 
 export type Lang = "en" | "es" | "ar";
 export type Persona = "analyst" | "casual";

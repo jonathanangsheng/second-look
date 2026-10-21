@@ -30,8 +30,18 @@ def test_fixture_events_validate():
 
 
 def _event(**overrides):
-    base = {"id": 1, "t": 1.0, "minute": 0, "period": 1, "type": "pass", "team": "nel",
-            "x": 50.0, "y": 30.0, "end_x": 60.0, "end_y": 30.0}
+    base = {
+        "id": 1,
+        "t": 1.0,
+        "minute": 0,
+        "period": 1,
+        "type": "pass",
+        "team": "nel",
+        "x": 50.0,
+        "y": 30.0,
+        "end_x": 60.0,
+        "end_y": 30.0,
+    }
     return {**base, **overrides}
 
 

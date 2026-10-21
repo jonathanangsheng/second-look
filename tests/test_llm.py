@@ -119,8 +119,13 @@ def test_json_mode_requests_a_json_object():
 
 
 def test_from_env_keeps_order_and_skips_unconfigured(monkeypatch):
-    for key in ("FOUNDRY_OPENAI_ENDPOINT", "FOUNDRY_MODEL_DEPLOYMENT", "FOUNDRY_API_KEY",
-                "FOUNDRY_SERVERLESS_ENDPOINT", "FOUNDRY_SERVERLESS_MODEL"):
+    for key in (
+        "FOUNDRY_OPENAI_ENDPOINT",
+        "FOUNDRY_MODEL_DEPLOYMENT",
+        "FOUNDRY_API_KEY",
+        "FOUNDRY_SERVERLESS_ENDPOINT",
+        "FOUNDRY_SERVERLESS_MODEL",
+    ):
         monkeypatch.delenv(key, raising=False)
     monkeypatch.setenv("LLM_PROVIDER", "foundry,github")
     monkeypatch.setenv("GITHUB_MODELS_TOKEN", "test-token")
@@ -129,8 +134,13 @@ def test_from_env_keeps_order_and_skips_unconfigured(monkeypatch):
 
 
 def test_from_env_with_nothing_configured_raises_unavailable(monkeypatch):
-    for key in ("FOUNDRY_OPENAI_ENDPOINT", "FOUNDRY_MODEL_DEPLOYMENT", "GITHUB_MODELS_TOKEN",
-                "FOUNDRY_SERVERLESS_ENDPOINT", "FOUNDRY_SERVERLESS_MODEL"):
+    for key in (
+        "FOUNDRY_OPENAI_ENDPOINT",
+        "FOUNDRY_MODEL_DEPLOYMENT",
+        "GITHUB_MODELS_TOKEN",
+        "FOUNDRY_SERVERLESS_ENDPOINT",
+        "FOUNDRY_SERVERLESS_MODEL",
+    ):
         monkeypatch.delenv(key, raising=False)
     with pytest.raises(LLMUnavailable):
         LLM.from_env(Settings.from_env(dotenv=False))

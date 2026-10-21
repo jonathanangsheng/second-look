@@ -1,5 +1,5 @@
-import type { MatchEvent } from "./contracts";
-import { PITCH_LENGTH_M as L, PITCH_WIDTH_M as W } from "./contracts";
+import type { MatchEvent } from "../contracts";
+import { PITCH_LENGTH_M as L, PITCH_WIDTH_M as W } from "../contracts";
 
 const DOT_SECONDS = 30; // match seconds a dot takes to fade (3s of wall clock at 10x)
 const SHOT_SECONDS = 60;
