@@ -11,31 +11,43 @@
   "claim": null,
   "lines": {
     "hype": {
-      "en": "North East London have taken 8 shots by 35', showing major attacking intent.",
-      "es": "North East London han realizado 8 disparos a los 35', mostrando una gran intención ofensiva.",
-      "ar": "لقد أطلق North East London 8 تسديدة بحلول الدقيقة 35، مما يدل على نية هجومية كبيرة."
+      "en": "Despite 8 shots, North East London struggles with quality chances and low xG",
+      "es": "A pesar de 8 disparos, North East London lucha por generar oportunidades de calidad y tiene un xG bajo",
+      "ar": "رغم 8 تسديدة، يعاني North East London من فرص ذات جودة منخفضة وxG ضعيف"
     },
     "sceptic": {
-      "en": "Despite 8 shots, North East London's low 0.024 shows poor scoring chances.",
-      "es": "A pesar de 8 disparos, el bajo 0,024 de North East London indica pocas oportunidades claras de gol.",
-      "ar": "رغم 8 تسديدة، إلا أن معدل 0.024 المنخفض لـ North East London يشير إلى فرص تسجيل ضعيفة."
+      "en": "Despite 8 shots, North East London faces very low chance quality with 0.036 xG…",
+      "es": "A pesar de 8 disparos, North East London enfrenta una calidad de oportunidades muy baja con un xG de 0,036 por disparo…",
+      "ar": "رغم 8 تسديدة، يواجه North East London فرصًا منخفضة الجودة مع xG لكل تسديدة 0.036…"
     },
     "verdict": {
-      "en": "North East London have taken 8 shots by 35', but their low 0.024 suggests…",
-      "es": "North East London han realizado 8 disparos a los 35', pero su bajo 0,024 sugiere…",
-      "ar": "لقد أطلق North East London 8 تسديدة بحلول الدقيقة 35، لكن معدل 0.024 المنخفض يشير إلى…"
+      "en": "North East London’s 8 shots yield very low quality chances and minimal xG",
+      "es": "Los 8 disparos de North East London producen oportunidades de muy baja calidad y un xG mínimo",
+      "ar": "أسفرت 8 تسديدة لـ North East London عن فرص منخفضة الجودة وxG ضئيل"
     }
   },
   "variants": {
     "analyst": {
-      "en": "North East London have 8 shots by 35' with an xG per shot of 0.024, below the threshold of 0.08, indicating low quality chances.",
-      "es": "North East London tienen 8 disparos a los 35' con un xG por disparo de 0,024, por debajo del umbral de 0,08, lo que indica oportunidades de baja calidad.",
-      "ar": "لدى North East London 8 تسديدة بحلول الدقيقة 35 مع معدل xG لكل تسديدة يبلغ 0.024، أقل من الحد 0.08، مما يدل على فرص منخفضة الجودة."
+      "en": "Despite North East London’s 8 shots, their xG per shot is 0.036, below the 0.08 threshold, indicating poor chance quality.",
+      "es": "A pesar de los 8 disparos de North East London, su xG por disparo es 0,036, por debajo del umbral de 0,08, lo que indica una calidad pobre en las oportunidades.",
+      "ar": "رغم 8 تسديدة لـ North East London، فإن xG لكل تسديدة هو 0.036، أقل من عتبة 0.08، مما يشير إلى جودة فرص ضعيفة."
     },
     "casual": {
-      "en": "North East London have taken many shots but aren't creating good chances yet.",
-      "es": "North East London han intentado muchos disparos pero aún no están generando buenas ocasiones.",
-      "ar": "أطلق North East London العديد من التسديدات لكنهم لم يخلقوا فرصًا جيدة بعد."
+      "en": "North East London took many shots but didn’t create good scoring chances.",
+      "es": "North East London intentó muchos disparos pero no creó buenas ocasiones de gol.",
+      "ar": "أطلق North East London العديد من التسديدات لكنه لم يصنع فرص تسجيل جيدة."
+    }
+  },
+  "fans": {
+    "nel": {
+      "en": "We had plenty of shots but just couldn’t make them count today.",
+      "es": "Tuvimos muchos disparos pero simplemente no pudimos concretarlos hoy.",
+      "ar": "كان لدينا الكثير من التسديدات لكننا لم نستطع استغلالها اليوم."
+    },
+    "yob": {
+      "en": "They fired off lots of shots but lacked real danger in front of goal.",
+      "es": "Ellos lanzaron muchos disparos pero les faltó peligro real frente al arco.",
+      "ar": "أطلقوا العديد من التسديدات لكنهم افتقروا إلى الخطورة الحقيقية أمام المرمى."
     }
   },
   "source": {
@@ -50,10 +62,10 @@
     "team": "nel",
     "minute": 35,
     "shots": 8,
-    "xg_total": 0.19,
-    "xg_per_shot": 0.024,
+    "xg_total": 0.29,
+    "xg_per_shot": 0.036,
     "threshold": 0.08,
-    "avg_shot_distance_m": 27,
+    "avg_shot_distance_m": 24,
     "score_home": 0,
     "score_away": 1
   },
@@ -74,14 +86,14 @@
       "ar": "8"
     },
     "xg_total": {
-      "en": "0.19",
-      "es": "0,19",
-      "ar": "0.19"
+      "en": "0.29",
+      "es": "0,29",
+      "ar": "0.29"
     },
     "xg_per_shot": {
-      "en": "0.024",
-      "es": "0,024",
-      "ar": "0.024"
+      "en": "0.036",
+      "es": "0,036",
+      "ar": "0.036"
     },
     "threshold": {
       "en": "0.08",
@@ -89,9 +101,9 @@
       "ar": "0.08"
     },
     "avg_shot_distance_m": {
-      "en": "27",
-      "es": "27",
-      "ar": "27"
+      "en": "24",
+      "es": "24",
+      "ar": "24"
     },
     "score_home": {
       "en": "0",

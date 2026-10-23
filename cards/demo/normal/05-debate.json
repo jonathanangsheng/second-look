@@ -1,0 +1,125 @@
+{
+  "seed": "demo",
+  "window": 5,
+  "t_start": 1800.0,
+  "t_end": 1812.0,
+  "kind": "debate",
+  "detector": "possession_penetration",
+  "contradiction_id": "c_nel_possession_penetration_30",
+  "prediction_id": null,
+  "window_from_minute": null,
+  "claim": null,
+  "lines": {
+    "hype": {
+      "en": "North East London dominate possession with 71%, but struggle to break Yorkshire Orange Black's…",
+      "es": "North East London domina la posesión con un 71%, pero lucha por penetrar la defensa de Yorkshire Orange Black…",
+      "ar": "North East London تسيطر على الكرة بنسبة 71%، لكنها تكافح لاختراق دفاع Yorkshire Orange Black…"
+    },
+    "sceptic": {
+      "en": "Despite 71% possession, North East London have a low box entry rate of 11.5",
+      "es": "A pesar de tener un 71% de posesión, North East London tiene una baja tasa de entradas al área de 11,5",
+      "ar": "رغم امتلاك North East London للكرة بنسبة 71%، إلا أن معدل دخولهم لمنطقة الجزاء منخفض عند 11.5"
+    },
+    "verdict": {
+      "en": "North East London controls possession at 71% but their box entry rate is less…",
+      "es": "North East London controla la posesión con un 71% pero su tasa de entradas al área es menor…",
+      "ar": "يسيطر North East London على الكرة بنسبة 71% لكن معدل دخوله لمنطقة الجزاء أقل…"
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "North East London holds 71% possession but 11.5 box entries lag behind Yorkshire Orange Black's 25.4, a 0.45 ratio.",
+      "es": "North East London mantiene un 71% de posesión, pero sus 11,5 entradas al área están por detrás de las 25,4 de Yorkshire Orange Black, con una proporción de 0,45.",
+      "ar": "يمتلك North East London الكرة بنسبة 71% لكن دخولاته لمنطقة الجزاء 11.5 أقل من Yorkshire Orange Black الذي يملك 25.4، بنسبة 0.45."
+    },
+    "casual": {
+      "en": "North East London has most of the ball but struggles to get into the box.",
+      "es": "North East London tiene la mayor parte del balón pero le cuesta entrar al área.",
+      "ar": "يمتلك North East London معظم الكرة لكنه يجد صعوبة في الوصول إلى منطقة الجزاء."
+    }
+  },
+  "fans": {
+    "nel": {
+      "en": "We control the ball a lot but need to get into their box more.",
+      "es": "Controlamos mucho el balón pero necesitamos entrar más en su área.",
+      "ar": "نحن نسيطر على الكرة كثيراً لكن نحتاج للدخول إلى منطقتهم أكثر."
+    },
+    "yob": {
+      "en": "They have the ball a lot but we get into their box more often.",
+      "es": "Ellos tienen mucho el balón pero nosotros entramos más a su área.",
+      "ar": "هم يملكون الكرة كثيراً لكننا ندخل منطقتهم أكثر."
+    }
+  },
+  "source": {
+    "hype": "live",
+    "sceptic": "live",
+    "verdict": "cache",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
+  },
+  "evidence": {
+    "team": "nel",
+    "opponent": "yob",
+    "minute": 30,
+    "possession_pct": 71,
+    "box_entry_rate": 11.5,
+    "opponent_box_entry_rate": 25.4,
+    "ratio": 0.45,
+    "max_ratio": 0.6,
+    "score_home": 0,
+    "score_away": 1
+  },
+  "evidence_display": {
+    "team": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
+    "opponent": {
+      "en": "Yorkshire Orange Black",
+      "es": "Yorkshire Orange Black",
+      "ar": "Yorkshire Orange Black"
+    },
+    "minute": {
+      "en": "30'",
+      "es": "30'",
+      "ar": "30"
+    },
+    "possession_pct": {
+      "en": "71%",
+      "es": "71%",
+      "ar": "71%"
+    },
+    "box_entry_rate": {
+      "en": "11.5",
+      "es": "11,5",
+      "ar": "11.5"
+    },
+    "opponent_box_entry_rate": {
+      "en": "25.4",
+      "es": "25,4",
+      "ar": "25.4"
+    },
+    "ratio": {
+      "en": "0.45",
+      "es": "0,45",
+      "ar": "0.45"
+    },
+    "max_ratio": {
+      "en": "0.6",
+      "es": "0,6",
+      "ar": "0.6"
+    },
+    "score_home": {
+      "en": "0",
+      "es": "0",
+      "ar": "0"
+    },
+    "score_away": {
+      "en": "1",
+      "es": "1",
+      "ar": "1"
+    }
+  }
+}

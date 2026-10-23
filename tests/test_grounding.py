@@ -49,3 +49,10 @@ def test_a_team_name_typed_out_is_rejected(raw):
 def test_a_team_name_inside_a_longer_word_and_digit_values_are_not_names():
     shown = {**SHOWN, "team": {"en": "Leeds", "es": "Leeds", "ar": "Leeds"}}
     assert ground("Leedsfield fans see {shots} shots at {xg_per_shot}.", shown, "en").startswith("Leedsfield")
+
+
+def test_digits_inside_a_placeholder_name_are_not_a_number():
+    shown = {**SHOWN, "rate_per_10": {"en": "6.4", "es": "6,4", "ar": "6.4"}}
+    assert ground("Only {rate_per_10} box entries.", shown, "en") == "Only 6.4 box entries."
+    with pytest.raises(GroundingError):
+        ground("Only {rate_per_10} box entries per 10.", shown, "en")

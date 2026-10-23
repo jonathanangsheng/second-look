@@ -66,10 +66,17 @@ def test_no_team_detector_pair_debates_more_than_four_times(seed):
 @pytest.mark.parametrize("seed", sorted(SEEDS))
 def test_template_lines_fill_every_placeholder_and_stay_short(seed):
     for card in _cards(seed):
-        for texts in [*card.lines.values(), *card.variants.values()]:
+        for texts in [*card.lines.values(), *card.variants.values(), *(card.fans or {}).values()]:
             for lang, text in texts.items():
                 assert "{" not in text, text
                 assert len(text.split()) <= 16, f"{lang}: {text}"
+
+
+@pytest.mark.parametrize("seed", ["demo", "random1"])
+def test_debate_cards_have_a_fan_line_for_each_team_in_the_match(seed):
+    teams = {SEEDS[seed].home, SEEDS[seed].away}
+    for card in _cards(seed):
+        assert (set(card.fans or {}) == teams) if card.kind == "debate" else card.fans is None
 
 
 def test_live_debate_card_merges_each_piece_with_its_own_fallback():
@@ -81,19 +88,30 @@ def test_live_debate_card_merges_each_piece_with_its_own_fallback():
 
     from second_look.pipeline import live_debate_card
 
-    card = next(c for c in _cards("demo") if c.kind == "debate")
+    card = next(c for c in _cards("demo") if c.detector == "volume_quality")
     es = {
         "hype": "{team}: ¡{shots} tiros!",
         "verdict": "Ruido.",
         "analyst": "{shots} tiros flojos.",
         "casual": "Mucho ruido.",
+        "fan_side": "Seguimos.",
+        "fan_other": "Tranquilos.",
     }
     llm = (
         FakeLLM()
         .reply(json.dumps({"line": "{team}: {shots} shots!"}))
         .timeout()
         .reply(json.dumps({"line": "Noise."}))
-        .reply(json.dumps({"analyst": "{shots} weak shots.", "casual": "All noise."}))
+        .reply(
+            json.dumps(
+                {
+                    "analyst": "{shots} weak shots.",
+                    "casual": "All noise.",
+                    "fan_side": "We go on.",
+                    "fan_other": "Calm.",
+                }
+            )
+        )
         .reply(json.dumps(es))
     )
     live, _ = asyncio.run(live_debate_card(card, llm, cached=None, fail=frozenset({"ar"})))
@@ -102,6 +120,9 @@ def test_live_debate_card_merges_each_piece_with_its_own_fallback():
     assert live.lines["hype"]["es"] == f"North East London: ¡{shots} tiros!"
     assert live.lines["sceptic"] == card.lines["sceptic"]  # timed out: template in every language
     assert live.variants["casual"] == {**card.variants["casual"], "en": "All noise.", "es": "Mucho ruido."}
+    # Fan lines land on the right team: the shooting side (nel) and its opponent (yob); Arabic stays template.
+    assert live.fans["nel"] == {**card.fans["nel"], "en": "We go on.", "es": "Seguimos."}
+    assert live.fans["yob"] == {**card.fans["yob"], "en": "Calm.", "es": "Tranquilos."}
     assert all(live.lines[s]["ar"] == card.lines[s]["ar"] for s in live.lines)  # Arabic failed alone
     assert all(live.variants[p]["ar"] == card.variants[p]["ar"] for p in live.variants)
     assert {k: live.source[k] for k in ("hype", "sceptic", "verdict", "personaliser", "es", "ar")} == {
@@ -161,3 +182,22 @@ def test_committed_cards_are_valid_and_sit_at_their_paths():
     for path in files:
         card = Card.model_validate_json(path.read_text(encoding="utf-8"))
         assert card_path(CARDS_DIR, card.seed, path.parent.name, card.window, card.kind) == path
+
+
+def test_demo_shows_each_newer_detector_for_nel():
+    """Planning #8 criterion 1, plus the effort detector: both appear as demo cards about NEL."""
+    for detector in ("possession_penetration", "effort_game_state"):
+        assert [c for c in _debates("demo", detector) if c.evidence["team"] == "nel"], detector
+
+
+def test_even_fires_each_newer_detector_at_most_twice():
+    """Planning #8 criterion 2, counted over every window boundary, picked or not."""
+    from second_look import config
+    from second_look.detectors import effort_game_state, possession_penetration
+    from second_look.pipeline import load_events
+    from second_look.stats import match_state
+
+    spec, events = SEEDS["even"], load_events("even")
+    states = [match_state(events, spec.home, spec.away, b, config.SX_WINDOW_MINUTES) for b in range(5, 91, 5)]
+    for detect in (possession_penetration, effort_game_state):
+        assert sum(len(detect(s)) for s in states) <= 2, detect.__name__

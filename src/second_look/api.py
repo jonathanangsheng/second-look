@@ -55,7 +55,7 @@ CHIPS: tuple[tuple[str, str, str, Callable[[Card], bool]], ...] = (
 
 def _team(team_id: str) -> dict:
     p = load_profiles()[team_id]
-    return {"id": p.id, "name": p.name, "short": p.short, "colors": list(p.colors)}
+    return {"id": p.id, "name": p.name, "short": p.short, "colors": list(p.colors), "squad": list(p.squad)}
 
 
 @app.get("/api/seeds")

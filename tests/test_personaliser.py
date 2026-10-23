@@ -3,7 +3,7 @@
 import json
 
 from fakes import FakeLLM
-from test_agents import debate
+from test_agents import FANS, debate
 
 from second_look.agents import AGENTS, VARIANT_WORDS
 
@@ -18,15 +18,17 @@ def personalise(*replies, claim=None):
 
 
 def test_personaliser_fills_both_personas_from_the_verdict():
-    state, llm = personalise(json.dumps({"analyst": "{team}: {shots} shots, weak.", "casual": "Busy, not dangerous."}))
-    assert state.variants == {"analyst": "NEL: 10 shots, weak.", "casual": "Busy, not dangerous."}
+    state, llm = personalise(
+        json.dumps({"analyst": "{team}: {shots} shots, weak.", "casual": "Busy, not dangerous.", **FANS})
+    )
+    assert state.variants == {"analyst": "NEL: 10 shots, weak.", "casual": "Busy, not dangerous.", **FANS}
     assert state.source["personaliser"] == "live" and state.raw["analyst"] == "{team}: {shots} shots, weak."
     assert json.loads(llm.calls[0].user)["verdict"] == "verdict template line"
 
 
 def test_personaliser_cuts_each_persona_to_its_word_limit_after_filling():
     long = "{team} " + " ".join(["word"] * 30) + "."
-    state, _ = personalise(json.dumps({"analyst": long, "casual": long}))
+    state, _ = personalise(json.dumps(dict.fromkeys(VARIANT_WORDS, long)))
     for persona, limit in VARIANT_WORDS.items():
         words = state.variants[persona].split()
         assert len(words) == limit and words[-1].endswith("…"), persona
@@ -43,18 +45,20 @@ LONG = " ".join(["word"] * 30) + "."
 
 
 def test_on_a_prediction_card_every_persona_ends_with_the_claim():
-    state, _ = personalise(json.dumps({"analyst": "Chances say so.", "casual": "Busy."}), claim=CLAIM)
+    state, _ = personalise(json.dumps({"analyst": "Chances say so.", "casual": "Busy.", **FANS}), claim=CLAIM)
     assert state.variants == {
         "analyst": "Chances say so. A goal is coming for NEL.",
         "casual": "Busy. A goal is coming for NEL.",
+        "fan_side": "We push. A goal is coming for NEL.",
+        "fan_other": "They hold. A goal is coming for NEL.",
     }
     assert state.raw["analyst"] == "Chances say so. A goal is coming for {team}."  # translators keep the placeholder
 
 
 def test_an_overlong_line_on_a_prediction_card_is_retried_not_cut_before_the_claim():
     too_long, fits = (
-        json.dumps({"analyst": "Fine.", "casual": LONG}),
-        json.dumps({"analyst": "Fine.", "casual": "Busy."}),
+        json.dumps({"analyst": "Fine.", "casual": LONG, **FANS}),
+        json.dumps({"analyst": "Fine.", "casual": "Busy.", **FANS}),
     )
     state, llm = personalise(too_long, fits, claim=CLAIM)
     assert (
@@ -69,3 +73,8 @@ def test_the_word_limits_and_claim_are_sent_to_the_model():
     _, llm = personalise("not json", claim=CLAIM)
     sent = json.loads(llm.calls[0].user)
     assert sent["max_words"] == VARIANT_WORDS and sent["claim"] == CLAIM  # the claim is extra, not counted
+
+
+def test_each_fan_line_is_told_which_team_it_supports():
+    _, llm = personalise("not json")
+    assert json.loads(llm.calls[0].user)["fan_supports"] == {"fan_side": "NEL", "fan_other": "their opponent"}

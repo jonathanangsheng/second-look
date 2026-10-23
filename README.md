@@ -40,7 +40,7 @@ flowchart LR
   cards --> api["FastAPI replay API"] --> ui["React overlay<br/>analyst / casual, EN / ES / AR"]
 ```
 
-- **Detectors** (`detectors.py`): `volume_quality` fires at 8 or more shots under 0.08 xG per shot; `scoreline_xg` fires when the trailing team's rolling 30-minute xG beats the leader's by 1.0. A scoreline call becomes a prediction ("a goal is coming"), resolved by a goal before its deadline or expired.
+- **Detectors** (`detectors.py`): `volume_quality` fires at 8 or more shots under 0.08 xG per shot; `scoreline_xg` fires when the trailing team's rolling 30-minute xG beats the leader's by 1.0; `possession_penetration` fires at 60% or more possession with box entries per possession-minute under 0.6 times the opponent's (after 15 minutes); `effort_game_state` fires when a trailing team presses under 0.7 times its own rate from when it was level or ahead (10 minutes of each). One card per window: prediction calls first, then the original two detectors on close calls. A scoreline call becomes a prediction ("a goal is coming"), resolved by a goal before its deadline or expired.
 - **Agents** (`agents.py`): one executor per agent in a `WorkflowBuilder` chain, with a fan-out to the two translators and a fan-in join. Each call has its own timeout inside a 25-second window budget and one retry when grounding rejects its reply.
 - **Grounding** (`grounding.py`): model text may contain no digits and no typed-out team names; numbers and names enter only through `{placeholders}` filled from the evidence, formatted per language.
 - **Fallbacks**: a failed agent keeps the cached line, else the template line, and each card records the true source of every piece (`live`, `cache` or `template`). The "Failure recovery" chip replays a run where the Sceptic was forced to fail.
@@ -97,7 +97,7 @@ Then check the Spanish and Arabic by back-translation: `uv run python scripts/ba
 
 | Seed | Match | What it is |
 |---|---|---|
-| `demo` | North East London v Yorkshire Orange Black | **Scripted.** Goals are placed by hand (YOB about 22' and 51', NEL 78'), and NEL's style is set per spell: long-range volume before half time, box chances from 54'. The detectors and agents are not scripted: every card comes from running them over these events. |
+| `demo` | North East London v Yorkshire Orange Black | **Scripted.** Goals are placed by hand (YOB about 22' and 51', NEL 78'), and NEL's style is set per spell: lots of the ball but few box entries and long-range shots to 35', less pressing once behind, box chances from 54'. The detectors and agents are not scripted: every card comes from running them over these events. |
 | `random1` | Man Blue v East Anglia Town | Unscripted (seed 26). Goals are drawn from each shot's xG. |
 | `even` | two evenly matched profiles | Unscripted (seed 11). No detector fires, which is the point: no misleading stat, no card. |
 
@@ -116,13 +116,13 @@ One hit in three. The misses stay in the replay on purpose: a sceptic that is ne
 | Brief | Where |
 |---|---|
 | (i) a. Ingest synthetic events | The replay walks each seed's events in 5-minute windows (`pipeline.py`) |
-| (i) b. Interpret into stats | Per-team shots, xG, xG per shot, shot distance and rolling 30-minute xG (`stats.py`) |
+| (i) b. Interpret into stats | Per-team shots, xG, xG per shot, shot distance, rolling 30-minute xG, possession share, box entries and pressing rate by game state (`stats.py`) |
 | (i) c. Explain why it matters | Detectors name the misleading stat; Sceptic and Verdict explain it |
 | (i) d. Render on screen | Broadcast lower third, outcome cards and an evidence row with a rolling-xG sparkline, timed to the match clock |
 | (i) e. Personalise | Analyst and casual Verdicts, plus three languages |
 | (ii) Real-time intelligence | Window-by-window stats and detection, each card produced inside a 25-second budget. Player tagging, pass quality, speed metrics and auto-eventing are not covered |
 | (iii) Narrative generation | The debate, predictions and their payoff ("Called it", "Missed"). Full match recaps are not covered |
-| (iv) Explainability | The core of the project: every card shows the surface stat, the deeper stat and the threshold between them |
+| (iv) Explainability | The core of the project: every card shows the surface stat, the deeper stat and the threshold between them. Four detectors cover shot quality, the scoreline, control without penetration and effort by game state |
 | (v) Data innovation | A seeded simulator with team profiles and a documented event schema |
 | (vi) Multi-language | English, Spanish and Arabic (right to left), with a back-translation check |
 

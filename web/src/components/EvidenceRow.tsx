@@ -7,9 +7,20 @@ type Props = { card: Card; lang: Lang; events: MatchEvent[]; match: Match; t: nu
 
 export function EvidenceRow({ card, lang, events, match, t }: Props) {
   const d = (key: string) => card.evidence_display?.[key]?.[lang] ?? "";
-  const cells = card.detector === "volume_quality"
-    ? [`Shots ${d("shots")}`, `xG/shot ${d("xg_per_shot")}`, `Threshold ${d("threshold")}`]
-    : [`${d("trailer")} xG ${d("trailer_xg_window")}`, `${d("leader")} xG ${d("leader_xg_window")}`, `Gap ≥ ${d("threshold")}`];
+  const cells = {
+    volume_quality: [`Shots ${d("shots")}`, `xG/shot ${d("xg_per_shot")}`, `Threshold ${d("threshold")}`],
+    scoreline_xg: [`${d("trailer")} xG ${d("trailer_xg_window")}`, `${d("leader")} xG ${d("leader_xg_window")}`, `Gap ≥ ${d("threshold")}`],
+    possession_penetration: [
+      `Possession ${d("possession_pct")}`,
+      `Box entries ${d("box_entry_rate")} vs ${d("opponent_box_entry_rate")}`,
+      `Ratio ${d("ratio")} < ${d("max_ratio")}`,
+    ],
+    effort_game_state: [
+      `Pressing ${d("press_rate_while_behind")} behind`,
+      `${d("press_rate_while_level")} before`,
+      `Ratio ${d("ratio")} < ${d("max_ratio")}`,
+    ],
+  }[card.detector];
   return (
     <div className="evidence">
       {cells.map((c) => <span key={c} className="num">{withBdi(c, lang)}</span>)}

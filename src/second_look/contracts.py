@@ -124,6 +124,8 @@ class Card(_Strict):
     lines: dict[Speaker, LangText]
     # The Verdict line shown on screen is variants[persona][lang]; Hype and Sceptic never change.
     variants: dict[Persona, LangText]
+    # The Verdict for a viewer who supports a team: team id -> line, on debate cards.
+    fans: dict[str, LangText] | None = None
     source: dict[Literal["hype", "sceptic", "verdict", "personaliser", "es", "ar"], Source]
     evidence: dict[str, float | int | str]
     evidence_display: dict[str, LangText] = Field(default_factory=dict)
@@ -136,6 +138,7 @@ class Card(_Strict):
         texts_by_name = [*self.lines.items(), *self.variants.items()]
         if self.claim:
             texts_by_name.append(("claim", self.claim))
+        texts_by_name += [(f"fans.{team}", texts) for team, texts in (self.fans or {}).items()]
         for name, texts in texts_by_name:
             missing = langs - texts.keys()
             if missing:

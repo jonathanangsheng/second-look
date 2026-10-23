@@ -1,0 +1,119 @@
+{
+  "seed": "demo",
+  "window": 10,
+  "t_start": 3300.0,
+  "t_end": 3312.0,
+  "kind": "debate",
+  "detector": "effort_game_state",
+  "contradiction_id": "c_nel_effort_game_state_55",
+  "prediction_id": null,
+  "window_from_minute": null,
+  "claim": null,
+  "lines": {
+    "hype": {
+      "en": "North East London have a press rate of just 0.8 while behind, showing low…",
+      "es": "North East London tiene una tasa de presión de solo 0,8 cuando va por detrás, mostrando poca…",
+      "ar": "معدل الضغط لفريق North East London هو فقط 0.8 أثناء التأخر في النتيجة، مما يظهر انخفاضاً في…"
+    },
+    "sceptic": {
+      "en": "Despite North East London pressing at 0.8, overall press rate drops to 0.39",
+      "es": "A pesar de que North East London presiona al 0,8, la tasa de presión general baja a 0,39",
+      "ar": "رغم ضغط North East London بمعدل 0.8، معدل الضغط الكلي ينخفض إلى 0.39"
+    },
+    "verdict": {
+      "en": "North East London press rate of 0.8 while behind is low compared to 2.1…",
+      "es": "La tasa de presión de North East London de 0,8 cuando iban por detrás es baja comparada con 2,1…",
+      "ar": "معدل ضغط North East London البالغ 0.8 أثناء التأخر منخفض مقارنة بـ 2.1…"
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "North East London’s press rate while behind is 0.8, much lower than their 2.1 rate when level, a ratio of 0.39 showing less pressure.",
+      "es": "La tasa de presión de North East London cuando va por detrás es 0,8, mucho más baja que su tasa de 2,1 cuando están igualados, una proporción de 0,39 que muestra menos presión.",
+      "ar": "معدل ضغط North East London أثناء التأخر هو 0.8، أقل بكثير من معدل 2.1 عندما يكون التعادل، بنسبة 0.39 مما يدل على ضغط أقل."
+    },
+    "casual": {
+      "en": "North East London press less when behind compared to when the score is level.",
+      "es": "North East London presiona menos cuando va por detrás comparado con cuando el marcador está igualado.",
+      "ar": "يضغط North East London أقل عندما يكون متأخراً مقارنة عندما يكون التعادل."
+    }
+  },
+  "fans": {
+    "nel": {
+      "en": "We don’t press as hard when we’re behind, but we can still turn this around.",
+      "es": "No presionamos tan fuerte cuando vamos por detrás, pero aún podemos darle la vuelta.",
+      "ar": "لا نضغط بقوة عندما نكون متأخرين، لكننا لا نزال قادرين على قلب الأمور."
+    },
+    "yob": {
+      "en": "They seem to ease off pressing when behind, which might help us keep control.",
+      "es": "Parece que bajan la presión cuando van por detrás, lo que podría ayudarnos a mantener el control.",
+      "ar": "يبدو أنهم يخففون الضغط عندما يكونون متأخرين، وهذا قد يساعدنا في السيطرة."
+    }
+  },
+  "source": {
+    "hype": "cache",
+    "sceptic": "cache",
+    "verdict": "cache",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
+  },
+  "evidence": {
+    "team": "nel",
+    "minute": 55,
+    "press_rate_while_behind": 0.8,
+    "press_rate_while_level": 2.1,
+    "minutes_spent_behind": 31,
+    "ratio": 0.39,
+    "max_ratio": 0.7,
+    "score_home": 0,
+    "score_away": 2
+  },
+  "evidence_display": {
+    "team": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
+    "minute": {
+      "en": "55'",
+      "es": "55'",
+      "ar": "55"
+    },
+    "press_rate_while_behind": {
+      "en": "0.8",
+      "es": "0,8",
+      "ar": "0.8"
+    },
+    "press_rate_while_level": {
+      "en": "2.1",
+      "es": "2,1",
+      "ar": "2.1"
+    },
+    "minutes_spent_behind": {
+      "en": "31",
+      "es": "31",
+      "ar": "31"
+    },
+    "ratio": {
+      "en": "0.39",
+      "es": "0,39",
+      "ar": "0.39"
+    },
+    "max_ratio": {
+      "en": "0.7",
+      "es": "0,7",
+      "ar": "0.7"
+    },
+    "score_home": {
+      "en": "0",
+      "es": "0",
+      "ar": "0"
+    },
+    "score_away": {
+      "en": "2",
+      "es": "2",
+      "ar": "2"
+    }
+  }
+}

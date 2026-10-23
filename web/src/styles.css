@@ -32,14 +32,24 @@ button { font: inherit; color: inherit; border: 0; border-radius: var(--radius);
 .pitch { display: block; width: 100%; height: 100%; }
 .frame .pitch { position: absolute; inset: 0; }
 
-.scorebug { position: absolute; top: var(--s4); left: var(--s4); display: flex; align-items: center; gap: var(--s2);
-  background: var(--ink); color: var(--bar); padding: var(--s1) var(--s3); border-radius: var(--radius);
-  font: 600 22px/1 var(--font-num); letter-spacing: 0.02em; }
-.scorebug .score { font-size: 28px; padding: 0 var(--s1); }
-.scorebug .clock { margin-left: var(--s2); color: var(--amber); }
-.scorebug .swatch { width: 6px; height: 20px; border-radius: var(--radius); }
+/* Broadcast scorebug: a full-width bar with the clock block, team codes and each goal count on its team's
+   colour, the two colours meeting on a slant. */
+.scorebug { position: absolute; top: 0; left: 0; right: 0; display: flex; align-items: center; height: 44px;
+  background: var(--ink); color: var(--bar); box-shadow: var(--shadow); font: 700 24px/1 var(--font-num);
+  letter-spacing: 0.04em; }
+.scorebug > span { display: flex; align-items: center; justify-content: center; height: 100%; }
+.scorebug .clock { min-width: 96px; padding: 0 var(--s4); background: rgba(244, 243, 238, 0.1); font-weight: 600; }
+.scorebug .team { min-width: 72px; padding: 0 var(--s4); }
+.scorebug .score span { display: flex; align-items: center; height: 100%; padding: 0 var(--s4); font-size: 30px; }
+.scorebug .score span:first-child { clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%); padding-right: 22px; }
+.scorebug .score span:last-child { clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%); margin-left: -10px; padding-left: 22px; }
 .scorebug.skeleton { width: 220px; height: 36px; }
 
+.pitch-legend { position: absolute; top: calc(44px + var(--s2)); left: var(--s4); display: flex; gap: var(--s3);
+  margin: 0; padding: var(--s1) var(--s2); list-style: none; background: rgba(18, 22, 20, 0.7); color: var(--bar);
+  border-radius: var(--radius); font: 400 12px/1 var(--font-ui); }
+.pitch-legend li { display: flex; align-items: center; gap: var(--s1); }
+.pitch-legend svg { width: 14px; height: 10px; fill: none; stroke: var(--bar); stroke-width: 1.5; stroke-linecap: round; }
 .slot { position: absolute; left: var(--s6); right: var(--s6); bottom: var(--s4); }
 .lower-third { background: var(--bar); box-shadow: var(--shadow); border-radius: var(--radius); padding: var(--s3) var(--s4);
   display: grid; gap: var(--s2); animation: rise 0.25s var(--ease) both; }
@@ -61,7 +71,7 @@ button { font: inherit; color: inherit; border: 0; border-radius: var(--radius);
 .evidence { display: flex; align-items: center; gap: var(--s5); margin-top: var(--s1); height: 32px; padding: 0 var(--s4);
   background: var(--ink); color: var(--bar); border-radius: var(--radius); font-size: 18px; }
 
-.outcome { position: absolute; top: var(--s6); right: var(--s4); width: 320px; background: var(--bar); box-shadow: var(--shadow);
+.outcome { position: absolute; top: calc(44px + var(--s4)); right: var(--s4); width: 320px; background: var(--bar); box-shadow: var(--shadow);
   border-radius: var(--radius); padding: var(--s3) var(--s4); animation: slide 0.3s var(--ease) both; }
 .outcome .quote { margin: 0 0 var(--s2); color: var(--ink-2); }
 .outcome .result { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s2); font-size: 20px; font-weight: 600; }
@@ -91,7 +101,12 @@ button { font: inherit; color: inherit; border: 0; border-radius: var(--radius);
   .chip, .toggles button, .speeds button { min-height: 44px; }
   .picture { display: flex; flex-direction: column; background: var(--ink); }
   .frame .pitch { position: static; aspect-ratio: 16 / 10; height: auto; }
-  .scorebug { top: var(--s2); left: var(--s2); font-size: 18px; }
+  .scorebug { height: 36px; font-size: 18px; }
+  .picture { padding-top: 36px; } /* the bar sits above the small pitch instead of over it */
+  .pitch-legend { position: static; flex-wrap: wrap; gap: var(--s1) var(--s3); padding: var(--s2) var(--s4); background: none;
+    border-radius: 0; font-size: 12px; }
+  .scorebug .clock { min-width: 64px; }
+  .scorebug .score span { font-size: 22px; }
   .slot { position: static; padding: var(--s3) var(--s4); }
   .line { grid-template-columns: 1fr; gap: var(--s1); }
   .line .text { font-size: 16px; }

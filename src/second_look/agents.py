@@ -30,7 +30,7 @@ MAX_TOKENS = {"hype": 80, "sceptic": 80, "verdict": 80, "personaliser": 200, "es
 CALL_TIMEOUT_S = 8.0
 WINDOW_CAP_S = 25.0  # a 5-minute window lasts 30s of wall clock at 10x
 MAX_WORDS = 14
-VARIANT_WORDS = {"analyst": 25, "casual": 16}
+VARIANT_WORDS = {"analyst": 25, "casual": 16, "fan_side": 16, "fan_other": 16}
 FAILURES = (LLMError, TimeoutError, GroundingError, ValueError, KeyError, TypeError)
 
 
@@ -45,7 +45,7 @@ class DebateState:
     source: dict[str, str] = field(default_factory=dict)
     flags: list[str] = field(default_factory=list)  # spelled-out numbers for human review
     raw: dict[str, str] = field(default_factory=dict)  # live English pieces in placeholder form, for the translators
-    variants: dict[str, str] = field(default_factory=dict)  # persona -> live English Verdict line
+    variants: dict[str, str] = field(default_factory=dict)  # persona or fan side -> live English Verdict line
     translations: dict[str, dict[str, str]] = field(default_factory=dict)  # lang -> piece -> live line
 
 
@@ -96,9 +96,12 @@ class Agent(Executor):
             return None
 
 
+HIDDEN_EVIDENCE = {"max_ratio"}  # a limit on a ratio, not a value: shown, the model compared rates with it
+
+
 def _evidence(state: DebateState) -> dict[str, str]:
     """Placeholder -> shown value (team name, not id), so the model reasons on values but writes keys."""
-    return {f"{{{k}}}": v["en"] for k, v in sorted(state.shown.items())}
+    return {f"{{{k}}}": v["en"] for k, v in sorted(state.shown.items()) if k not in HIDDEN_EVIDENCE}
 
 
 class Speaker(Agent):
@@ -134,7 +137,7 @@ class Speaker(Agent):
 
 
 class Personaliser(Agent):
-    """Rewrites the Verdict for the analyst and casual personas."""
+    """Rewrites the Verdict for the analyst and casual personas and for a fan of each team."""
 
     def __init__(self, llm, *, fail: bool = False):
         super().__init__("personaliser", llm, (PROMPTS / "personaliser.md").read_text(encoding="utf-8"), fail=fail)
@@ -159,6 +162,11 @@ class Personaliser(Agent):
                 "evidence": _evidence(state),
                 "claim": state.claim,
                 "max_words": VARIANT_WORDS,
+                # Named outright: told only "the team the evidence is about", the model swapped sides.
+                "fan_supports": {
+                    "fan_side": state.shown.get("trailer", state.shown.get("team", {})).get("en", ""),
+                    "fan_other": state.shown.get("leader", state.shown.get("opponent", {})).get("en", "their opponent"),
+                },
             },
             ensure_ascii=False,
         )

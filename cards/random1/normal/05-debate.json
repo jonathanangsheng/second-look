@@ -15,42 +15,55 @@
   },
   "lines": {
     "hype": {
-      "en": "Despite trailing, Man Blue boasts an impressive 1.2 xG in this match",
-      "es": "A pesar de ir por detrás, Man Blue presume de un impresionante xG de 1,2 en este partido",
-      "ar": "رغم التأخر، يمتلك Man Blue معدل xG مثير للإعجاب يبلغ 1.2 في هذه المباراة"
+      "en": "Man Blue are piling up the chances with 1.2 expected goals this half",
+      "es": "Man Blue están acumulando oportunidades con 1,2 goles esperados en esta mitad",
+      "ar": "يُصنع Man Blue العديد من الفرص مع 1.2 من الأهداف المتوقعة في هذا الشوط"
     },
     "sceptic": {
-      "en": "Despite trailing, Man Blue holds a higher xG at 1.2 versus East Anglia Town's…",
-      "es": "A pesar de ir por detrás, Man Blue mantiene un xG superior de 1,2 frente al de East Anglia Town…",
-      "ar": "رغم التأخر، يتفوق Man Blue في معدل xG عند 1.2 مقابل East Anglia Town…"
+      "en": "East Anglia Town leads despite only 0.1 expected goals this half, chance quality low",
+      "es": "East Anglia Town lidera a pesar de tener solo 0,1 goles esperados en esta mitad, calidad de oportunidades baja",
+      "ar": "يتقدم East Anglia Town رغم وجود 0.1 فقط من الأهداف المتوقعة في هذا الشوط، جودة الفرص منخفضة"
     },
     "verdict": {
-      "en": "Despite trailing, Man Blue holds a strong xG lead since 0' suggesting a goal…",
-      "es": "A pesar de ir por detrás, Man Blue mantiene una fuerte ventaja en xG desde el minuto 0' que sugiere un gol…",
-      "ar": "رغم التأخر، يحتفظ Man Blue بتفوق قوي في xG منذ الدقيقة 0 مما يشير إلى هدف…"
+      "en": "Man Blue dominate chances with 1.2 expected goals, a goal is likely soon",
+      "es": "Man Blue dominan las oportunidades con 1,2 goles esperados, es probable que marquen pronto",
+      "ar": "يسيطر Man Blue على الفرص مع 1.2 من الأهداف المتوقعة، من المحتمل أن يسجل هدفًا قريبًا"
     }
   },
   "variants": {
     "analyst": {
-      "en": "Rolling xG since 0': 1.2 against 0.1, past the 1.0 gap.",
-      "es": "xG desde el 0': 1,2 contra 0,1, por encima de 1,0.",
-      "ar": "الأهداف المتوقعة منذ الدقيقة 0: 1.2 مقابل 0.1، فوق فارق 1.0."
+      "en": "Man Blue's xG is 1.2 since 0', above the 1.0 threshold, while East Anglia Town lags at 0.1, suggesting a goal soon A goal is coming for Man Blue.",
+      "es": "El xG de Man Blue es 1,2 desde el minuto 0', por encima del umbral de 1,0, mientras que East Anglia Town se queda atrás con 0,1, lo que sugiere que pronto habrá un gol. Un gol está por venir para Man Blue.",
+      "ar": "قيمة xG لـ Man Blue هي 1.2 منذ الدقيقة 0، فوق عتبة 1.0، بينما يتخلف East Anglia Town عند 0.1، مما يشير إلى هدف قريب. هدف قادم لـ Man Blue."
     },
     "casual": {
-      "en": "The score says one thing. The chances say Man Blue will score.",
-      "es": "El marcador dice una cosa. Las ocasiones dicen que Man Blue marcará.",
-      "ar": "النتيجة تقول شيئًا، والفرص تقول إن Man Blue سيسجل."
+      "en": "Man Blue have created the best chances and should score soon A goal is coming for Man Blue.",
+      "es": "Man Blue han creado las mejores oportunidades y deberían marcar pronto. Un gol está por venir para Man Blue.",
+      "ar": "خلق Man Blue أفضل الفرص ويجب أن يسجلوا قريبًا. هدف قادم لـ Man Blue."
+    }
+  },
+  "fans": {
+    "mnb": {
+      "en": "We are creating the best chances and a goal should come soon A goal is coming for Man Blue.",
+      "es": "Estamos creando las mejores oportunidades y pronto debería llegar un gol. Un gol está por venir para Man Blue.",
+      "ar": "نحن نخلق أفضل الفرص ويجب أن يأتي هدف قريبًا. هدف قادم لـ Man Blue."
+    },
+    "eat": {
+      "en": "They have the better chances and look set to score soon A goal is coming for Man Blue.",
+      "es": "Ellos tienen las mejores oportunidades y parece que marcarán pronto. Un gol está por venir para Man Blue.",
+      "ar": "لديهم الفرص الأفضل ويبدو أنهم على وشك التسجيل قريبًا. هدف قادم لـ Man Blue."
     }
   },
   "source": {
     "hype": "live",
     "sceptic": "live",
-    "verdict": "cache",
-    "personaliser": "template",
+    "verdict": "live",
+    "personaliser": "live",
     "es": "live",
     "ar": "live"
   },
   "evidence": {
+    "trailer": "mnb",
     "leader": "eat",
     "minute": 30,
     "window_from_minute": 0,
@@ -58,10 +71,14 @@
     "leader_xg_window": 0.1,
     "threshold": 1.0,
     "score_home": 0,
-    "score_away": 1,
-    "trailer": "mnb"
+    "score_away": 1
   },
   "evidence_display": {
+    "trailer": {
+      "en": "Man Blue",
+      "es": "Man Blue",
+      "ar": "Man Blue"
+    },
     "leader": {
       "en": "East Anglia Town",
       "es": "East Anglia Town",
@@ -101,11 +118,6 @@
       "en": "1",
       "es": "1",
       "ar": "1"
-    },
-    "trailer": {
-      "en": "Man Blue",
-      "es": "Man Blue",
-      "ar": "Man Blue"
     }
   }
 }

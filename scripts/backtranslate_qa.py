@@ -31,7 +31,7 @@ Reply with JSON only: {{"<key>": {{"back": "<your English>", "meaning": "same|ch
 
 async def review(llm, name: str, card: Card) -> list[dict]:
     """Flagged strings of one card: [{id, en, translated, back}]."""
-    flagged, texts = [], {**card.lines, **card.variants}
+    flagged, texts = [], {**card.lines, **card.variants, **{f"fan_{t}": v for t, v in (card.fans or {}).items()}}
     for lang, language in LANGUAGE.items():
         pieces = {piece: {"translated": t[lang], "english": t["en"]} for piece, t in texts.items()}
         reply = await llm.complete(

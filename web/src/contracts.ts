@@ -83,6 +83,8 @@ export interface Card {
   lines: Partial<Record<Speaker, LangText>>;
   // The Verdict line on screen is variants[persona][lang]; Hype and Sceptic never change.
   variants: Record<Persona, LangText>;
+  // The Verdict for a viewer who supports a team: team id -> line, on debate cards.
+  fans?: Record<string, LangText> | null;
   source: Partial<Record<"hype" | "sceptic" | "verdict" | "personaliser" | "es" | "ar", Source>>;
   evidence: Evidence;
   evidence_display?: Record<string, LangText>;

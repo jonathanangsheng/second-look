@@ -14,7 +14,7 @@ Same profiles + same seed = byte-identical output.
 
 | Seed | Teams | Notes |
 |---|---|---|
-| `demo` | `nel` v `yob` | Scripted goals (`yob` ~22', 51'; `nel` 78') and per-window profile overrides: long-range volume before half time, box chances from 54'. Only scripted shots score. |
+| `demo` | `nel` v `yob` | Scripted goals (`yob` ~22', 51'; `nel` 78') and per-window profile overrides: lots of the ball but few box entries and long-range shots to 35', less pressing once behind (22'–54'), box chances from 54'. Seed 21. Only scripted shots score. |
 | `random1` | `mnb` v `eat` | Unscripted, seed 26. Goals are drawn from each shot's xG; the scoreline detector makes a call here that misses. |
 | `even` | `mer` v `mnb` | Unscripted, seed 11, two evenly matched profiles. |
 
@@ -53,4 +53,5 @@ One JSON object per line, validated by `second_look.contracts.Event`. `null` fie
 | `long_ball_pct` | share of passes that are long (22–38 m) |
 | `shot_rate` | chance a sequence entering the final third ends in a shot |
 | `shot_distance_mean_m`, `shot_distance_sd_m` | shot distance distribution |
+| `box_entry_pct` | chance a pass or carry into the box gets there (default 1.0; only the demo script lowers it) |
 | `pressures_per_5min` | pressing intensity against the opponent's sequences |

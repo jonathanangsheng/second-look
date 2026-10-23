@@ -1,0 +1,119 @@
+{
+  "seed": "demo",
+  "window": 12,
+  "t_start": 3900.0,
+  "t_end": 3912.0,
+  "kind": "debate",
+  "detector": "scoreline_xg",
+  "contradiction_id": "c_nel_scoreline_xg_65",
+  "prediction_id": null,
+  "window_from_minute": 35,
+  "claim": null,
+  "lines": {
+    "hype": {
+      "en": "Despite Yorkshire Orange Black leading 0 to 2, their expected goals are surprisingly low",
+      "es": "A pesar de que Yorkshire Orange Black lidera 0 a 2, sus goles esperados son sorprendentemente bajos",
+      "ar": "رغم تقدم Yorkshire Orange Black بنتيجة 0 إلى 2، إلا أن توقعات الأهداف لديهم منخفضة بشكل مفاجئ"
+    },
+    "sceptic": {
+      "en": "Since 35', North East London have 1.8 xG to 0.2. The score is lying.",
+      "es": "Desde el 35', North East London suma 1,8 xG contra 0,2. El marcador miente.",
+      "ar": "منذ الدقيقة 35، لدى North East London ‏1.8 مقابل 0.2. النتيجة تكذب."
+    },
+    "verdict": {
+      "en": "Yorkshire Orange Black lead 2 to 0 but have just 0.2 xG since 35'",
+      "es": "Yorkshire Orange Black lidera 2 a 0 pero solo tiene 0,2 xG desde el minuto 35'",
+      "ar": "يتقدم Yorkshire Orange Black بنتيجة 2 إلى 0 لكن لديهم فقط 0.2 من xG منذ الدقيقة 35"
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "Yorkshire Orange Black lead 2 to 0 but have just 0.2 xG since 35', below the 1.0 threshold, while North East London has 1.8 xG…",
+      "es": "Yorkshire Orange Black lidera 2 a 0 pero solo tiene 0,2 xG desde el minuto 35', por debajo del umbral de 1,0, mientras que North East London tiene 1,8 xG…",
+      "ar": "يتقدم Yorkshire Orange Black بنتيجة 2 إلى 0 لكن لديهم فقط 0.2 من xG منذ الدقيقة 35، وهو أقل من عتبة 1.0، بينما لدى North East London 1.8 من xG…"
+    },
+    "casual": {
+      "en": "Yorkshire Orange Black are winning 2 to 0 but haven't created many chances since 35'",
+      "es": "Yorkshire Orange Black está ganando 2 a 0 pero no ha creado muchas oportunidades desde el minuto 35'",
+      "ar": "يتقدم Yorkshire Orange Black بنتيجة 2 إلى 0 لكنهم لم يخلقوا العديد من الفرص منذ الدقيقة 35"
+    }
+  },
+  "fans": {
+    "nel": {
+      "en": "We are behind 0 to 2 but have made more chances since 35'",
+      "es": "Estamos perdiendo 0 a 2 pero hemos generado más ocasiones desde el minuto 35'",
+      "ar": "نحن متأخرون بنتيجة 0 إلى 2 لكننا صنعنا فرصًا أكثر منذ الدقيقة 35"
+    },
+    "yob": {
+      "en": "We lead 2 to 0 but haven't threatened much since 35'",
+      "es": "Estamos ganando 2 a 0 pero no hemos generado muchas amenazas desde el minuto 35'",
+      "ar": "نحن في المقدمة بنتيجة 2 إلى 0 لكننا لم نشكل تهديدًا كبيرًا منذ الدقيقة 35"
+    }
+  },
+  "source": {
+    "hype": "live",
+    "sceptic": "template",
+    "verdict": "live",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
+  },
+  "evidence": {
+    "trailer": "nel",
+    "leader": "yob",
+    "minute": 65,
+    "window_from_minute": 35,
+    "trailer_xg_window": 1.8,
+    "leader_xg_window": 0.2,
+    "threshold": 1.0,
+    "score_home": 0,
+    "score_away": 2
+  },
+  "evidence_display": {
+    "trailer": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
+    "leader": {
+      "en": "Yorkshire Orange Black",
+      "es": "Yorkshire Orange Black",
+      "ar": "Yorkshire Orange Black"
+    },
+    "minute": {
+      "en": "65'",
+      "es": "65'",
+      "ar": "65"
+    },
+    "window_from_minute": {
+      "en": "35'",
+      "es": "35'",
+      "ar": "35"
+    },
+    "trailer_xg_window": {
+      "en": "1.8",
+      "es": "1,8",
+      "ar": "1.8"
+    },
+    "leader_xg_window": {
+      "en": "0.2",
+      "es": "0,2",
+      "ar": "0.2"
+    },
+    "threshold": {
+      "en": "1.0",
+      "es": "1,0",
+      "ar": "1.0"
+    },
+    "score_home": {
+      "en": "0",
+      "es": "0",
+      "ar": "0"
+    },
+    "score_away": {
+      "en": "2",
+      "es": "2",
+      "ar": "2"
+    }
+  }
+}

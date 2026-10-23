@@ -15,53 +15,70 @@
   },
   "lines": {
     "hype": {
-      "en": "North East London dominating with 1.3 xG since 30' minutes",
-      "es": "North East London domina con 1,3 xG en los últimos 30' minutos",
-      "ar": "North East London يسيطرون مع 1.3 xG منذ 30 دقيقة"
+      "en": "Yorkshire Orange Black lead by 0 nil despite only 0.2 xG since 30'",
+      "es": "Yorkshire Orange Black lidera por 0 a cero a pesar de tener solo 0,2 xG desde el minuto 30'",
+      "ar": "يتقدم Yorkshire Orange Black بنتيجة 0 صفر رغم تحقيقه فقط 0.2 xG منذ الدقيقة 30"
     },
     "sceptic": {
-      "en": "Since 30', North East London have 1.3 xG to 0.1. The score is lying.",
-      "es": "Desde el 30', North East London suma 1,3 xG contra 0,1. El marcador miente.",
-      "ar": "منذ الدقيقة 30، لدى North East London ‏1.3 مقابل 0.1. النتيجة تكذب."
+      "en": "Despite 0.2 xG, Yorkshire Orange Black leads; North East London has 1.5 xG since…",
+      "es": "A pesar de 0,2 xG, Yorkshire Orange Black va adelante; North East London tiene 1,5 xG desde…",
+      "ar": "رغم 0.2 xG، يتقدم Yorkshire Orange Black؛ بينما لدى North East London 1.5 xG منذ…"
     },
     "verdict": {
-      "en": "A goal is coming for North East London.",
-      "es": "Se viene un gol de North East London.",
-      "ar": "هدف قادم لفريق North East London."
+      "en": "North East London’s higher xG since 30' suggests a goal is likely soon",
+      "es": "El mayor xG de North East London desde el minuto 30' sugiere que un gol es probable pronto",
+      "ar": "ارتفاع xG لدى North East London منذ الدقيقة 30 يشير إلى احتمال تسجيل هدف قريباً"
     }
   },
   "variants": {
     "analyst": {
-      "en": "Rolling xG since 30': 1.3 against 0.1, past the 1.0 gap.",
-      "es": "xG desde el 30': 1,3 contra 0,1, por encima de 1,0.",
-      "ar": "الأهداف المتوقعة منذ الدقيقة 30: 1.3 مقابل 0.1، فوق فارق 1.0."
+      "en": "North East London's xG since 30' is 1.5 above Yorkshire Orange Black's 0.2, exceeding the 1.0 threshold; a goal is likely soon. A goal is coming for North East London.",
+      "es": "El xG de North East London desde el minuto 30' es 1,5 por encima del 0,2 de Yorkshire Orange Black, superando el umbral de 1,0; un gol es probable pronto. Se acerca un gol para North East London.",
+      "ar": "xG لدى North East London منذ الدقيقة 30 هو 1.5، متفوقاً على 0.2 لدى Yorkshire Orange Black، متجاوزاً عتبة 1.0؛ من المرجح تسجيل هدف قريباً. هدف قادم لـ North East London."
     },
     "casual": {
-      "en": "The score says one thing. The chances say North East London will score.",
-      "es": "El marcador dice una cosa. Las ocasiones dicen que North East London marcará.",
-      "ar": "النتيجة تقول شيئًا، والفرص تقول إن North East London سيسجل."
+      "en": "North East London have been creating more chances since 30', so a goal should come soon. A goal is coming for North East London.",
+      "es": "North East London ha estado creando más oportunidades desde el minuto 30', así que un gol debería llegar pronto. Se acerca un gol para North East London.",
+      "ar": "يخلق North East London فرصاً أكثر منذ الدقيقة 30، لذا من المفترض أن يسجلوا هدفاً قريباً. هدف قادم لـ North East London."
+    }
+  },
+  "fans": {
+    "nel": {
+      "en": "We have been pushing hard since 30' and chances are stacking up for us. A goal is coming for North East London.",
+      "es": "Hemos estado presionando fuerte desde el minuto 30' y las oportunidades se están acumulando para nosotros. Se acerca un gol para North East London.",
+      "ar": "نحن نضغط بقوة منذ الدقيقة 30 والفرص تتراكم لصالحنا. هدف قادم لـ North East London."
+    },
+    "yob": {
+      "en": "They look dangerous since 30', but we still hold the lead comfortably. A goal is coming for North East London.",
+      "es": "Ellos se ven peligrosos desde el minuto 30', pero aún mantenemos la ventaja cómodamente. Se acerca un gol para North East London.",
+      "ar": "يبدون خطيرين منذ الدقيقة 30، لكننا لا نزال متقدمين بسهولة. هدف قادم لـ North East London."
     }
   },
   "source": {
     "hype": "live",
-    "sceptic": "template",
-    "verdict": "template",
-    "personaliser": "template",
+    "sceptic": "live",
+    "verdict": "live",
+    "personaliser": "live",
     "es": "live",
     "ar": "live"
   },
   "evidence": {
+    "trailer": "nel",
     "leader": "yob",
     "minute": 60,
     "window_from_minute": 30,
-    "trailer_xg_window": 1.3,
-    "leader_xg_window": 0.1,
+    "trailer_xg_window": 1.5,
+    "leader_xg_window": 0.2,
     "threshold": 1.0,
     "score_home": 0,
-    "score_away": 2,
-    "trailer": "nel"
+    "score_away": 2
   },
   "evidence_display": {
+    "trailer": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
     "leader": {
       "en": "Yorkshire Orange Black",
       "es": "Yorkshire Orange Black",
@@ -78,14 +95,14 @@
       "ar": "30"
     },
     "trailer_xg_window": {
-      "en": "1.3",
-      "es": "1,3",
-      "ar": "1.3"
+      "en": "1.5",
+      "es": "1,5",
+      "ar": "1.5"
     },
     "leader_xg_window": {
-      "en": "0.1",
-      "es": "0,1",
-      "ar": "0.1"
+      "en": "0.2",
+      "es": "0,2",
+      "ar": "0.2"
     },
     "threshold": {
       "en": "1.0",
@@ -101,11 +118,6 @@
       "en": "2",
       "es": "2",
       "ar": "2"
-    },
-    "trailer": {
-      "en": "North East London",
-      "es": "North East London",
-      "ar": "North East London"
     }
   }
 }

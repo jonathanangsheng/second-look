@@ -1,0 +1,119 @@
+{
+  "seed": "demo",
+  "window": 7,
+  "t_start": 2400.0,
+  "t_end": 2412.0,
+  "kind": "debate",
+  "detector": "effort_game_state",
+  "contradiction_id": "c_nel_effort_game_state_40",
+  "prediction_id": null,
+  "window_from_minute": null,
+  "claim": null,
+  "lines": {
+    "hype": {
+      "en": "North East London pressing at just 0.3 when behind is surprisingly low",
+      "es": "El pressing de North East London a solo 0,3 cuando van por detrás es sorprendentemente bajo",
+      "ar": "ضغط North East London بمعدل 0.3 فقط عند التأخر هو منخفض بشكل مفاجئ"
+    },
+    "sceptic": {
+      "en": "Press rate of 0.3 when behind reveals a 0.15 ratio drop is concerning",
+      "es": "La tasa de pressing de 0,3 cuando van por detrás muestra una caída preocupante de 0,15",
+      "ar": "معدل الضغط 0.3 عند التأخر يكشف عن انخفاض بنسبة 0.15 وهو أمر مقلق"
+    },
+    "verdict": {
+      "en": "North East London press rate drops sharply to 0.3 when trailing at 40'",
+      "es": "La tasa de pressing de North East London cae drásticamente a 0,3 cuando van perdiendo en el minuto 40'",
+      "ar": "معدل ضغط North East London ينخفض بشكل حاد إلى 0.3 عند التأخر في الدقيقة 40"
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "Press rate drops to 0.3 at 40' when trailing, much lower than 2.1 while level, a 0.15 ratio.",
+      "es": "La tasa de pressing baja a 0,3 en el minuto 40' cuando van por detrás, mucho menor que 2,1 cuando están igualados, una proporción de 0,15.",
+      "ar": "معدل الضغط ينخفض إلى 0.3 في الدقيقة 40 عند التأخر، وهو أقل بكثير من 2.1 أثناء التعادل، بنسبة 0.15."
+    },
+    "casual": {
+      "en": "They press much less after falling behind at 40'.",
+      "es": "Presionan mucho menos después de ir perdiendo en el minuto 40'.",
+      "ar": "يضغطون أقل بكثير بعد التأخر في الدقيقة 40."
+    }
+  },
+  "fans": {
+    "nel": {
+      "en": "We lose our pressing edge badly after going behind at 40'.",
+      "es": "Perdemos totalmente nuestra intensidad de pressing tras ir por detrás en el minuto 40'.",
+      "ar": "نفقد حدة الضغط بشكل كبير بعد التأخر في الدقيقة 40."
+    },
+    "yob": {
+      "en": "They really ease off pressing once they fall behind at 40'.",
+      "es": "Realmente bajan el ritmo de pressing una vez que van perdiendo en el minuto 40'.",
+      "ar": "يخففون الضغط حقًا بمجرد التأخر في الدقيقة 40."
+    }
+  },
+  "source": {
+    "hype": "live",
+    "sceptic": "live",
+    "verdict": "live",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
+  },
+  "evidence": {
+    "team": "nel",
+    "minute": 40,
+    "press_rate_while_behind": 0.3,
+    "press_rate_while_level": 2.1,
+    "minutes_spent_behind": 16,
+    "ratio": 0.15,
+    "max_ratio": 0.7,
+    "score_home": 0,
+    "score_away": 1
+  },
+  "evidence_display": {
+    "team": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
+    "minute": {
+      "en": "40'",
+      "es": "40'",
+      "ar": "40"
+    },
+    "press_rate_while_behind": {
+      "en": "0.3",
+      "es": "0,3",
+      "ar": "0.3"
+    },
+    "press_rate_while_level": {
+      "en": "2.1",
+      "es": "2,1",
+      "ar": "2.1"
+    },
+    "minutes_spent_behind": {
+      "en": "16",
+      "es": "16",
+      "ar": "16"
+    },
+    "ratio": {
+      "en": "0.15",
+      "es": "0,15",
+      "ar": "0.15"
+    },
+    "max_ratio": {
+      "en": "0.7",
+      "es": "0,7",
+      "ar": "0.7"
+    },
+    "score_home": {
+      "en": "0",
+      "es": "0",
+      "ar": "0"
+    },
+    "score_away": {
+      "en": "1",
+      "es": "1",
+      "ar": "1"
+    }
+  }
+}

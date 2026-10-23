@@ -13,6 +13,7 @@ def test_seeds_list_teams_and_story_chips():
     assert {s["seed"] for s in body["seeds"]} == {"demo", "random1", "even"}
     demo = next(s for s in body["seeds"] if s["seed"] == "demo")
     assert (demo["home"]["short"], demo["away"]["short"]) == ("NEL", "YOB")
+    assert len(demo["home"]["squad"]) == 11  # names for the player on the ball
     chips = {c["label"]: (c["seed"], c["minute"]) for c in body["chips"]}
     assert chips["The call"] == ("demo", 60) and chips["Called it"] == ("demo", 78)
     assert chips["A miss"][0] == "random1"

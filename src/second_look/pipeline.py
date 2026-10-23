@@ -54,7 +54,7 @@ def template_cards(seed: str) -> list[Card]:
 def _debate_card(
     seed: str, c: Contradiction, prediction: Prediction | None, claim: templates.T | None, names: dict[str, str]
 ) -> Card:
-    lines, variants, shown = templates.render(c.detector, c.evidence, names)
+    lines, variants, shown, fans = templates.render(c.detector, c.evidence, names)
     return Card(
         seed=seed,
         window=c.minute // config.WINDOW_MINUTES - 1,
@@ -68,6 +68,7 @@ def _debate_card(
         claim=claim,
         lines=lines,
         variants=variants,
+        fans={team: fans[side] for side, team in _fan_teams(seed, c.team).items()},
         source=_all_template(lines),
         evidence=c.evidence,
         evidence_display=shown,
@@ -76,7 +77,7 @@ def _debate_card(
 
 def _outcome_card(seed: str, kind: str, p: Prediction, minute: int, t: float, names: dict[str, str]) -> Card:
     evidence = {"team": p.team, "made_at_minute": p.made_at_minute, "by_minute": p.by_minute, "minute": minute}
-    lines, variants, shown = templates.render(kind, evidence, names)
+    lines, variants, shown, _ = templates.render(kind, evidence, names)
     window = min(minute, FULL_TIME_MINUTE - 1) // config.WINDOW_MINUTES
     return Card(
         seed=seed,
@@ -96,6 +97,12 @@ def _outcome_card(seed: str, kind: str, p: Prediction, minute: int, t: float, na
     )
 
 
+def _fan_teams(seed: str, team: str) -> dict[str, str]:
+    """Fan perspective -> team id: the team the stat is about (shooter or trailer), and its opponent."""
+    spec = SEEDS[seed]
+    return {"fan_side": team, "fan_other": spec.away if team == spec.home else spec.home}
+
+
 def _all_template(lines: dict) -> dict:
     return {**dict.fromkeys(lines, "template"), "personaliser": "template", "es": "template", "ar": "template"}
 
@@ -105,8 +112,8 @@ async def live_debate_card(
 ) -> tuple[Card, list[str]]:
     """Run the agents over a template debate card and merge whatever came back live.
 
-    Every piece falls back on its own, with its true source: a speaker line, the persona
-    variants (Personaliser) and each language (Translator) keep the cached card's text if
+    Every piece falls back on its own, with its true source: a speaker line, the persona and
+    fan variants (Personaliser) and each language (Translator) keep the cached card's text if
     there is one, else the template's.
     """
     from second_look.agents import AGENTS, SPEAKERS, new_state, run_debate
@@ -120,13 +127,18 @@ async def live_debate_card(
     state = await run_debate(llm, new_state(card.detector, card.evidence_display, claim, fallback), fail=fail)
     lines = {s: {**base.lines[s], "en": state.lines[s]} for s in SPEAKERS}
     variants = {p: dict(texts) for p, texts in base.variants.items()}
-    for persona, text in state.variants.items():
-        variants[persona]["en"] = text
-    for lang, pieces in state.translations.items():
-        for piece, text in pieces.items():
-            (lines if piece in lines else variants)[piece][lang] = text
+    fans = {team: dict(texts) for team, texts in (base.fans or card.fans).items()}
+    subject = card.evidence.get("trailer") or card.evidence["team"]
+    # Every piece by the name the agents use, pointing at the card text it updates.
+    pieces = {**lines, **variants, **{side: fans[team] for side, team in _fan_teams(card.seed, subject).items()}}
+    for piece, text in state.variants.items():
+        pieces[piece]["en"] = text
+    for lang, translated in state.translations.items():
+        for piece, text in translated.items():
+            pieces[piece][lang] = text
     source = {**card.source, **{k: fallback_source(k) for k in AGENTS}, **state.source}
-    return card.model_copy(update={"lines": lines, "variants": variants, "source": source}), state.flags
+    update = {"lines": lines, "variants": variants, "fans": fans, "source": source}
+    return card.model_copy(update=update), state.flags
 
 
 def read_cards(seed: str, mode: CacheMode, root: Path = CARDS_DIR) -> dict[tuple[int, str], Card]:

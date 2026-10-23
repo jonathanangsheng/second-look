@@ -9,7 +9,8 @@ from second_look.contracts import Lang
 
 LANGS: tuple[Lang, ...] = ("en", "es", "ar")
 MINUTE_FIELDS = {"minute", "made_at_minute", "by_minute", "window_from_minute"}
-TEAM_FIELDS = {"team", "trailer", "leader"}
+PERCENT_FIELDS = {"possession_pct"}
+TEAM_FIELDS = {"team", "trailer", "leader", "opponent"}
 
 T = dict[Lang, str]
 TEMPLATES: dict[str, dict[str, T]] = {
@@ -39,6 +40,17 @@ TEMPLATES: dict[str, dict[str, T]] = {
             "es": "Muchos disparos, casi ninguna ocasión real.",
             "ar": "تسديدات كثيرة، وفرص حقيقية شبه معدومة.",
         },
+        # Fan lines: a supporter of the team the stat is about (side), then of the other team.
+        "fan_side": {
+            "en": "We keep shooting, but we need better chances than these.",
+            "es": "Seguimos disparando, pero necesitamos ocasiones mejores que estas.",
+            "ar": "نواصل التسديد، لكننا نحتاج فرصًا أفضل من هذه.",
+        },
+        "fan_other": {
+            "en": "They are shooting from anywhere. Nothing to worry about yet.",
+            "es": "Disparan desde cualquier sitio. De momento, nada de qué preocuparse.",
+            "ar": "يسددون من أي مكان. لا داعي للقلق حتى الآن.",
+        },
     },
     "scoreline_xg": {
         "hype": {
@@ -66,6 +78,90 @@ TEMPLATES: dict[str, dict[str, T]] = {
             "en": "The score says one thing. The chances say {trailer} will score.",
             "es": "El marcador dice una cosa. Las ocasiones dicen que {trailer} marcará.",
             "ar": "النتيجة تقول شيئًا، والفرص تقول إن {trailer} سيسجل.",
+        },
+        "fan_side": {
+            "en": "Behind on the scoreboard, ahead on chances. Keep believing.",
+            "es": "Por detrás en el marcador, por delante en ocasiones. A seguir creyendo.",
+            "ar": "متأخرون في النتيجة، متقدمون في الفرص. واصلوا الإيمان.",
+        },
+        "fan_other": {
+            "en": "We are ahead, but they are making the better chances.",
+            "es": "Vamos por delante, pero ellos generan las mejores ocasiones.",
+            "ar": "نحن متقدمون، لكنهم يصنعون الفرص الأفضل.",
+        },
+    },
+    "possession_penetration": {
+        "hype": {
+            "en": "{team} own the ball: {possession_pct} possession. Total control.",
+            "es": "{team} es dueño del balón: {possession_pct} de posesión. Control total.",
+            "ar": "{team} يسيطر على الكرة: استحواذ {possession_pct}. سيطرة تامة.",
+        },
+        "sceptic": {
+            "en": "Box entry rate: {box_entry_rate} against {opponent_box_entry_rate} for {opponent}.",
+            "es": "Entradas al área: {box_entry_rate} frente a {opponent_box_entry_rate} de {opponent}.",
+            "ar": "معدل الدخول إلى المنطقة: {box_entry_rate} مقابل {opponent_box_entry_rate} لـ {opponent}.",
+        },
+        "verdict": {
+            "en": "The ball, not the box. Possession is not pressure.",
+            "es": "El balón, no el área. Tener la pelota no es apretar.",
+            "ar": "الكرة لا المنطقة. الاستحواذ ليس خطورة.",
+        },
+        "analyst": {
+            "en": "{possession_pct} possession; box entry rate {box_entry_rate} vs {opponent_box_entry_rate}, a ratio of {ratio}, under {max_ratio}.",
+            "es": "{possession_pct} de posesión; entradas al área {box_entry_rate} frente a {opponent_box_entry_rate}, una proporción de {ratio}, bajo {max_ratio}.",
+            "ar": "استحواذ {possession_pct}؛ معدل الدخول إلى المنطقة {box_entry_rate} مقابل {opponent_box_entry_rate}، بنسبة {ratio}، أقل من {max_ratio}.",
+        },
+        "casual": {
+            "en": "Lots of the ball, hardly any trips into the box.",
+            "es": "Mucho balón, casi ninguna llegada al área.",
+            "ar": "استحواذ كبير، وبالكاد وصول إلى المنطقة.",
+        },
+        "fan_side": {
+            "en": "We have all the ball. Now we need to get into the box.",
+            "es": "Tenemos todo el balón. Ahora hay que pisar el área.",
+            "ar": "الكرة كلها معنا. الآن علينا دخول المنطقة.",
+        },
+        "fan_other": {
+            "en": "Let them pass it around. They are not getting near our box.",
+            "es": "Que se la pasen. No se acercan a nuestra área.",
+            "ar": "دعهم يتناقلون الكرة. لا يقتربون من منطقتنا.",
+        },
+    },
+    "effort_game_state": {
+        "hype": {
+            "en": "{team} are behind but still fighting for every ball.",
+            "es": "{team} va por detrás pero sigue peleando cada balón.",
+            "ar": "{team} متأخر لكنه ما زال يقاتل على كل كرة.",
+        },
+        "sceptic": {
+            "en": "Their pressing rate fell from {press_rate_while_level} to {press_rate_while_behind} since going behind.",
+            "es": "Su ritmo de presión bajó de {press_rate_while_level} a {press_rate_while_behind} desde que van perdiendo.",
+            "ar": "تراجع معدل ضغطهم من {press_rate_while_level} إلى {press_rate_while_behind} منذ تأخرهم.",
+        },
+        "verdict": {
+            "en": "Behind on the scoreboard, and the effort has faded with it.",
+            "es": "Por detrás en el marcador, y el esfuerzo se ha apagado con él.",
+            "ar": "متأخرون في النتيجة، والجهد تراجع معها.",
+        },
+        "analyst": {
+            "en": "Pressing rate {press_rate_while_behind} while behind against {press_rate_while_level} before: a ratio of {ratio}, under {max_ratio}.",
+            "es": "Ritmo de presión {press_rate_while_behind} perdiendo frente a {press_rate_while_level} antes: una proporción de {ratio}, bajo {max_ratio}.",
+            "ar": "معدل الضغط {press_rate_while_behind} أثناء التأخر مقابل {press_rate_while_level} قبله: بنسبة {ratio}، أقل من {max_ratio}.",
+        },
+        "casual": {
+            "en": "Since going behind, they have stopped chasing the ball.",
+            "es": "Desde que van perdiendo, han dejado de perseguir el balón.",
+            "ar": "منذ أن تأخروا، توقفوا عن مطاردة الكرة.",
+        },
+        "fan_side": {
+            "en": "We are behind and we have stopped pressing. Wake up.",
+            "es": "Vamos perdiendo y hemos dejado de presionar. Despertemos.",
+            "ar": "نحن متأخرون وتوقفنا عن الضغط. استيقظوا.",
+        },
+        "fan_other": {
+            "en": "They have gone quiet since falling behind. Keep it that way.",
+            "es": "Se han apagado desde que van perdiendo. Que siga así.",
+            "ar": "هدأوا منذ تأخرهم. فلنحافظ على ذلك.",
         },
     },
     "called_it": {
@@ -111,6 +207,8 @@ def display(evidence: dict, team_names: dict[str, str]) -> dict[str, T]:
     for key, value in evidence.items():
         if key in TEAM_FIELDS:
             out[key] = dict.fromkeys(LANGS, team_names.get(value, value))
+        elif key in PERCENT_FIELDS:
+            out[key] = dict.fromkeys(LANGS, f"{value}%")
         elif key in MINUTE_FIELDS:
             out[key] = {"en": f"{value}'", "es": f"{value}'", "ar": f"{value}"}
         elif isinstance(value, float):
@@ -130,8 +228,13 @@ def claim(team_name: str) -> T:
     return {lang: text.format(trailer=team_name) for lang, text in CLAIM.items()}
 
 
-def render(key: str, evidence: dict, team_names: dict[str, str]) -> tuple[dict[str, T], dict[str, T], dict[str, T]]:
-    """(lines by speaker, variants by persona, evidence_display) for a detector or outcome kind."""
+FAN_SIDES = ("fan_side", "fan_other")
+
+
+def render(
+    key: str, evidence: dict, team_names: dict[str, str]
+) -> tuple[dict[str, T], dict[str, T], dict[str, T], dict[str, T]]:
+    """(lines by speaker, variants by persona, evidence_display, fan lines by side) for a detector or outcome kind."""
     shown = display(evidence, team_names)
     parts = {
         part: {lang: text.format(**{k: v[lang] for k, v in shown.items()}) for lang, text in texts.items()}
@@ -139,4 +242,5 @@ def render(key: str, evidence: dict, team_names: dict[str, str]) -> tuple[dict[s
     }
     lines = {s: parts[s] for s in ("hype", "sceptic", "verdict") if s in parts}
     variants = {p: parts[p] for p in ("analyst", "casual")}
-    return lines, variants, shown
+    fans = {side: parts[side] for side in FAN_SIDES if side in parts}
+    return lines, variants, shown, fans

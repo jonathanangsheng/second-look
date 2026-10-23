@@ -1,0 +1,119 @@
+{
+  "seed": "even",
+  "window": 9,
+  "t_start": 3000.0,
+  "t_end": 3012.0,
+  "kind": "debate",
+  "detector": "effort_game_state",
+  "contradiction_id": "c_mnb_effort_game_state_50",
+  "prediction_id": null,
+  "window_from_minute": null,
+  "claim": null,
+  "lines": {
+    "hype": {
+      "en": "At 50', Man Blue sustain pressure but at half their usual rate when behind",
+      "es": "En el 50', Man Blue mantienen la presión pero a la mitad de su ritmo habitual cuando van por detrás",
+      "ar": "في الدقيقة 50، يستمر Man Blue في الضغط ولكن بمعدل نصف المعتاد عندما يكون متأخراً"
+    },
+    "sceptic": {
+      "en": "Despite trailing at 50', Man Blue press rate is only half their usual effort",
+      "es": "A pesar de ir por detrás en el 50', la tasa de presión de Man Blue es solo la mitad de su esfuerzo habitual",
+      "ar": "رغم التأخر في الدقيقة 50، معدل الضغط لفريق Man Blue لا يتجاوز نصف جهدهم المعتاد"
+    },
+    "verdict": {
+      "en": "At 50', Man Blue press at half their usual rate when trailing in the…",
+      "es": "En el 50', Man Blue presionan a la mitad de su ritmo habitual cuando están perdiendo en el…",
+      "ar": "في الدقيقة 50، يضغط Man Blue بمعدل نصف المعتاد عندما يتأخر في…"
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "At 50', Man Blue press at half their level when behind, with a press rate ratio of 0.5.",
+      "es": "En el 50', Man Blue presionan a la mitad de su nivel cuando van por detrás, con una tasa de presión de 0,5.",
+      "ar": "في الدقيقة 50، يضغط Man Blue بمستوى نصف المعتاد عندما يكون متأخراً، بنسبة ضغط تبلغ 0.5."
+    },
+    "casual": {
+      "en": "At 50', Man Blue press less when they are behind.",
+      "es": "En el 50', Man Blue presionan menos cuando están por detrás.",
+      "ar": "في الدقيقة 50، يضغط Man Blue أقل عندما يكون متأخراً."
+    }
+  },
+  "fans": {
+    "mnb": {
+      "en": "At 50', we press less than usual when trailing.",
+      "es": "En el 50', presionamos menos de lo habitual cuando vamos perdiendo.",
+      "ar": "في الدقيقة 50، نضغط أقل من المعتاد عندما نكون متأخرين."
+    },
+    "mer": {
+      "en": "At 50', they press less hard when behind in the game.",
+      "es": "En el 50', ellos presionan menos fuerte cuando están por detrás en el partido.",
+      "ar": "في الدقيقة 50، يضغطون أقل قوة عندما يكونون متأخرين في المباراة."
+    }
+  },
+  "source": {
+    "hype": "live",
+    "sceptic": "cache",
+    "verdict": "live",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
+  },
+  "evidence": {
+    "team": "mnb",
+    "minute": 50,
+    "press_rate_while_behind": 1.0,
+    "press_rate_while_level": 2.0,
+    "minutes_spent_behind": 10,
+    "ratio": 0.5,
+    "max_ratio": 0.7,
+    "score_home": 2,
+    "score_away": 1
+  },
+  "evidence_display": {
+    "team": {
+      "en": "Man Blue",
+      "es": "Man Blue",
+      "ar": "Man Blue"
+    },
+    "minute": {
+      "en": "50'",
+      "es": "50'",
+      "ar": "50"
+    },
+    "press_rate_while_behind": {
+      "en": "1.0",
+      "es": "1,0",
+      "ar": "1.0"
+    },
+    "press_rate_while_level": {
+      "en": "2.0",
+      "es": "2,0",
+      "ar": "2.0"
+    },
+    "minutes_spent_behind": {
+      "en": "10",
+      "es": "10",
+      "ar": "10"
+    },
+    "ratio": {
+      "en": "0.5",
+      "es": "0,5",
+      "ar": "0.5"
+    },
+    "max_ratio": {
+      "en": "0.7",
+      "es": "0,7",
+      "ar": "0.7"
+    },
+    "score_home": {
+      "en": "2",
+      "es": "2",
+      "ar": "2"
+    },
+    "score_away": {
+      "en": "1",
+      "es": "1",
+      "ar": "1"
+    }
+  }
+}

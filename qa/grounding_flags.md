@@ -3,3 +3,4 @@
 - demo/normal/6: una
 - demo/normal/6: una
 - demo/fail-sceptic/11: two
+- demo/fail-sceptic/10: one

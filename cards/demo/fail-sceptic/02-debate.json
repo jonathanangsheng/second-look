@@ -1,0 +1,125 @@
+{
+  "seed": "demo",
+  "window": 2,
+  "t_start": 900.0,
+  "t_end": 912.0,
+  "kind": "debate",
+  "detector": "possession_penetration",
+  "contradiction_id": "c_nel_possession_penetration_15",
+  "prediction_id": null,
+  "window_from_minute": null,
+  "claim": null,
+  "lines": {
+    "hype": {
+      "en": "North East London dominates with 72% possession but struggles with 6.4 box entries",
+      "es": "North East London domina con un 72% de posesión pero tiene problemas con las entradas al área, solo un 6,4",
+      "ar": "North East London يهيمن بنسبة استحواذ 72% لكنه يعاني في دخول منطقة الجزاء بنسبة 6.4"
+    },
+    "sceptic": {
+      "en": "Despite 72% possession, North East London manage only 6.4 box entries versus 14.0",
+      "es": "A pesar de 72% de posesión, North East London logran solo 6,4 entradas al área frente a 14,0",
+      "ar": "رغم امتلاك 72% للكرة، ينجح North East London فقط في 6.4 دخول إلى منطقة الجزاء مقابل 14.0"
+    },
+    "verdict": {
+      "en": "North East London controls possession at 72% but box entries lag at 6.4",
+      "es": "North East London controla la posesión con un 72% pero las entradas al área están rezagadas con un 6,4",
+      "ar": "North East London يسيطر على الكرة بنسبة 72% لكن دخول منطقة الجزاء متأخر بنسبة 6.4"
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "North East London holds 72% possession but their box entry rate is 6.4, only 0.46 of Yorkshire Orange Black's 14.0, showing inefficiency.",
+      "es": "North East London mantiene un 72% de posesión pero su tasa de entradas al área es de 6,4, apenas un 0,46 de las 14,0 de Yorkshire Orange Black, mostrando ineficiencia.",
+      "ar": "North East London يحتفظ بنسبة استحواذ 72% لكن معدل دخولهم لمنطقة الجزاء هو 6.4 فقط، أي 0.46 من معدل دخول Yorkshire Orange Black لمنطقة الجزاء 14.0، مما يظهر عدم الفعالية."
+    },
+    "casual": {
+      "en": "North East London has most of the ball but struggles to get into the box.",
+      "es": "North East London tiene la mayor parte del balón pero le cuesta entrar al área.",
+      "ar": "North East London يمتلك الكرة معظم الوقت لكنه يجد صعوبة في الوصول لمنطقة الجزاء."
+    }
+  },
+  "fans": {
+    "nel": {
+      "en": "We control the ball well but need more chances in the box.",
+      "es": "Controlamos bien el balón pero necesitamos más oportunidades en el área.",
+      "ar": "نحن نتحكم بالكرة جيداً لكن نحتاج المزيد من الفرص داخل منطقة الجزاء."
+    },
+    "yob": {
+      "en": "They have the ball a lot but aren't threatening enough in the box.",
+      "es": "Ellos tienen mucho el balón pero no son lo suficientemente amenazantes en el área.",
+      "ar": "لديهم الكرة كثيراً لكنهم ليسوا مهددين بما فيه الكفاية داخل منطقة الجزاء."
+    }
+  },
+  "source": {
+    "hype": "live",
+    "sceptic": "cache",
+    "verdict": "live",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
+  },
+  "evidence": {
+    "team": "nel",
+    "opponent": "yob",
+    "minute": 15,
+    "possession_pct": 72,
+    "box_entry_rate": 6.4,
+    "opponent_box_entry_rate": 14.0,
+    "ratio": 0.46,
+    "max_ratio": 0.6,
+    "score_home": 0,
+    "score_away": 0
+  },
+  "evidence_display": {
+    "team": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
+    "opponent": {
+      "en": "Yorkshire Orange Black",
+      "es": "Yorkshire Orange Black",
+      "ar": "Yorkshire Orange Black"
+    },
+    "minute": {
+      "en": "15'",
+      "es": "15'",
+      "ar": "15"
+    },
+    "possession_pct": {
+      "en": "72%",
+      "es": "72%",
+      "ar": "72%"
+    },
+    "box_entry_rate": {
+      "en": "6.4",
+      "es": "6,4",
+      "ar": "6.4"
+    },
+    "opponent_box_entry_rate": {
+      "en": "14.0",
+      "es": "14,0",
+      "ar": "14.0"
+    },
+    "ratio": {
+      "en": "0.46",
+      "es": "0,46",
+      "ar": "0.46"
+    },
+    "max_ratio": {
+      "en": "0.6",
+      "es": "0,6",
+      "ar": "0.6"
+    },
+    "score_home": {
+      "en": "0",
+      "es": "0",
+      "ar": "0"
+    },
+    "score_away": {
+      "en": "0",
+      "es": "0",
+      "ar": "0"
+    }
+  }
+}

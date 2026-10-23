@@ -32,7 +32,7 @@ class GroundingError(ValueError):
 
 def ground(raw: str, shown: dict[str, dict[str, str]], lang: Lang) -> str:
     """Fill placeholders from `shown` (evidence_display) or raise GroundingError."""
-    if re.search(r"\d", raw.translate(ARABIC_INDIC)):
+    if re.search(r"\d", re.sub(r"\{[^{}]*\}", "", raw).translate(ARABIC_INDIC)):  # placeholder names may hold digits
         raise GroundingError(f"digit outside a placeholder: {raw!r}")
     for key, value in shown.items():  # a name typed out would get translated or drift; only its placeholder is safe
         name = value[lang]

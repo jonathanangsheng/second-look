@@ -30,7 +30,9 @@ def test_committed_card_follows_the_text_rules(path):
     if card.kind == "debate" and card.claim:  # the claim sentence appended to each persona line is extra
         claim_words = len(card.claim["en"].split())
         limits = {k: n + claim_words if k in VARIANT_WORDS else n for k, n in limits.items()}
-    for name, texts in [*card.lines.items(), *card.variants.items()]:
+    fans = [(f"fan_{team}", texts) for team, texts in (card.fans or {}).items()]
+    limits |= {name: limits["fan_side"] for name, _ in fans}
+    for name, texts in [*card.lines.items(), *card.variants.items(), *fans]:
         for lang, text in texts.items():
             where = f"{name}.{lang}: {text}"
             assert text.strip(), where

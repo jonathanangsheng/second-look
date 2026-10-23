@@ -1,0 +1,125 @@
+{
+  "seed": "demo",
+  "window": 2,
+  "t_start": 900.0,
+  "t_end": 912.0,
+  "kind": "debate",
+  "detector": "possession_penetration",
+  "contradiction_id": "c_nel_possession_penetration_15",
+  "prediction_id": null,
+  "window_from_minute": null,
+  "claim": null,
+  "lines": {
+    "hype": {
+      "en": "Despite 72% possession, North East London struggle with just 6.4 box entries",
+      "es": "A pesar de tener 72% de posesión, North East London luchan con solo 6,4 entradas al área",
+      "ar": "رغم امتلاك 72% للكرة، يعاني North East London مع فقط 6.4 دخول إلى منطقة الجزاء"
+    },
+    "sceptic": {
+      "en": "Despite 72% possession, North East London manage only 6.4 box entries versus 14.0",
+      "es": "A pesar de 72% de posesión, North East London logran solo 6,4 entradas al área frente a 14,0",
+      "ar": "رغم امتلاك 72% للكرة، ينجح North East London فقط في 6.4 دخول إلى منطقة الجزاء مقابل 14.0"
+    },
+    "verdict": {
+      "en": "Despite 72% possession, North East London struggle with just 6.4 box entries",
+      "es": "A pesar de 72% de posesión, North East London luchan con solo 6,4 entradas al área",
+      "ar": "رغم امتلاك 72% للكرة، يعاني North East London مع فقط 6.4 دخول إلى منطقة الجزاء"
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "Despite 72% possession, North East London have a low 6.4 box entry rate, less than half the 14.0 of Yorkshire Orange Black.",
+      "es": "A pesar de 72% de posesión, North East London tienen una baja tasa de entradas al área de 6,4, menos de la mitad del 14,0 de Yorkshire Orange Black.",
+      "ar": "رغم امتلاك 72% للكرة، لدى North East London معدل دخول منخفض إلى منطقة الجزاء يبلغ 6.4، أقل من نصف 14.0 لدى Yorkshire Orange Black."
+    },
+    "casual": {
+      "en": "North East London have most of the ball but struggle to get into the box.",
+      "es": "North East London tienen la mayor parte del balón pero les cuesta entrar al área.",
+      "ar": "يمتلك North East London معظم الكرة لكنه يعاني في الوصول إلى منطقة الجزاء."
+    }
+  },
+  "fans": {
+    "nel": {
+      "en": "We control the ball a lot but need to get into their box more often.",
+      "es": "Controlamos mucho el balón pero necesitamos entrar más a su área.",
+      "ar": "نحن نسيطر على الكرة كثيرًا لكننا بحاجة إلى الدخول إلى منطقتهم أكثر."
+    },
+    "yob": {
+      "en": "They have the ball a lot but aren't making many chances in our box.",
+      "es": "Ellos tienen mucho el balón pero no están creando muchas ocasiones en nuestra área.",
+      "ar": "هم يملكون الكرة كثيرًا لكنهم لا يصنعون الكثير من الفرص في منطقتنا."
+    }
+  },
+  "source": {
+    "hype": "live",
+    "sceptic": "live",
+    "verdict": "live",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
+  },
+  "evidence": {
+    "team": "nel",
+    "opponent": "yob",
+    "minute": 15,
+    "possession_pct": 72,
+    "box_entry_rate": 6.4,
+    "opponent_box_entry_rate": 14.0,
+    "ratio": 0.46,
+    "max_ratio": 0.6,
+    "score_home": 0,
+    "score_away": 0
+  },
+  "evidence_display": {
+    "team": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
+    "opponent": {
+      "en": "Yorkshire Orange Black",
+      "es": "Yorkshire Orange Black",
+      "ar": "Yorkshire Orange Black"
+    },
+    "minute": {
+      "en": "15'",
+      "es": "15'",
+      "ar": "15"
+    },
+    "possession_pct": {
+      "en": "72%",
+      "es": "72%",
+      "ar": "72%"
+    },
+    "box_entry_rate": {
+      "en": "6.4",
+      "es": "6,4",
+      "ar": "6.4"
+    },
+    "opponent_box_entry_rate": {
+      "en": "14.0",
+      "es": "14,0",
+      "ar": "14.0"
+    },
+    "ratio": {
+      "en": "0.46",
+      "es": "0,46",
+      "ar": "0.46"
+    },
+    "max_ratio": {
+      "en": "0.6",
+      "es": "0,6",
+      "ar": "0.6"
+    },
+    "score_home": {
+      "en": "0",
+      "es": "0",
+      "ar": "0"
+    },
+    "score_away": {
+      "en": "0",
+      "es": "0",
+      "ar": "0"
+    }
+  }
+}

@@ -23,6 +23,12 @@ HALF_SECONDS = 45 * 60
 GOAL_X, GOAL_Y, GOAL_WIDTH_M = PITCH_LENGTH_M, PITCH_WIDTH_M / 2, 7.32
 BOX_X, BOX_Y_MIN, BOX_Y_MAX = PITCH_LENGTH_M - 16.5, 13.84, 54.16
 
+
+def in_box(x: float, y: float) -> bool:
+    """Inside the attacking penalty area, in the team's own frame."""
+    return x >= BOX_X and BOX_Y_MIN <= y <= BOX_Y_MAX
+
+
 # xG = logistic(XG_BIAS + XG_DISTANCE * distance_m + XG_ANGLE * goal_angle_rad), clamped.
 # Hand-tuned so a central 11 m shot is ~0.33, 18 m ~0.10 and 27 m ~0.02.
 XG_BIAS, XG_DISTANCE, XG_ANGLE = 0.4, -0.17, 1.2
@@ -55,6 +61,7 @@ class Profile:
     shot_distance_sd_m: float
     pressures_per_5min: float
     squad: tuple[str, ...] = field(default=())
+    box_entry_pct: float = 1.0  # chance a pass or carry into the box gets there; else it recycles outside
 
 
 def load_profiles(path: Path = PROFILES_FILE) -> dict[str, Profile]:
@@ -110,19 +117,26 @@ class SeedSpec:
     script: Script | None = None
 
 
-# The demo is a two-act story: NEL waste long shots in the first half, attack the box after
-# half time, and score at 78' after YOB lead 0-2 from few chances.
+# The demo is a two-act story: NEL hog the ball but rarely reach the box and waste long shots,
+# stop pressing once YOB score at 22', attack the box after half time, and score at 78' after
+# YOB lead 0-2 from few chances. Seed and settings were picked so each detector shows once or more.
 DEMO_SCRIPT = Script(
     goals=((22, "yob"), (51, "yob"), (78, "nel")),
     overrides=(
-        Override("nel", 0, 46, {"shot_rate": 0.3, "shot_distance_mean_m": 25.0, "shot_distance_sd_m": 2.5}),
+        Override(
+            "nel",
+            0,
+            35,
+            {"shot_rate": 0.3, "shot_distance_mean_m": 25.0, "shot_distance_sd_m": 2.5, "box_entry_pct": 0.35},
+        ),
+        Override("nel", 22, 54, {"pressures_per_5min": 1.5}),  # heads drop after going behind
         Override("nel", 54, 61, {"shot_rate": 0.7, "shot_distance_mean_m": 10.5, "shot_distance_sd_m": 1.5}),
         Override("yob", 0, 61, {"shot_rate": 0.15, "shot_distance_mean_m": 22.0, "shot_distance_sd_m": 3.0}),
     ),
 )
 
 SEEDS: dict[str, SeedSpec] = {
-    "demo": SeedSpec("nel", "yob", seed=3, script=DEMO_SCRIPT),
+    "demo": SeedSpec("nel", "yob", seed=21, script=DEMO_SCRIPT),
     "random1": SeedSpec("mnb", "eat", seed=26),  # unscripted; the detector makes a call that misses
     "even": SeedSpec("mer", "mnb", seed=11),
 }
@@ -225,6 +239,9 @@ class _Match:
             long = self.rng.random() < p.long_ball_pct
             ex = min(PITCH_LENGTH_M - 4, x + (self.rng.uniform(22, 38) if long else self.rng.uniform(4, 14)))
             ey = min(PITCH_WIDTH_M - 2, max(2.0, y + self.rng.uniform(-12, 12)))
+            # Draws only when the knob is set, so seeds that never use it replay exactly.
+            if p.box_entry_pct < 1.0 and in_box(ex, ey) and self.rng.random() > p.box_entry_pct:
+                ex = BOX_X - self.rng.uniform(2, 8)
             completion = p.pass_completion - (0.25 if long else 0.0)
             done = forced or self.rng.random() < completion
             kind = "carry" if not long and self.rng.random() < 0.25 else "pass"

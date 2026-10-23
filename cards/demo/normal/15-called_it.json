@@ -1,8 +1,8 @@
 {
   "seed": "demo",
   "window": 15,
-  "t_start": 4719.5,
-  "t_end": 4731.5,
+  "t_start": 4731.8,
+  "t_end": 4743.8,
   "kind": "called_it",
   "detector": "scoreline_xg",
   "contradiction_id": "c_nel_scoreline_xg_60",
@@ -32,6 +32,7 @@
       "ar": "المتشكك رآه قادمًا."
     }
   },
+  "fans": null,
   "source": {
     "verdict": "template",
     "personaliser": "template",

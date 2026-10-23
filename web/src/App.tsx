@@ -3,7 +3,7 @@ import { LowerThird } from "./components/LowerThird";
 import { OutcomeCard } from "./components/OutcomeCard";
 import { Pitch } from "./components/Pitch";
 import type { CacheMode, Card, Lang, MatchEvent, Persona } from "./contracts";
-import { type Meta, SPEAKERS, type Team } from "./shared";
+import { type Meta, SPEAKERS, type Team, verdictText } from "./shared";
 import { FULL_TIME, usePlayback } from "./usePlayback";
 
 const SHOW_FOR = 60; // match seconds a card stays up once its hold ends
@@ -26,6 +26,7 @@ export default function App() {
   const [cards, setCards] = useState<Card[]>([]);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [persona, setPersona] = useState<Persona>("casual");
+  const [club, setClub] = useState<string | null>(null); // the team the viewer supports, if any
   const [lang, setLang] = useState<Lang>("en");
   const [chip, setChip] = useState(0);
   const { t, setT, playing, speed, setSpeed, instant, seek, togglePlay, stop } = usePlayback(cards);
@@ -94,6 +95,7 @@ export default function App() {
   });
 
   const match = meta?.seeds.find((s) => s.seed === seed);
+  const supporting = match && (club === match.home.id || club === match.away.id) ? club : null; // stale after a match switch
   const live = (pick: (c: Card) => boolean) =>
     [...cards].reverse().find((c) => pick(c) && c.t_start <= t && t < c.t_start + SHOW_FOR);
   const debate = live((c) => c.kind === "debate");
@@ -101,7 +103,6 @@ export default function App() {
   const minute = Math.floor(t / 60);
   const goals = (team?: Team) => events.filter((e) => e.type === "goal" && e.team === team?.id && e.t <= t).length;
   const dir = lang === "ar" ? "rtl" : "ltr";
-  const colors = match ? { [match.home.id]: match.home.colors[0], [match.away.id]: match.away.colors[0] } : {};
 
   return (
     <div className="stage">
@@ -122,6 +123,14 @@ export default function App() {
                   <button key={p} aria-pressed={persona === p} onClick={() => setPersona(p)}>{p === "analyst" ? "Analyst" : "Casual"}</button>
                 ))}
               </div>
+              {match && (
+                <div role="group" aria-label="Supporting">
+                  <button aria-pressed={supporting === null} onClick={() => setClub(null)}>Neutral</button>
+                  {[match.home, match.away].map((team) => (
+                    <button key={team.id} aria-pressed={supporting === team.id} onClick={() => setClub(team.id)}>{team.short}</button>
+                  ))}
+                </div>
+              )}
               <div role="group" aria-label="Language">
                 {(["en", "es", "ar"] as const).map((l) => (
                   <button key={l} aria-pressed={lang === l} onClick={() => setLang(l)}>{l.toUpperCase()}</button>
@@ -131,15 +140,24 @@ export default function App() {
           </header>
 
           <main className={`picture ${status === "loading" ? "dim" : ""}`}>
-            <Pitch events={events} t={t} homeId={match?.home.id ?? ""} colors={colors} />
+            {match && <Pitch events={events} t={t} home={match.home} away={match.away} />}
+            <ul className="pitch-legend" aria-label="Pitch key">
+              <li><svg viewBox="0 0 10 10" aria-hidden="true"><circle cx="5" cy="5" r="4" fill="var(--bar)" /></svg>Player on the ball</li>
+              <li><svg viewBox="0 0 16 10" aria-hidden="true"><line x1="1" y1="5" x2="15" y2="5" /></svg>Pass</li>
+              <li><svg viewBox="0 0 16 10" aria-hidden="true"><line x1="1" y1="5" x2="15" y2="5" strokeDasharray="3 2" /></svg>Dribble</li>
+              <li><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 2l6 6M8 2l-6 6" /></svg>Press, tackle</li>
+              <li><svg viewBox="0 0 16 10" aria-hidden="true"><line x1="1" y1="5" x2="15" y2="5" strokeWidth="3" /></svg>Shot, thicker = better chance</li>
+            </ul>
             {match && (
               <div className="scorebug" aria-label="Score">
-                <span className="swatch" style={{ background: match.home.colors[0] }} />
-                <span>{match.home.short}</span>
-                <span className="num score">{goals(match.home)}-{goals(match.away)}</span>
-                <span>{match.away.short}</span>
-                <span className="swatch" style={{ background: match.away.colors[0] }} />
                 <span className="num clock">{t >= FULL_TIME ? "FT" : `${minute}'`}</span>
+                <span className="team">{match.home.short}</span>
+                <span className="num score">
+                  {[match.home, match.away].map((team) => (
+                    <span key={team.id} style={{ background: team.colors[0], color: team.colors[1] }}>{goals(team)}</span>
+                  ))}
+                </span>
+                <span className="team">{match.away.short}</span>
               </div>
             )}
             {outcome && <OutcomeCard key={cardKey(outcome)} card={outcome} lang={lang} dir={dir} instant={instant} />}
@@ -152,11 +170,11 @@ export default function App() {
               ) : status === "loading" ? (
                 <div className="lower-third message"><p>Loading match…</p></div>
               ) : debate ? (
-                <LowerThird key={cardKey(debate)} card={debate} persona={persona} lang={lang} instant={instant} events={events} match={match!} t={t} />
+                <LowerThird key={cardKey(debate)} card={debate} persona={persona} club={supporting} lang={lang} instant={instant} events={events} match={match!} t={t} />
               ) : null}
             </div>
             <div className="sr-only" aria-live="polite" lang={lang}>
-              {debate ? SPEAKERS.map(([s, label]) => `${label}: ${s === "verdict" ? debate.variants[persona][lang] : debate.lines[s]?.[lang]}`).join(" ") : ""}
+              {debate ? SPEAKERS.map(([s, label]) => `${label}: ${s === "verdict" ? verdictText(debate, persona, supporting, lang) : debate.lines[s]?.[lang]}`).join(" ") : ""}
             </div>
           </main>
 

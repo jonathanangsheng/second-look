@@ -1,0 +1,125 @@
+{
+  "seed": "demo",
+  "window": 5,
+  "t_start": 1800.0,
+  "t_end": 1812.0,
+  "kind": "debate",
+  "detector": "possession_penetration",
+  "contradiction_id": "c_nel_possession_penetration_30",
+  "prediction_id": null,
+  "window_from_minute": null,
+  "claim": null,
+  "lines": {
+    "hype": {
+      "en": "North East London dominate possession with 71% but struggle on 11.5",
+      "es": "North East London dominan la posesión con un 71% pero tienen problemas con el 11,5",
+      "ar": "North East London يسيطرون على الكرة بنسبة 71% لكنهم يواجهون صعوبة في الدخول إلى منطقة الجزاء بنسبة 11.5"
+    },
+    "sceptic": {
+      "en": "Despite 71% possession, North East London have a low box entry rate of 11.5",
+      "es": "A pesar de tener un 71% de posesión, North East London tiene una baja tasa de entradas al área de 11,5",
+      "ar": "رغم امتلاك North East London للكرة بنسبة 71%، إلا أن معدل دخولهم لمنطقة الجزاء منخفض عند 11.5"
+    },
+    "verdict": {
+      "en": "North East London hold 71% possession but only manage 11.5 box entries",
+      "es": "North East London mantienen un 71% de posesión pero solo logran 11,5 entradas al área",
+      "ar": "North East London يحتفظون بالكرة بنسبة 71% لكنهم ينجحون فقط في تحقيق 11.5 من دخول منطقة الجزاء"
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "North East London have 71% possession but only 11.5 box entries, less than half the 25.4 rate of Yorkshire Orange Black, showing inefficiency.",
+      "es": "North East London tienen un 71% de posesión pero solo 11,5 entradas al área, menos de la mitad del 25,4 de Yorkshire Orange Black, mostrando ineficiencia.",
+      "ar": "North East London لديهم نسبة استحواذ تبلغ 71% لكنهم يحققون فقط 11.5 من دخول منطقة الجزاء، أقل من نصف معدل 25.4 لـ Yorkshire Orange Black، مما يدل على عدم الكفاءة."
+    },
+    "casual": {
+      "en": "North East London control the ball a lot but struggle to get into the box.",
+      "es": "North East London controlan mucho el balón pero les cuesta entrar al área.",
+      "ar": "North East London يسيطرون على الكرة كثيرًا لكنهم يجدون صعوبة في الدخول إلى منطقة الجزاء."
+    }
+  },
+  "fans": {
+    "nel": {
+      "en": "We have most of the ball but need more chances in the box.",
+      "es": "Tenemos la mayor parte del balón pero necesitamos más ocasiones en el área.",
+      "ar": "نحن نمتلك معظم الكرة لكننا بحاجة إلى المزيد من الفرص داخل منطقة الجزاء."
+    },
+    "yob": {
+      "en": "They keep the ball but don’t threaten enough in the box.",
+      "es": "Ellos mantienen el balón pero no amenazan lo suficiente en el área.",
+      "ar": "هم يحتفظون بالكرة لكنهم لا يشكلون تهديدًا كافيًا داخل منطقة الجزاء."
+    }
+  },
+  "source": {
+    "hype": "live",
+    "sceptic": "cache",
+    "verdict": "live",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
+  },
+  "evidence": {
+    "team": "nel",
+    "opponent": "yob",
+    "minute": 30,
+    "possession_pct": 71,
+    "box_entry_rate": 11.5,
+    "opponent_box_entry_rate": 25.4,
+    "ratio": 0.45,
+    "max_ratio": 0.6,
+    "score_home": 0,
+    "score_away": 1
+  },
+  "evidence_display": {
+    "team": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
+    "opponent": {
+      "en": "Yorkshire Orange Black",
+      "es": "Yorkshire Orange Black",
+      "ar": "Yorkshire Orange Black"
+    },
+    "minute": {
+      "en": "30'",
+      "es": "30'",
+      "ar": "30"
+    },
+    "possession_pct": {
+      "en": "71%",
+      "es": "71%",
+      "ar": "71%"
+    },
+    "box_entry_rate": {
+      "en": "11.5",
+      "es": "11,5",
+      "ar": "11.5"
+    },
+    "opponent_box_entry_rate": {
+      "en": "25.4",
+      "es": "25,4",
+      "ar": "25.4"
+    },
+    "ratio": {
+      "en": "0.45",
+      "es": "0,45",
+      "ar": "0.45"
+    },
+    "max_ratio": {
+      "en": "0.6",
+      "es": "0,6",
+      "ar": "0.6"
+    },
+    "score_home": {
+      "en": "0",
+      "es": "0",
+      "ar": "0"
+    },
+    "score_away": {
+      "en": "1",
+      "es": "1",
+      "ar": "1"
+    }
+  }
+}

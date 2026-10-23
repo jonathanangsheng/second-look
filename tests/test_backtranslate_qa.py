@@ -16,7 +16,9 @@ _spec.loader.exec_module(qa)
 
 def test_only_changed_strings_are_flagged_per_language():
     card = next(c for c in template_cards("demo") if c.kind == "debate")
-    same = {p: {"back": "x", "meaning": "same"} for p in (*card.lines, *card.variants)}
+    same = {
+        p: {"back": "x", "meaning": "same"} for p in (*card.lines, *card.variants, *(f"fan_{t}" for t in card.fans))
+    }
     llm = (
         FakeLLM()
         .reply(json.dumps({**same, "casual": {"back": "Wrong.", "meaning": "changed"}}))
@@ -37,7 +39,9 @@ def test_a_rerun_keeps_the_notes_of_strings_still_flagged():
 
 def test_a_string_the_model_leaves_out_is_flagged():
     card = next(c for c in template_cards("demo") if c.kind == "debate")
-    same = {p: {"back": "x", "meaning": "same"} for p in (*card.lines, *card.variants)}
+    same = {
+        p: {"back": "x", "meaning": "same"} for p in (*card.lines, *card.variants, *(f"fan_{t}" for t in card.fans))
+    }
     del same["analyst"]
     llm = FakeLLM().reply(json.dumps(same)).reply(json.dumps({**same, "analyst": "not a dict"}))
     flags = asyncio.run(qa.review(llm, "c.json", card))

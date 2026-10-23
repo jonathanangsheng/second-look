@@ -9,6 +9,8 @@ from second_look.agents import AGENTS, CALL_TIMEOUT_S, LANGUAGE, SPEAKERS, new_s
 
 SHOWN = {"shots": {"en": "10", "es": "10", "ar": "10"}, "team": {"en": "NEL", "es": "NEL", "ar": "NEL"}}
 FALLBACK = {s: (f"{s} template line", "template") for s in ("hype", "sceptic", "verdict")}
+FANS = {"fan_side": "We push.", "fan_other": "They hold."}  # the Personaliser's fan lines in a scripted reply
+FANS_ES = {"fan_side": "Empujamos.", "fan_other": "Aguantan."}
 
 
 def line(text):
@@ -112,7 +114,7 @@ def test_five_agents_hand_off_and_fan_in_survives_one_failed_translator():
         .reply(line("{shots} shots."))
         .reply(line("Volume."))
         .reply(line("Noise."))
-        .reply(json.dumps({"analyst": "{shots} shots, low quality.", "casual": "Lots of shots, few chances."}))
+        .reply(json.dumps({"analyst": "{shots} shots, low quality.", "casual": "Lots of shots, few chances.", **FANS}))
         .reply(
             json.dumps(
                 {
@@ -121,12 +123,13 @@ def test_five_agents_hand_off_and_fan_in_survives_one_failed_translator():
                     "verdict": "Ruido.",
                     "analyst": "{shots} tiros, poca calidad.",
                     "casual": "Muchos tiros.",
+                    **FANS_ES,
                 }
             )
         )
     )
     state = debate(llm, fail=frozenset({"ar"}), speakers_only=False)
-    assert state.variants == {"analyst": "10 shots, low quality.", "casual": "Lots of shots, few chances."}
+    assert state.variants == {"analyst": "10 shots, low quality.", "casual": "Lots of shots, few chances.", **FANS}
     assert state.translations == {
         "es": {
             "hype": "10 tiros.",
@@ -134,6 +137,7 @@ def test_five_agents_hand_off_and_fan_in_survives_one_failed_translator():
             "verdict": "Ruido.",
             "analyst": "10 tiros, poca calidad.",
             "casual": "Muchos tiros.",
+            **FANS_ES,
         }
     }
     assert state.source == {"hype": "live", "sceptic": "live", "verdict": "live", "personaliser": "live", "es": "live"}
@@ -177,3 +181,19 @@ def test_the_join_merges_each_translator_branch_even_from_separate_copies():
     merged = asyncio.run(go())
     assert merged.translations == {"es": {"hype": "Hola."}, "ar": {"hype": "مرحبا."}}
     assert merged.source == {"hype": "live", "es": "live", "ar": "live"}
+
+
+def test_a_ratio_limit_is_kept_from_the_agents():
+    shown = {
+        **SHOWN,
+        "ratio": {"en": "0.4", "es": "0,4", "ar": "0.4"},
+        "max_ratio": {"en": "0.6", "es": "0,6", "ar": "0.6"},
+    }
+    llm = FakeLLM().reply(line("A.")).reply(line("B.")).reply(line("C."))
+
+    async def go():
+        return await run_debate(llm, new_state("volume_quality", shown, None, FALLBACK), fail=LATER)
+
+    asyncio.run(go())
+    sent = json.loads(llm.calls[0].user)["evidence"]
+    assert "{ratio}" in sent and "{max_ratio}" not in sent
