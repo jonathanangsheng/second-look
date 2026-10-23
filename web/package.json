@@ -2,6 +2,7 @@
   "name": "second-look-web",
   "private": true,
   "type": "module",
+  "engines": { "node": ">=24.22.1" },
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
