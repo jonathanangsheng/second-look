@@ -16,7 +16,7 @@ from typing import Any, Protocol
 import openai
 from openai import AsyncOpenAI
 
-from second_look.config import FOUNDRY_TOKEN_SCOPE, GITHUB_MODELS_ENDPOINT, ProviderName, Settings
+from second_look.config import FOUNDRY_TOKEN_SCOPE, ProviderName, Settings
 
 
 class LLMError(RuntimeError):
@@ -144,11 +144,6 @@ class LLM:
 
 def build_provider(name: ProviderName, settings: Settings) -> Provider | None:
     """The configured provider for `name`, or None when its settings are missing."""
-    if name == "github":
-        if not settings.github_models_token:
-            return None
-        client = AsyncOpenAI(base_url=GITHUB_MODELS_ENDPOINT, api_key=settings.github_models_token, max_retries=0)
-        return Provider(name, settings.github_models_model, client)
     if name == "foundry":
         if not (settings.foundry_endpoint and settings.foundry_deployment):
             return None

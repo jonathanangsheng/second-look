@@ -42,7 +42,7 @@ def _run(llm, **overrides):
 
 def test_first_configured_provider_answers_and_later_ones_are_not_called():
     first, second = FakeClient("OK"), FakeClient("unused")
-    result = _run(LLM([Provider("foundry", "m1", first), Provider("github", "m2", second)]))
+    result = _run(LLM([Provider("foundry", "m1", first), Provider("foundry_serverless", "m2", second)]))
     assert (result.text, result.provider, result.model) == ("OK", "foundry", "m1")
     assert second.calls == []
 
@@ -59,8 +59,8 @@ def test_first_configured_provider_answers_and_later_ones_are_not_called():
 )
 def test_failing_provider_falls_back_to_the_next(error):
     first, second = FakeClient(error), FakeClient("OK")
-    result = _run(LLM([Provider("foundry", "m1", first), Provider("github", "m2", second)]))
-    assert result.provider == "github"
+    result = _run(LLM([Provider("foundry", "m1", first), Provider("foundry_serverless", "m2", second)]))
+    assert result.provider == "foundry_serverless"
     assert len(first.calls) == len(second.calls) == 1
 
 
@@ -74,32 +74,35 @@ class PlainTextClient(FakeClient):
 
 def test_non_completion_reply_counts_as_failure_and_falls_back():
     stub, real = PlainTextClient(), FakeClient("banana")
-    result = _run(LLM([Provider("github", "m1", stub), Provider("foundry", "m2", real)]))
+    result = _run(LLM([Provider("foundry_serverless", "m1", stub), Provider("foundry", "m2", real)]))
     assert (result.text, result.provider) == ("banana", "foundry")
 
 
 def test_only_non_completion_replies_raise_unavailable():
     with pytest.raises(LLMUnavailable, match="not a chat completion"):
-        _run(LLM([Provider("github", "m", PlainTextClient())]))
+        _run(LLM([Provider("foundry_serverless", "m", PlainTextClient())]))
 
 
 def test_every_provider_rate_limited_raises_rate_limited():
-    providers = [Provider(n, "m", FakeClient(_status_error(openai.RateLimitError, 429))) for n in ("foundry", "github")]
-    with pytest.raises(LLMRateLimited, match="foundry, github"):
+    providers = [
+        Provider(n, "m", FakeClient(_status_error(openai.RateLimitError, 429)))
+        for n in ("foundry", "foundry_serverless")
+    ]
+    with pytest.raises(LLMRateLimited, match="foundry, foundry_serverless"):
         _run(LLM(providers))
 
 
 def test_mixed_failures_raise_unavailable_naming_each_provider():
     providers = [
         Provider("foundry", "m", FakeClient(_status_error(openai.AuthenticationError, 401))),
-        Provider("github", "m", FakeClient(_status_error(openai.RateLimitError, 429))),
+        Provider("foundry_serverless", "m", FakeClient(_status_error(openai.RateLimitError, 429))),
     ]
-    with pytest.raises(LLMUnavailable, match=r"foundry: HTTP 401.*github: 429"):
+    with pytest.raises(LLMUnavailable, match=r"foundry: HTTP 401.*foundry_serverless: 429"):
         _run(LLM(providers))
 
 
 def test_slow_provider_exceeds_budget_and_raises_timeout():
-    llm = LLM([Provider("github", "m", FakeClient("late", delay=1.0))])
+    llm = LLM([Provider("foundry_serverless", "m", FakeClient("late", delay=1.0))])
     with pytest.raises(LLMTimeout) as info:
         _run(llm, timeout_s=0.05)
     assert isinstance(info.value, TimeoutError)  # FakeLLM and executors rely on this
@@ -108,13 +111,13 @@ def test_slow_provider_exceeds_budget_and_raises_timeout():
 def test_zero_budget_raises_timeout_without_calling():
     client = FakeClient("OK")
     with pytest.raises(LLMTimeout):
-        _run(LLM([Provider("github", "m", client)]), timeout_s=0)
+        _run(LLM([Provider("foundry_serverless", "m", client)]), timeout_s=0)
     assert client.calls == []
 
 
 def test_json_mode_requests_a_json_object():
     client = FakeClient('{"line": "x"}')
-    _run(LLM([Provider("github", "m", client)]), json=True)
+    _run(LLM([Provider("foundry_serverless", "m", client)]), json=True)
     assert client.calls[0]["response_format"] == {"type": "json_object"}
 
 
@@ -127,17 +130,18 @@ def test_from_env_keeps_order_and_skips_unconfigured(monkeypatch):
         "FOUNDRY_SERVERLESS_MODEL",
     ):
         monkeypatch.delenv(key, raising=False)
-    monkeypatch.setenv("LLM_PROVIDER", "foundry,github")
-    monkeypatch.setenv("GITHUB_MODELS_TOKEN", "test-token")
+    monkeypatch.setenv("LLM_PROVIDER", "foundry,foundry_serverless")
+    monkeypatch.setenv("FOUNDRY_SERVERLESS_ENDPOINT", "https://example.invalid/v1/")
+    monkeypatch.setenv("FOUNDRY_SERVERLESS_MODEL", "phi")
+    monkeypatch.setenv("FOUNDRY_SERVERLESS_API_KEY", "test-key")
     llm = LLM.from_env(Settings.from_env(dotenv=False))
-    assert [p.name for p in llm.providers] == ["github"]
+    assert [p.name for p in llm.providers] == ["foundry_serverless"]
 
 
 def test_from_env_with_nothing_configured_raises_unavailable(monkeypatch):
     for key in (
         "FOUNDRY_OPENAI_ENDPOINT",
         "FOUNDRY_MODEL_DEPLOYMENT",
-        "GITHUB_MODELS_TOKEN",
         "FOUNDRY_SERVERLESS_ENDPOINT",
         "FOUNDRY_SERVERLESS_MODEL",
     ):

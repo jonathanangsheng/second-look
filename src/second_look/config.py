@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 import os
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
 
 from dotenv import load_dotenv
 
-ProviderName = Literal["foundry", "foundry_serverless", "github"]
-PROVIDER_NAMES: tuple[ProviderName, ...] = ("foundry", "foundry_serverless", "github")
+ProviderName = Literal["foundry", "foundry_serverless"]
+PROVIDER_NAMES: tuple[ProviderName, ...] = ("foundry", "foundry_serverless")
 
 # Repo paths: code lives in src/second_look/, runtime data at the repo root.
 ROOT = Path(__file__).resolve().parents[2]
@@ -18,8 +18,6 @@ PROFILES_FILE = ROOT / "profiles" / "teams.toml"
 SEEDS_DIR = ROOT / "data" / "seeds"
 CARDS_DIR = ROOT / "cards"
 WEB_DIST = ROOT / "web" / "dist"
-
-GITHUB_MODELS_ENDPOINT = "https://models.github.ai/inference"
 
 # Detectors run at every WINDOW_MINUTES boundary over all events before it.
 WINDOW_MINUTES = 5
@@ -38,7 +36,7 @@ def _env(name: str) -> str | None:
 
 
 def _provider_order(raw: str | None) -> tuple[ProviderName, ...]:
-    names = [n.strip() for n in (raw or "foundry,github").split(",") if n.strip()]
+    names = [n.strip() for n in (raw or "foundry").split(",") if n.strip()]
     unknown = [n for n in names if n not in PROVIDER_NAMES]
     if unknown:
         raise ValueError(f"LLM_PROVIDER has unknown provider(s) {unknown}; allowed: {list(PROVIDER_NAMES)}")
@@ -48,7 +46,7 @@ def _provider_order(raw: str | None) -> tuple[ProviderName, ...]:
 @dataclass(frozen=True)
 class Settings:
     mode: Literal["replay", "live"] = "replay"
-    llm_provider: tuple[ProviderName, ...] = ("foundry", "github")
+    llm_provider: tuple[ProviderName, ...] = ("foundry",)
 
     # Microsoft Foundry, OpenAI-compatible v1 endpoint, e.g. https://<resource>.openai.azure.com/openai/v1/
     foundry_endpoint: str | None = None
@@ -59,10 +57,6 @@ class Settings:
     foundry_serverless_endpoint: str | None = None
     foundry_serverless_model: str | None = None
     foundry_serverless_api_key: str | None = None
-
-    # GitHub Models (dev and fallback).
-    github_models_token: str | None = field(default=None, repr=False)
-    github_models_model: str = "openai/gpt-4.1-mini"
 
     @classmethod
     def from_env(cls, *, dotenv: bool = True) -> Settings:
@@ -80,6 +74,4 @@ class Settings:
             foundry_serverless_endpoint=_env("FOUNDRY_SERVERLESS_ENDPOINT"),
             foundry_serverless_model=_env("FOUNDRY_SERVERLESS_MODEL"),
             foundry_serverless_api_key=_env("FOUNDRY_SERVERLESS_API_KEY"),
-            github_models_token=_env("GITHUB_MODELS_TOKEN"),
-            github_models_model=_env("GITHUB_MODELS_MODEL") or "openai/gpt-4.1-mini",
         )
