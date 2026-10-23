@@ -9,7 +9,7 @@ from second_look.contracts import Lang
 
 LANGS: tuple[Lang, ...] = ("en", "es", "ar")
 MINUTE_FIELDS = {"minute", "made_at_minute", "by_minute", "window_from_minute"}
-TEAM_FIELDS = {"team", "leader"}
+TEAM_FIELDS = {"team", "trailer", "leader"}
 
 T = dict[Lang, str]
 TEMPLATES: dict[str, dict[str, T]] = {
@@ -47,15 +47,15 @@ TEMPLATES: dict[str, dict[str, T]] = {
             "ar": "{leader} متقدم ويبدو مرتاحًا. المباراة محسومة.",
         },
         "sceptic": {
-            "en": "Since {window_from_minute}, {team} have {trailer_xg_window} xG to {leader_xg_window}. The score is lying.",
-            "es": "Desde el {window_from_minute}, {team} suma {trailer_xg_window} xG contra {leader_xg_window}. El marcador miente.",
-            "ar": "منذ الدقيقة {window_from_minute}، لدى {team} ‏{trailer_xg_window} مقابل {leader_xg_window}. النتيجة تكذب.",
+            "en": "Since {window_from_minute}, {trailer} have {trailer_xg_window} xG to {leader_xg_window}. The score is lying.",
+            "es": "Desde el {window_from_minute}, {trailer} suma {trailer_xg_window} xG contra {leader_xg_window}. El marcador miente.",
+            "ar": "منذ الدقيقة {window_from_minute}، لدى {trailer} ‏{trailer_xg_window} مقابل {leader_xg_window}. النتيجة تكذب.",
         },
-        # Also the prediction's claim_text (English).
+        # Also the prediction itself: CLAIM below, used for the card's claim and the ledger's claim_text.
         "verdict": {
-            "en": "A goal is coming for {team}.",
-            "es": "Se viene un gol de {team}.",
-            "ar": "هدف قادم لفريق {team}.",
+            "en": "A goal is coming for {trailer}.",
+            "es": "Se viene un gol de {trailer}.",
+            "ar": "هدف قادم لفريق {trailer}.",
         },
         "analyst": {
             "en": "Rolling xG since {window_from_minute}: {trailer_xg_window} against {leader_xg_window}, past the {threshold} gap.",
@@ -63,9 +63,9 @@ TEMPLATES: dict[str, dict[str, T]] = {
             "ar": "الأهداف المتوقعة منذ الدقيقة {window_from_minute}: {trailer_xg_window} مقابل {leader_xg_window}، فوق فارق {threshold}.",
         },
         "casual": {
-            "en": "The score says one thing. The chances say {team} will score.",
-            "es": "El marcador dice una cosa. Las ocasiones dicen que {team} marcará.",
-            "ar": "النتيجة تقول شيئًا، والفرص تقول إن {team} سيسجل.",
+            "en": "The score says one thing. The chances say {trailer} will score.",
+            "es": "El marcador dice una cosa. Las ocasiones dicen que {trailer} marcará.",
+            "ar": "النتيجة تقول شيئًا، والفرص تقول إن {trailer} سيسجل.",
         },
     },
     "called_it": {
@@ -122,9 +122,12 @@ def display(evidence: dict, team_names: dict[str, str]) -> dict[str, T]:
     return out
 
 
+CLAIM = TEMPLATES["scoreline_xg"]["verdict"]  # the prediction a scoreline_xg call makes, with a {trailer} placeholder
+
+
 def claim(team_name: str) -> T:
-    """The prediction a scoreline_xg Verdict makes, in every language (team names read the same in all three)."""
-    return {lang: text.format(team=team_name) for lang, text in TEMPLATES["scoreline_xg"]["verdict"].items()}
+    """The prediction filled in, in every language (team names read the same in all three)."""
+    return {lang: text.format(trailer=team_name) for lang, text in CLAIM.items()}
 
 
 def render(key: str, evidence: dict, team_names: dict[str, str]) -> tuple[dict[str, T], dict[str, T], dict[str, T]]:

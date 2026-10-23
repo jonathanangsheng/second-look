@@ -200,12 +200,20 @@ class Translator(Agent):
         await ctx.send_message(state)
 
 
-class Join(Executor):
-    """Fan-in: both translators share one state, so either copy is the result."""
+def _merge(states: list[DebateState]) -> DebateState:
+    """Fan-in: fold each translator branch's language into the first state. Today both branches share one
+    object, so this changes nothing; it keeps the result right if the framework ever hands out copies."""
+    state = states[0]
+    for other in states[1:]:
+        state.translations |= other.translations
+        state.source |= other.source
+    return state
 
+
+class Join(Executor):
     @handler
     async def join(self, states: list[DebateState], ctx: WorkflowContext[Never, DebateState]) -> None:
-        await ctx.yield_output(states[0])
+        await ctx.yield_output(_merge(states))
 
 
 async def run_debate(llm, state: DebateState, *, fail: frozenset[str] = frozenset()) -> DebateState:

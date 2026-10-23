@@ -4,9 +4,11 @@
   "t_start": 4200.0,
   "t_end": 4212.0,
   "kind": "debate",
+  "detector": "scoreline_xg",
   "contradiction_id": "c_nel_scoreline_xg_70",
   "prediction_id": null,
   "window_from_minute": 40,
+  "claim": null,
   "lines": {
     "hype": {
       "en": "Yorkshire Orange Black dominating with almost no expected goals, shocking at 70'",
@@ -45,7 +47,6 @@
     "ar": "live"
   },
   "evidence": {
-    "team": "nel",
     "leader": "yob",
     "minute": 70,
     "window_from_minute": 40,
@@ -53,14 +54,10 @@
     "leader_xg_window": 0.1,
     "threshold": 1.0,
     "score_home": 0,
-    "score_away": 2
+    "score_away": 2,
+    "trailer": "nel"
   },
   "evidence_display": {
-    "team": {
-      "en": "North East London",
-      "es": "North East London",
-      "ar": "North East London"
-    },
     "leader": {
       "en": "Yorkshire Orange Black",
       "es": "Yorkshire Orange Black",
@@ -100,6 +97,11 @@
       "en": "2",
       "es": "2",
       "ar": "2"
+    },
+    "trailer": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
     }
   }
 }

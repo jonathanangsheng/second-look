@@ -50,3 +50,14 @@ def test_fail_sceptic_cards_replace_normal_ones_in_the_same_window(tmp_path, mon
         assert "Failure recovery" in {c["label"] for c in client.get("/api/seeds").json()["chips"]}
     finally:
         api._cards.cache_clear()
+
+
+def test_the_ui_page_is_never_cached_but_hashed_assets_can_be(tmp_path):
+    from fastapi import FastAPI
+
+    (tmp_path / "index.html").write_text("<!doctype html>", encoding="utf-8")
+    (tmp_path / "app-3f9a.js").write_text("1", encoding="utf-8")
+    web = FastAPI()
+    web.mount("/", api.WebFiles(directory=tmp_path, html=True))
+    page, asset = TestClient(web).get("/"), TestClient(web).get("/app-3f9a.js")
+    assert page.headers["cache-control"] == "no-cache" and "cache-control" not in asset.headers

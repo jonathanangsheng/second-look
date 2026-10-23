@@ -15,13 +15,12 @@ from __future__ import annotations
 
 import argparse
 import asyncio
-import os
 import statistics
 import sys
 import time
 
 from second_look.agents import AGENTS
-from second_look.config import CARDS_DIR, ROOT
+from second_look.config import CARDS_DIR, ROOT, env
 from second_look.contracts import card_path
 from second_look.llm import LLM, LLMRateLimited, LLMUnavailable
 from second_look.pipeline import live_debate_card, read_cards, template_cards, write_cards
@@ -83,6 +82,24 @@ async def build_live(seed: str, mode: str, windows: set[int] | None, force: bool
     return 0
 
 
+def _configure_tracing() -> None:
+    """Trace every workflow run to Application Insights, with each agent's model call (model, tokens, latency)
+    inside its executor span. Off unless its connection string is set."""
+    conn = env("APPLICATIONINSIGHTS_CONNECTION_STRING")
+    if not conn:
+        return
+    try:
+        from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter
+        from opentelemetry.instrumentation.openai_v2 import OpenAIInstrumentor
+    except ImportError:
+        print("Tracing skipped: run with `uv run --extra tracing second-look-cards ...`.")
+        return
+    from agent_framework.observability import configure_otel_providers
+
+    configure_otel_providers(service_name="second-look", exporters=[AzureMonitorTraceExporter(connection_string=conn)])
+    OpenAIInstrumentor().instrument()
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(prog="second-look-cards", description=__doc__.splitlines()[0])
     ap.add_argument("--seed", choices=sorted(SEEDS), action="append", help="repeatable; default: every seed")
@@ -100,15 +117,12 @@ def main() -> int:
             written = write_cards(cards, seed, force=args.force)
             print(f"{seed}: {len(cards)} cards, {written} written to {CARDS_DIR / seed / 'normal'}")
         return 0
-    if os.environ.get("OTEL_EXPORTER_OTLP_ENDPOINT"):  # traces of each agent call to an OTLP collector
-        from agent_framework.observability import configure_otel_providers
-
-        configure_otel_providers(service_name="second-look")
     try:
-        llm = RateLimitWatch(LLM.from_env())
+        llm = RateLimitWatch(LLM.from_env())  # also loads .env, which may hold the tracing connection string
     except LLMUnavailable as exc:
         print(f"{exc}. Live cards need a model provider; template cards need none.")
         return 2
+    _configure_tracing()
     windows = {int(w) for w in args.windows.split(",")} if args.windows else None
 
     async def build_all() -> int:  # one event loop for every seed: the model client's connections belong to it

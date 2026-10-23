@@ -4,9 +4,11 @@
   "t_start": 2100.0,
   "t_end": 2112.0,
   "kind": "debate",
+  "detector": "volume_quality",
   "contradiction_id": "c_nel_volume_quality_35",
   "prediction_id": null,
   "window_from_minute": null,
+  "claim": null,
   "lines": {
     "hype": {
       "en": "Incredible pressure from North East London with 8 shots but xG only 0.19",

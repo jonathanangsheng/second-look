@@ -59,7 +59,7 @@ def scoreline_xg(state: MatchState) -> list[Contradiction]:
             surface=StatValue(label="goal difference", value=trailer.goals - leader.goals),
             truth=StatValue(label="xG difference since window start", value=round(gap, 2)),
             evidence={
-                "team": trailer.team,
+                "trailer": trailer.team,
                 "leader": leader.team,
                 "minute": state.minute,
                 "window_from_minute": state.window_from_minute,

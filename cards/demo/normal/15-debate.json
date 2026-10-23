@@ -4,9 +4,15 @@
   "t_start": 4800.0,
   "t_end": 4812.0,
   "kind": "debate",
+  "detector": "scoreline_xg",
   "contradiction_id": "c_nel_scoreline_xg_80",
   "prediction_id": "pr_nel_80",
   "window_from_minute": 50,
+  "claim": {
+    "en": "A goal is coming for North East London.",
+    "es": "Se viene un gol de North East London.",
+    "ar": "هدف قادم لفريق North East London."
+  },
   "lines": {
     "hype": {
       "en": "Despite Yorkshire Orange Black leading, North East London has a huge xG chance brewing…",
@@ -45,7 +51,6 @@
     "ar": "live"
   },
   "evidence": {
-    "team": "nel",
     "leader": "yob",
     "minute": 80,
     "window_from_minute": 50,
@@ -53,14 +58,10 @@
     "leader_xg_window": 0.1,
     "threshold": 1.0,
     "score_home": 1,
-    "score_away": 2
+    "score_away": 2,
+    "trailer": "nel"
   },
   "evidence_display": {
-    "team": {
-      "en": "North East London",
-      "es": "North East London",
-      "ar": "North East London"
-    },
     "leader": {
       "en": "Yorkshire Orange Black",
       "es": "Yorkshire Orange Black",
@@ -100,6 +101,11 @@
       "en": "2",
       "es": "2",
       "ar": "2"
+    },
+    "trailer": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
     }
   }
 }

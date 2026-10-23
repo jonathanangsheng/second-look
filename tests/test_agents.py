@@ -159,3 +159,21 @@ def test_a_team_name_typed_out_is_rejected_so_translators_never_see_it():
     llm = FakeLLM().reply(line("NEL take {shots} shots.")).reply(line("{team} take {shots} shots."))
     state = debate(llm, fail=frozenset({"sceptic", "verdict"}))
     assert state.raw["hype"] == "{team} take {shots} shots." and "write {team} instead of 'NEL'" in llm.calls[1].user
+
+
+def test_the_join_merges_each_translator_branch_even_from_separate_copies():
+    import copy
+
+    from second_look.agents import _merge
+
+    async def go():
+        base = new_state("volume_quality", SHOWN, None, FALLBACK)
+        base.source = {"hype": "live"}
+        es, ar = copy.deepcopy(base), copy.deepcopy(base)
+        es.translations, es.source["es"] = {"es": {"hype": "Hola."}}, "live"
+        ar.translations, ar.source["ar"] = {"ar": {"hype": "مرحبا."}}, "live"
+        return _merge([es, ar])
+
+    merged = asyncio.run(go())
+    assert merged.translations == {"es": {"hype": "Hola."}, "ar": {"hype": "مرحبا."}}
+    assert merged.source == {"hype": "live", "es": "live", "ar": "live"}

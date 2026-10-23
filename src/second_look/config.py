@@ -30,7 +30,8 @@ DEDUP_MINUTES = 15  # ...or after this many match minutes
 FOUNDRY_TOKEN_SCOPE = "https://cognitiveservices.azure.com/.default"
 
 
-def _env(name: str) -> str | None:
+def env(name: str) -> str | None:
+    """An environment variable, stripped; unset or blank is None."""
     value = os.environ.get(name, "").strip()
     return value or None
 
@@ -62,16 +63,16 @@ class Settings:
     def from_env(cls, *, dotenv: bool = True) -> Settings:
         if dotenv:
             load_dotenv(override=False)
-        mode = _env("MODE") or "replay"
+        mode = env("MODE") or "replay"
         if mode not in ("replay", "live"):
             raise ValueError(f"MODE must be 'replay' or 'live', got {mode!r}")
         return cls(
             mode=mode,  # type: ignore[arg-type]
-            llm_provider=_provider_order(_env("LLM_PROVIDER")),
-            foundry_endpoint=_env("FOUNDRY_OPENAI_ENDPOINT"),
-            foundry_deployment=_env("FOUNDRY_MODEL_DEPLOYMENT"),
-            foundry_api_key=_env("FOUNDRY_API_KEY"),
-            foundry_serverless_endpoint=_env("FOUNDRY_SERVERLESS_ENDPOINT"),
-            foundry_serverless_model=_env("FOUNDRY_SERVERLESS_MODEL"),
-            foundry_serverless_api_key=_env("FOUNDRY_SERVERLESS_API_KEY"),
+            llm_provider=_provider_order(env("LLM_PROVIDER")),
+            foundry_endpoint=env("FOUNDRY_OPENAI_ENDPOINT"),
+            foundry_deployment=env("FOUNDRY_MODEL_DEPLOYMENT"),
+            foundry_api_key=env("FOUNDRY_API_KEY"),
+            foundry_serverless_endpoint=env("FOUNDRY_SERVERLESS_ENDPOINT"),
+            foundry_serverless_model=env("FOUNDRY_SERVERLESS_MODEL"),
+            foundry_serverless_api_key=env("FOUNDRY_SERVERLESS_API_KEY"),
         )

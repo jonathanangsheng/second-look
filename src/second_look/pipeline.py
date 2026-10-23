@@ -43,15 +43,17 @@ def template_cards(seed: str) -> list[Card]:
         found = run_all(state)
         predicts = {c.id for c in found if c.detector == "scoreline_xg" and not ledger.has_open(c.team)}
         if chosen := picker.pick(found, predicts):
-            prediction = None
+            prediction, claim = None, None
             if chosen.id in predicts:
-                claim = templates.claim(names[chosen.team])["en"]
-                prediction = ledger.make(chosen.team, boundary, claim)
-            cards.append(_debate_card(seed, chosen, prediction, names))
+                claim = templates.claim(names[chosen.team])
+                prediction = ledger.make(chosen.team, boundary, claim["en"])
+            cards.append(_debate_card(seed, chosen, prediction, claim, names))
     return sorted(cards, key=lambda c: c.t_start)
 
 
-def _debate_card(seed: str, c: Contradiction, prediction: Prediction | None, names: dict[str, str]) -> Card:
+def _debate_card(
+    seed: str, c: Contradiction, prediction: Prediction | None, claim: templates.T | None, names: dict[str, str]
+) -> Card:
     lines, variants, shown = templates.render(c.detector, c.evidence, names)
     return Card(
         seed=seed,
@@ -59,9 +61,11 @@ def _debate_card(seed: str, c: Contradiction, prediction: Prediction | None, nam
         t_start=c.minute * 60.0,
         t_end=c.minute * 60.0 + CARD_SECONDS,
         kind="debate",
+        detector=c.detector,
         contradiction_id=c.id,
         prediction_id=prediction.id if prediction else None,
         window_from_minute=c.window_from_minute,
+        claim=claim,
         lines=lines,
         variants=variants,
         source=_all_template(lines),
@@ -73,8 +77,6 @@ def _debate_card(seed: str, c: Contradiction, prediction: Prediction | None, nam
 def _outcome_card(seed: str, kind: str, p: Prediction, minute: int, t: float, names: dict[str, str]) -> Card:
     evidence = {"team": p.team, "made_at_minute": p.made_at_minute, "by_minute": p.by_minute, "minute": minute}
     lines, variants, shown = templates.render(kind, evidence, names)
-    # The prediction as it was made, for the outcome card's quote (the live Verdict line may not state it).
-    shown["claim"] = templates.claim(names[p.team])
     window = min(minute, FULL_TIME_MINUTE - 1) // config.WINDOW_MINUTES
     return Card(
         seed=seed,
@@ -82,8 +84,10 @@ def _outcome_card(seed: str, kind: str, p: Prediction, minute: int, t: float, na
         t_start=t,
         t_end=t + CARD_SECONDS,
         kind=kind,
+        detector="scoreline_xg",
         contradiction_id=f"c_{p.team}_scoreline_xg_{p.made_at_minute}",
         prediction_id=p.id,
+        claim=templates.claim(names[p.team]),  # the prediction as made, quoted by the outcome card
         lines=lines,
         variants=variants,
         source=_all_template(lines),
@@ -111,10 +115,9 @@ async def live_debate_card(
         return "cache" if cached and cached.source.get(piece, "template") != "template" else "template"
 
     base = cached or card
-    detector = "scoreline_xg" if "_scoreline_xg_" in (card.contradiction_id or "") else "volume_quality"
     fallback = {s: (base.lines[s]["en"], fallback_source(s)) for s in SPEAKERS}
-    claim = templates.TEMPLATES["scoreline_xg"]["verdict"]["en"] if card.prediction_id else None  # placeholder form
-    state = await run_debate(llm, new_state(detector, card.evidence_display, claim, fallback), fail=fail)
+    claim = templates.CLAIM["en"] if card.claim else None  # placeholder form, for the agents
+    state = await run_debate(llm, new_state(card.detector, card.evidence_display, claim, fallback), fail=fail)
     lines = {s: {**base.lines[s], "en": state.lines[s]} for s in SPEAKERS}
     variants = {p: dict(texts) for p, texts in base.variants.items()}
     for persona, text in state.variants.items():

@@ -75,9 +75,11 @@ export interface Card {
   t_start: number;
   t_end: number;
   kind: "debate" | "called_it" | "missed_call";
+  detector: Detector; // outcome cards carry their call's detector, scoreline_xg
   contradiction_id?: string | null;
   prediction_id?: string | null;
   window_from_minute?: number | null;
+  claim?: LangText | null; // the prediction, on a call's debate card and its outcome card
   lines: Partial<Record<Speaker, LangText>>;
   // The Verdict line on screen is variants[persona][lang]; Hype and Sceptic never change.
   variants: Record<Persona, LangText>;

@@ -4,9 +4,15 @@
   "t_start": 3600.0,
   "t_end": 3612.0,
   "kind": "missed_call",
+  "detector": "scoreline_xg",
   "contradiction_id": "c_mnb_scoreline_xg_30",
   "prediction_id": "pr_mnb_30",
   "window_from_minute": null,
+  "claim": {
+    "en": "A goal is coming for Man Blue.",
+    "es": "Se viene un gol de Man Blue.",
+    "ar": "هدف قادم لفريق Man Blue."
+  },
   "lines": {
     "verdict": {
       "en": "Missed: no goal for Man Blue by 55'.",
@@ -58,11 +64,6 @@
       "en": "60'",
       "es": "60'",
       "ar": "60"
-    },
-    "claim": {
-      "en": "A goal is coming for Man Blue.",
-      "es": "Se viene un gol de Man Blue.",
-      "ar": "هدف قادم لفريق Man Blue."
     }
   }
 }

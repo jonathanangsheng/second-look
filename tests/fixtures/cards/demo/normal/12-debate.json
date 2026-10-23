@@ -1,12 +1,18 @@
 {
   "seed": "demo",
   "window": 12,
-  "t_start": 3600,
-  "t_end": 3612,
+  "t_start": 3600.0,
+  "t_end": 3612.0,
   "kind": "debate",
+  "detector": "scoreline_xg",
   "contradiction_id": "c_nel_scoreline_xg_60",
   "prediction_id": "pr_nel_60",
   "window_from_minute": 30,
+  "claim": {
+    "en": "A goal is coming for North East London.",
+    "es": "Se viene un gol de North East London.",
+    "ar": "هدف قادم لفريق North East London."
+  },
   "lines": {
     "hype": {
       "en": "Yorkshire Orange Black are cruising. This one looks finished.",
@@ -45,19 +51,35 @@
     "ar": "live"
   },
   "evidence": {
-    "team": "nel",
     "minute": 60,
     "window_from_minute": 30,
     "nel_xg_window": 1.4,
     "yob_xg_window": 0.1,
     "threshold": 1.0,
     "score_home": 0,
-    "score_away": 2
+    "score_away": 2,
+    "trailer": "nel"
   },
   "evidence_display": {
-    "window_from_minute": {"en": "30'", "es": "30'", "ar": "30"},
-    "nel_xg_window": {"en": "1.4", "es": "1,4", "ar": "1.4"},
-    "yob_xg_window": {"en": "0.1", "es": "0,1", "ar": "0.1"},
-    "threshold": {"en": "1.0", "es": "1,0", "ar": "1.0"}
+    "window_from_minute": {
+      "en": "30'",
+      "es": "30'",
+      "ar": "30"
+    },
+    "nel_xg_window": {
+      "en": "1.4",
+      "es": "1,4",
+      "ar": "1.4"
+    },
+    "yob_xg_window": {
+      "en": "0.1",
+      "es": "0,1",
+      "ar": "0.1"
+    },
+    "threshold": {
+      "en": "1.0",
+      "es": "1,0",
+      "ar": "1.0"
+    }
   }
 }

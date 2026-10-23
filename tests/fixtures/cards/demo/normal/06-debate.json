@@ -1,12 +1,14 @@
 {
   "seed": "demo",
   "window": 6,
-  "t_start": 2040,
-  "t_end": 2052,
+  "t_start": 2040.0,
+  "t_end": 2052.0,
   "kind": "debate",
+  "detector": "volume_quality",
   "contradiction_id": "c_nel_volume_quality_34",
   "prediction_id": null,
   "window_from_minute": null,
+  "claim": null,
   "lines": {
     "hype": {
       "en": "North East London: 10 shots and total control out there.",
@@ -56,9 +58,25 @@
     "score_away": 1
   },
   "evidence_display": {
-    "shots": {"en": "10", "es": "10", "ar": "10"},
-    "xg_per_shot": {"en": "0.05", "es": "0,05", "ar": "0.05"},
-    "threshold": {"en": "0.08", "es": "0,08", "ar": "0.08"},
-    "avg_shot_distance_m": {"en": "24", "es": "24", "ar": "24"}
+    "shots": {
+      "en": "10",
+      "es": "10",
+      "ar": "10"
+    },
+    "xg_per_shot": {
+      "en": "0.05",
+      "es": "0,05",
+      "ar": "0.05"
+    },
+    "threshold": {
+      "en": "0.08",
+      "es": "0,08",
+      "ar": "0.08"
+    },
+    "avg_shot_distance_m": {
+      "en": "24",
+      "es": "24",
+      "ar": "24"
+    }
   }
 }

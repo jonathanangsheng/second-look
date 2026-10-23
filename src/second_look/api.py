@@ -36,7 +36,7 @@ def _merged(seed: str, mode: str) -> list[Card]:
 
 
 def _is_lie(c: Card) -> bool:
-    return c.kind == "debate" and "_volume_quality_" in (c.contradiction_id or "")
+    return c.kind == "debate" and c.detector == "volume_quality"
 
 
 def _is_call(c: Card) -> bool:
@@ -96,5 +96,16 @@ def cards(seed: str, mode: Literal["normal", "fail-sceptic"] = "normal") -> list
     return _merged(seed, mode)
 
 
+class WebFiles(StaticFiles):
+    """The built UI. index.html is revalidated on every load so a redeploy shows at once; the hashed assets it
+    names can stay cached."""
+
+    def file_response(self, *args, **kwargs):
+        response = super().file_response(*args, **kwargs)
+        if response.media_type == "text/html":
+            response.headers["Cache-Control"] = "no-cache"
+        return response
+
+
 if WEB_DIST.exists():  # the built UI; in development Vite serves it and proxies /api here
-    app.mount("/", StaticFiles(directory=WEB_DIST, html=True), name="web")
+    app.mount("/", WebFiles(directory=WEB_DIST, html=True), name="web")

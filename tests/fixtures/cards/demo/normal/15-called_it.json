@@ -1,12 +1,18 @@
 {
   "seed": "demo",
   "window": 15,
-  "t_start": 4680,
-  "t_end": 4692,
+  "t_start": 4680.0,
+  "t_end": 4692.0,
   "kind": "called_it",
+  "detector": "scoreline_xg",
   "contradiction_id": "c_nel_scoreline_xg_60",
   "prediction_id": "pr_nel_60",
   "window_from_minute": null,
+  "claim": {
+    "en": "A goal is coming for North East London.",
+    "es": "Se viene un gol de North East London.",
+    "ar": "هدف قادم لفريق North East London."
+  },
   "lines": {
     "verdict": {
       "en": "Called it at 60'. North East London score at 78'.",
@@ -41,8 +47,20 @@
     "score_away": 2
   },
   "evidence_display": {
-    "made_at_minute": {"en": "60'", "es": "60'", "ar": "60"},
-    "minute": {"en": "78'", "es": "78'", "ar": "78"},
-    "by_minute": {"en": "85'", "es": "85'", "ar": "85"}
+    "made_at_minute": {
+      "en": "60'",
+      "es": "60'",
+      "ar": "60"
+    },
+    "minute": {
+      "en": "78'",
+      "es": "78'",
+      "ar": "78"
+    },
+    "by_minute": {
+      "en": "85'",
+      "es": "85'",
+      "ar": "85"
+    }
   }
 }

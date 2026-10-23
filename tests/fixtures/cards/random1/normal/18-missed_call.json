@@ -1,12 +1,18 @@
 {
   "seed": "random1",
   "window": 18,
-  "t_start": 5400,
-  "t_end": 5412,
+  "t_start": 5400.0,
+  "t_end": 5412.0,
   "kind": "missed_call",
+  "detector": "scoreline_xg",
   "contradiction_id": "c_yob_scoreline_xg_70",
   "prediction_id": "pr_yob_70",
   "window_from_minute": null,
+  "claim": {
+    "en": "A goal is coming for Yorkshire Orange Black.",
+    "es": "Se viene un gol de Yorkshire Orange Black.",
+    "ar": "هدف قادم لفريق Yorkshire Orange Black."
+  },
   "lines": {
     "verdict": {
       "en": "Missed: no goal for Yorkshire Orange Black by 90'.",
@@ -39,7 +45,15 @@
     "minute": 90
   },
   "evidence_display": {
-    "made_at_minute": {"en": "70'", "es": "70'", "ar": "70"},
-    "by_minute": {"en": "90'", "es": "90'", "ar": "90"}
+    "made_at_minute": {
+      "en": "70'",
+      "es": "70'",
+      "ar": "70"
+    },
+    "by_minute": {
+      "en": "90'",
+      "es": "90'",
+      "ar": "90"
+    }
   }
 }

@@ -116,9 +116,11 @@ class Card(_Strict):
     t_start: float = Field(ge=0)
     t_end: float = Field(ge=0)
     kind: Literal["debate", "called_it", "missed_call"]
+    detector: Detector  # outcome cards carry their call's detector, scoreline_xg
     contradiction_id: str | None = None
     prediction_id: str | None = None
     window_from_minute: int | None = None
+    claim: LangText | None = None  # the prediction, on a call's debate card and its outcome card
     lines: dict[Speaker, LangText]
     # The Verdict line shown on screen is variants[persona][lang]; Hype and Sceptic never change.
     variants: dict[Persona, LangText]
@@ -131,7 +133,10 @@ class Card(_Strict):
         if self.t_end < self.t_start:
             raise ValueError("t_end must be >= t_start")
         langs = {"en", "es", "ar"}
-        for name, texts in [*self.lines.items(), *self.variants.items()]:
+        texts_by_name = [*self.lines.items(), *self.variants.items()]
+        if self.claim:
+            texts_by_name.append(("claim", self.claim))
+        for name, texts in texts_by_name:
             missing = langs - texts.keys()
             if missing:
                 raise ValueError(f"{name} is missing languages: {sorted(missing)}")
@@ -141,6 +146,8 @@ class Card(_Strict):
             raise ValueError("cards need analyst and casual variants")
         if self.kind != "debate" and self.prediction_id is None:
             raise ValueError(f"{self.kind} cards must reference a prediction")
+        if (self.prediction_id is None) != (self.claim is None):
+            raise ValueError("a card has a claim exactly when it references a prediction")
         return self
 
 

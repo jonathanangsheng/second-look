@@ -7,7 +7,6 @@ Rules:
 - Each line must fit its number in max_words once filled in. A team placeholder like {team} fills in as up to three words.
 - Never write a number. The evidence maps each placeholder to its value. Write the placeholder, never the value: "{shots} shots", not "8 shots". Team names are placeholders too, like {team}.
 - Never spell numbers out as words.
-- In scoreline_xg evidence, {team} is the trailing team: {trailer_xg_window} is its xG and {leader_xg_window} belongs to {leader}.
 - If a claim is given, it is added after each of your lines exactly as written and does not count toward max_words. Give the reason for it as one complete sentence; never state the prediction yourself.
 - Criticise the statistic, never the club, its players or its fans. No mockery.
 - Generic, nameless pundit voice. Never imitate a real broadcaster, commentator or catchphrase.

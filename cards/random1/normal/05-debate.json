@@ -4,9 +4,15 @@
   "t_start": 1800.0,
   "t_end": 1812.0,
   "kind": "debate",
+  "detector": "scoreline_xg",
   "contradiction_id": "c_mnb_scoreline_xg_30",
   "prediction_id": "pr_mnb_30",
   "window_from_minute": 0,
+  "claim": {
+    "en": "A goal is coming for Man Blue.",
+    "es": "Se viene un gol de Man Blue.",
+    "ar": "هدف قادم لفريق Man Blue."
+  },
   "lines": {
     "hype": {
       "en": "Despite trailing, Man Blue boasts an impressive 1.2 xG in this match",
@@ -45,7 +51,6 @@
     "ar": "live"
   },
   "evidence": {
-    "team": "mnb",
     "leader": "eat",
     "minute": 30,
     "window_from_minute": 0,
@@ -53,14 +58,10 @@
     "leader_xg_window": 0.1,
     "threshold": 1.0,
     "score_home": 0,
-    "score_away": 1
+    "score_away": 1,
+    "trailer": "mnb"
   },
   "evidence_display": {
-    "team": {
-      "en": "Man Blue",
-      "es": "Man Blue",
-      "ar": "Man Blue"
-    },
     "leader": {
       "en": "East Anglia Town",
       "es": "East Anglia Town",
@@ -100,6 +101,11 @@
       "en": "1",
       "es": "1",
       "ar": "1"
+    },
+    "trailer": {
+      "en": "Man Blue",
+      "es": "Man Blue",
+      "ar": "Man Blue"
     }
   }
 }

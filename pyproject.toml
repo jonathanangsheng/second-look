@@ -19,6 +19,13 @@ dependencies = [
 second-look-sim = "second_look.sim:main"
 second-look-cards = "second_look.build_cards:main"
 
+[project.optional-dependencies]
+tracing = [
+    "azure-monitor-opentelemetry-exporter>=1.0.0b58",
+    "opentelemetry-instrumentation-openai-v2==2.4b0",
+    "opentelemetry-util-genai==0.4b0",  # pinned together: 1.x drops a module openai-v2 2.4b0 imports
+]
+
 [dependency-groups]
 dev = [
     "httpx>=0.28.1",

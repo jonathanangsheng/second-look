@@ -4,9 +4,15 @@
   "t_start": 5400.0,
   "t_end": 5412.0,
   "kind": "missed_call",
+  "detector": "scoreline_xg",
   "contradiction_id": "c_nel_scoreline_xg_80",
   "prediction_id": "pr_nel_80",
   "window_from_minute": null,
+  "claim": {
+    "en": "A goal is coming for North East London.",
+    "es": "Se viene un gol de North East London.",
+    "ar": "هدف قادم لفريق North East London."
+  },
   "lines": {
     "verdict": {
       "en": "Missed: no goal for North East London by 90'.",
@@ -58,11 +64,6 @@
       "en": "90'",
       "es": "90'",
       "ar": "90"
-    },
-    "claim": {
-      "en": "A goal is coming for North East London.",
-      "es": "Se viene un gol de North East London.",
-      "ar": "هدف قادم لفريق North East London."
     }
   }
 }

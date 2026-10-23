@@ -18,7 +18,7 @@ def _cards(seed):
 
 
 def _debates(seed, detector):
-    return [c for c in _cards(seed) if c.kind == "debate" and f"_{detector}_" in c.contradiction_id]
+    return [c for c in _cards(seed) if c.kind == "debate" and c.detector == detector]
 
 
 def test_demo_lie_card_first_fires_around_34():
@@ -42,12 +42,13 @@ def test_every_prediction_is_resolved_by_full_time(seed):
 
 @pytest.mark.parametrize("seed", ["demo", "random1"])
 def test_outcome_cards_quote_the_claim_their_call_made(seed):
-    """The quote is the prediction itself in every language, not the (possibly live) Verdict line."""
+    """The quote is the prediction itself in every language: the call's template Verdict, not its live one."""
     calls = {c.prediction_id: c for c in _cards(seed) if c.kind == "debate" and c.prediction_id}
     outcomes = [c for c in _cards(seed) if c.kind in ("called_it", "missed_call")]
     assert outcomes
     for card in outcomes:
-        assert card.evidence_display["claim"] == calls[card.prediction_id].lines["verdict"]
+        call = calls[card.prediction_id]
+        assert card.claim == call.claim == call.lines["verdict"] and card.detector == "scoreline_xg"
 
 
 def test_random1_shows_a_genuine_missed_call():

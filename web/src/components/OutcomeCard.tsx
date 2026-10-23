@@ -5,7 +5,7 @@ type Props = { card: Card; lang: Lang; dir: string; instant: boolean };
 
 export function OutcomeCard({ card, lang, dir, instant }: Props) {
   const made = card.evidence_display?.made_at_minute?.[lang] ?? "";
-  const claim = card.evidence_display?.claim?.[lang];
+  const claim = card.claim?.[lang];
   const hit = card.kind === "called_it";
   return (
     <aside className={`outcome ${instant ? "instant" : ""}`} dir={dir} lang={lang}>

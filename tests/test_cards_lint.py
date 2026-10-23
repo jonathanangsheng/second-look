@@ -14,7 +14,6 @@ from second_look.agents import MAX_WORDS, VARIANT_WORDS
 from second_look.config import CARDS_DIR
 from second_look.contracts import Card
 from second_look.grounding import ARABIC_INDIC
-from second_look.templates import claim
 
 CARD_FILES = sorted(CARDS_DIR.rglob("*.json"))
 NUMBER = re.compile(r"\d+(?:[.,]\d+)?")
@@ -28,8 +27,8 @@ def _numbers(text: str) -> set[str]:
 def test_committed_card_follows_the_text_rules(path):
     card = Card.model_validate_json(path.read_text(encoding="utf-8"))
     limits = {**dict.fromkeys(card.lines, MAX_WORDS), **VARIANT_WORDS}
-    if card.kind == "debate" and card.prediction_id:  # the claim sentence appended to each persona line is extra
-        claim_words = len(claim(card.evidence_display["team"]["en"])["en"].split())
+    if card.kind == "debate" and card.claim:  # the claim sentence appended to each persona line is extra
+        claim_words = len(card.claim["en"].split())
         limits = {k: n + claim_words if k in VARIANT_WORDS else n for k, n in limits.items()}
     for name, texts in [*card.lines.items(), *card.variants.items()]:
         for lang, text in texts.items():

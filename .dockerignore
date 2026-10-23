@@ -1,0 +1,17 @@
+# Secrets, local-only files and anything the replay server doesn't need stay out of the image.
+.env
+.denylist.local
+.planning
+.gstack
+.claude
+.git
+.github
+.venv
+**/node_modules
+web/dist
+**/__pycache__
+.pytest_cache
+.ruff_cache
+qa
+tests
+scripts
