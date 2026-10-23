@@ -9,40 +9,40 @@
   "window_from_minute": 50,
   "lines": {
     "hype": {
-      "en": "Yorkshire Orange Black lead and look comfortable. This one is done.",
-      "es": "Yorkshire Orange Black va por delante y parece tranquilo. Esto está hecho.",
-      "ar": "Yorkshire Orange Black متقدم ويبدو مرتاحًا. المباراة محسومة."
+      "en": "Despite Yorkshire Orange Black leading, North East London has a huge xG chance brewing…",
+      "es": "A pesar de que Yorkshire Orange Black va ganando, North East London está generando una gran oportunidad de xG…",
+      "ar": "رغم تقدم Yorkshire Orange Black، لدى North East London فرصة xG كبيرة تتشكل…"
     },
     "sceptic": {
-      "en": "Since 50', North East London have 1.8 xG to 0.1. The score is lying.",
-      "es": "Desde el 50', North East London suma 1,8 xG contra 0,1. El marcador miente.",
-      "ar": "منذ الدقيقة 50، لدى North East London ‏1.8 مقابل 0.1. النتيجة تكذب."
+      "en": "Despite the lead, North East London’s xG over the last window is below threshold…",
+      "es": "A pesar de la ventaja, el xG de North East London en la última ventana está por debajo del umbral…",
+      "ar": "رغم التقدم، فإن xG لفريق North East London في الفترة الأخيرة أقل من الحد المطلوب…"
     },
     "verdict": {
-      "en": "A goal is coming for North East London.",
-      "es": "Se viene un gol de North East London.",
-      "ar": "هدف قادم لفريق North East London."
+      "en": "Despite trailing, North East London’s recent xG surge suggests a goal is likely soon.",
+      "es": "Aunque van por detrás, el reciente aumento del xG de North East London sugiere que pronto marcarán.",
+      "ar": "رغم التأخر، تشير زيادة xG الأخيرة لفريق North East London إلى احتمال تسجيل هدف قريباً."
     }
   },
   "variants": {
     "analyst": {
-      "en": "Rolling xG since 50': 1.8 against 0.1, past the 1.0 gap.",
-      "es": "xG desde el 50': 1,8 contra 0,1, por encima de 1,0.",
-      "ar": "الأهداف المتوقعة منذ الدقيقة 50: 1.8 مقابل 0.1، فوق فارق 1.0."
+      "en": "Despite trailing, North East London’s xG in the last 50' minutes is 1.8, well above the 1.0 threshold, unlike Yorkshire Orange Black’s 0.1. A goal is coming for North East London.",
+      "es": "Aunque van por detrás, el xG de North East London en los últimos 50' minutos es 1,8, muy por encima del umbral de 1,0, a diferencia del Yorkshire Orange Black con 0,1. El gol para North East London está en camino.",
+      "ar": "رغم التأخر، فإن xG لفريق North East London في آخر 50 دقيقة هو 1.8، وهو أعلى بكثير من الحد 1.0، على عكس Yorkshire Orange Black الذي لديه 0.1. هدف قادم لفريق North East London."
     },
     "casual": {
-      "en": "The score says one thing. The chances say North East London will score.",
-      "es": "El marcador dice una cosa. Las ocasiones dicen que North East London marcará.",
-      "ar": "النتيجة تقول شيئًا، والفرص تقول إن North East London سيسجل."
+      "en": "North East London are likely to score soon because their chances have improved a lot recently. A goal is coming for North East London.",
+      "es": "Es probable que North East London marque pronto porque sus oportunidades han mejorado mucho últimamente. El gol para North East London está por llegar.",
+      "ar": "من المحتمل أن يسجل North East London قريباً لأن فرصهم تحسنت كثيراً مؤخراً. هدف قادم لفريق North East London."
     }
   },
   "source": {
-    "hype": "template",
-    "sceptic": "template",
-    "verdict": "template",
-    "personaliser": "template",
-    "es": "template",
-    "ar": "template"
+    "hype": "live",
+    "sceptic": "live",
+    "verdict": "live",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
   },
   "evidence": {
     "team": "nel",

@@ -9,19 +9,19 @@
   "window_from_minute": 0,
   "lines": {
     "hype": {
-      "en": "East Anglia Town lead and look comfortable. This one is done.",
-      "es": "East Anglia Town va por delante y parece tranquilo. Esto está hecho.",
-      "ar": "East Anglia Town متقدم ويبدو مرتاحًا. المباراة محسومة."
+      "en": "Despite trailing, Man Blue boasts an impressive 1.2 xG in this match",
+      "es": "A pesar de ir por detrás, Man Blue presume de un impresionante xG de 1,2 en este partido",
+      "ar": "رغم التأخر، يمتلك Man Blue معدل xG مثير للإعجاب يبلغ 1.2 في هذه المباراة"
     },
     "sceptic": {
-      "en": "Since 0', Man Blue have 1.2 xG to 0.1. The score is lying.",
-      "es": "Desde el 0', Man Blue suma 1,2 xG contra 0,1. El marcador miente.",
-      "ar": "منذ الدقيقة 0، لدى Man Blue ‏1.2 مقابل 0.1. النتيجة تكذب."
+      "en": "Despite trailing, Man Blue holds a higher xG at 1.2 versus East Anglia Town's…",
+      "es": "A pesar de ir por detrás, Man Blue mantiene un xG superior de 1,2 frente al de East Anglia Town…",
+      "ar": "رغم التأخر، يتفوق Man Blue في معدل xG عند 1.2 مقابل East Anglia Town…"
     },
     "verdict": {
-      "en": "A goal is coming for Man Blue.",
-      "es": "Se viene un gol de Man Blue.",
-      "ar": "هدف قادم لفريق Man Blue."
+      "en": "Despite trailing, Man Blue holds a strong xG lead since 0' suggesting a goal…",
+      "es": "A pesar de ir por detrás, Man Blue mantiene una fuerte ventaja en xG desde el minuto 0' que sugiere un gol…",
+      "ar": "رغم التأخر، يحتفظ Man Blue بتفوق قوي في xG منذ الدقيقة 0 مما يشير إلى هدف…"
     }
   },
   "variants": {
@@ -37,12 +37,12 @@
     }
   },
   "source": {
-    "hype": "template",
-    "sceptic": "template",
-    "verdict": "template",
+    "hype": "live",
+    "sceptic": "live",
+    "verdict": "cache",
     "personaliser": "template",
-    "es": "template",
-    "ar": "template"
+    "es": "live",
+    "ar": "live"
   },
   "evidence": {
     "team": "mnb",

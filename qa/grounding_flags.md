@@ -1,0 +1,5 @@
+- demo/normal/6: eight
+- demo/normal/6: eight, una, ocho, una
+- demo/normal/6: una
+- demo/normal/6: una
+- demo/fail-sceptic/11: two

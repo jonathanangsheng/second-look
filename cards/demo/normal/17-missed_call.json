@@ -11,7 +11,7 @@
     "verdict": {
       "en": "Missed: no goal for North East London by 90'.",
       "es": "Fallado: ningún gol de North East London antes del 90'.",
-      "ar": "توقع خاطئ: لم يسجل North East London حتى الدقيقة 90."
+      "ar": "توقع خاطئ: لا هدف لـ North East London بحلول الدقيقة 90."
     }
   },
   "variants": {
@@ -58,6 +58,11 @@
       "en": "90'",
       "es": "90'",
       "ar": "90"
+    },
+    "claim": {
+      "en": "A goal is coming for North East London.",
+      "es": "Se viene un gol de North East London.",
+      "ar": "هدف قادم لفريق North East London."
     }
   }
 }

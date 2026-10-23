@@ -9,40 +9,40 @@
   "window_from_minute": null,
   "lines": {
     "hype": {
-      "en": "North East London: 13 shots already. They are all over them.",
-      "es": "North East London: ya 13 disparos. Los tienen encerrados.",
-      "ar": "North East London: 13 تسديدات حتى الآن. يحاصرون منافسهم."
+      "en": "North East London have fired 13 shots but their xG per shot is worryingly…",
+      "es": "North East London han disparado 13 tiros pero su xG por tiro es preocupantemente…",
+      "ar": "أطلق North East London 13 تسديدة لكن معدل xG لكل تسديدة لديهم مقلق…"
     },
     "sceptic": {
-      "en": "13 shots at 0.032 xG each, from 25 metres on average.",
-      "es": "13 disparos de 0,032 xG cada uno, desde 25 metros de media.",
-      "ar": "13 تسديدات بمعدل 0.032 لكل منها، من 25 مترًا في المتوسط."
+      "en": "Despite 13 shots, North East London's low 0.032 reveals poor shot quality.",
+      "es": "A pesar de 13 tiros, el bajo 0,032 de North East London revela mala calidad en los disparos.",
+      "ar": "رغم 13 تسديدة، يكشف معدل 0.032 المنخفض لـ North East London عن ضعف جودة التسديدات."
     },
     "verdict": {
-      "en": "Volume, not danger. These shots rarely score.",
-      "es": "Volumen, no peligro. Estos disparos casi nunca acaban en gol.",
-      "ar": "كمية بلا خطورة. هذه التسديدات نادرًا ما تهز الشباك."
+      "en": "North East London have taken 13 shots but their low 0.032 xG per shot…",
+      "es": "North East London han realizado 13 tiros pero su bajo xG por tiro de 0,032…",
+      "ar": "قام North East London بـ 13 تسديدة لكن معدل xG المنخفض لكل تسديدة 0.032…"
     }
   },
   "variants": {
     "analyst": {
-      "en": "13 shots at 0.032 xG per shot, under the 0.08 threshold.",
-      "es": "13 disparos a 0,032 xG por disparo, bajo el umbral de 0,08.",
-      "ar": "13 تسديدات بمعدل 0.032 للتسديدة، أقل من حد 0.08."
+      "en": "Despite North East London taking 13 shots, their xG per shot of 0.032 is below the 0.08 threshold, indicating low quality chances.",
+      "es": "Aunque North East London ha tomado 13 tiros, su xG por tiro de 0,032 está por debajo del umbral de 0,08, indicando oportunidades de baja calidad.",
+      "ar": "رغم أن North East London أطلق 13 تسديدة، فإن معدل xG لكل تسديدة 0.032 أقل من العتبة 0.08، مما يشير إلى فرص تسجيل ضعيفة الجودة."
     },
     "casual": {
-      "en": "Lots of shots, almost no real chances.",
-      "es": "Muchos disparos, casi ninguna ocasión real.",
-      "ar": "تسديدات كثيرة، وفرص حقيقية شبه معدومة."
+      "en": "North East London have many shots but they are not creating good scoring chances.",
+      "es": "North East London tienen muchos tiros pero no están creando buenas oportunidades de gol.",
+      "ar": "لدى North East London العديد من التسديدات لكنهم لا يخلقون فرص تسجيل جيدة."
     }
   },
   "source": {
-    "hype": "template",
-    "sceptic": "template",
-    "verdict": "template",
-    "personaliser": "template",
-    "es": "template",
-    "ar": "template"
+    "hype": "live",
+    "sceptic": "live",
+    "verdict": "live",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
   },
   "evidence": {
     "team": "nel",

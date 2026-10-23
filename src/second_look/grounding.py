@@ -34,14 +34,23 @@ def ground(raw: str, shown: dict[str, dict[str, str]], lang: Lang) -> str:
     """Fill placeholders from `shown` (evidence_display) or raise GroundingError."""
     if re.search(r"\d", raw.translate(ARABIC_INDIC)):
         raise GroundingError(f"digit outside a placeholder: {raw!r}")
-    try:
-        fields = {name for _, name, _, _ in string.Formatter().parse(raw) if name}
-    except ValueError as exc:  # unbalanced braces
-        raise GroundingError(str(exc)) from exc
+    for key, value in shown.items():  # a name typed out would get translated or drift; only its placeholder is safe
+        name = value[lang]
+        if not re.search(r"\d", name) and re.search(rf"(?<!\w){re.escape(name)}(?!\w)", raw, re.I):
+            raise GroundingError(f"write {{{key}}} instead of {name!r}")
+    fields = placeholders(raw)
     unknown = fields - shown.keys()
     if unknown:
         raise GroundingError(f"unknown placeholder(s) {sorted(unknown)}")
     return raw.format(**{k: shown[k][lang] for k in fields})
+
+
+def placeholders(raw: str) -> set[str]:
+    """The {placeholder} names in `raw`."""
+    try:
+        return {name for _, name, _, _ in string.Formatter().parse(raw) if name}
+    except ValueError as exc:  # unbalanced braces
+        raise GroundingError(str(exc)) from exc
 
 
 def number_words(text: str, lang: Lang) -> list[str]:

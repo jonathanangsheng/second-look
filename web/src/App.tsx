@@ -142,7 +142,7 @@ export default function App() {
                 <span className="num clock">{t >= FULL_TIME ? "FT" : `${minute}'`}</span>
               </div>
             )}
-            {outcome && <OutcomeCard key={cardKey(outcome)} card={outcome} cards={cards} lang={lang} dir={dir} instant={instant} />}
+            {outcome && <OutcomeCard key={cardKey(outcome)} card={outcome} lang={lang} dir={dir} instant={instant} />}
             <div className="slot" dir={dir} lang={lang}>
               {status === "error" ? (
                 <div className="lower-third message">

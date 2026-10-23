@@ -20,7 +20,7 @@ import statistics
 import sys
 import time
 
-from second_look.agents import SPEAKERS
+from second_look.agents import AGENTS
 from second_look.config import CARDS_DIR, ROOT
 from second_look.contracts import card_path
 from second_look.llm import LLM, LLMRateLimited, LLMUnavailable
@@ -57,7 +57,7 @@ async def build_live(seed: str, mode: str, windows: set[int] | None, force: bool
                 write_cards([card], seed, mode)  # keeps an existing file
             continue
         existing = existing_cards.get((card.window, card.kind))
-        if existing and not force and all(existing.source.get(s) == "live" for s in SPEAKERS if s not in fail):
+        if existing and not force and all(existing.source.get(s) == "live" for s in AGENTS if s not in fail):
             continue
         cached = normal_cards.get((card.window, card.kind))
         started = time.perf_counter()
@@ -71,7 +71,7 @@ async def build_live(seed: str, mode: str, windows: set[int] | None, force: bool
         path.write_text(live.model_dump_json(indent=2) + "\n", encoding="utf-8")
         print(
             f"  {path.relative_to(ROOT).as_posix()}  {latencies[-1]:.1f}s  "
-            + " ".join(f"{s}={live.source[s]}" for s in SPEAKERS)
+            + " ".join(f"{s}={live.source[s]}" for s in AGENTS)
         )
         if flags:
             FLAGS_FILE.parent.mkdir(exist_ok=True)
@@ -110,10 +110,14 @@ def main() -> int:
         print(f"{exc}. Live cards need a model provider; template cards need none.")
         return 2
     windows = {int(w) for w in args.windows.split(",")} if args.windows else None
-    for seed in seeds:
-        if asyncio.run(build_live(seed, args.mode, windows, args.force, llm)):
-            return 1
-    return 0
+
+    async def build_all() -> int:  # one event loop for every seed: the model client's connections belong to it
+        for seed in seeds:
+            if await build_live(seed, args.mode, windows, args.force, llm):
+                return 1
+        return 0
+
+    return asyncio.run(build_all())
 
 
 if __name__ == "__main__":

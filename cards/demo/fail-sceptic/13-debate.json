@@ -1,0 +1,105 @@
+{
+  "seed": "demo",
+  "window": 13,
+  "t_start": 4200.0,
+  "t_end": 4212.0,
+  "kind": "debate",
+  "contradiction_id": "c_nel_scoreline_xg_70",
+  "prediction_id": null,
+  "window_from_minute": 40,
+  "lines": {
+    "hype": {
+      "en": "Yorkshire Orange Black dominating with almost no expected goals, shocking at 70'",
+      "es": "Yorkshire Orange Black domina con casi ningún gol esperado, impactante en el minuto 70'",
+      "ar": "Yorkshire Orange Black يهيمن مع توقعات أهداف شبه معدومة، مفاجأة في الدقيقة 70"
+    },
+    "sceptic": {
+      "en": "Despite Yorkshire Orange Black’s lead, North East London’s 1.7 xG since 40' shows pressure…",
+      "es": "A pesar de la ventaja de Yorkshire Orange Black, los 1,7 xG de North East London desde 40' muestran presión…",
+      "ar": "رغم تقدم Yorkshire Orange Black، يظهر North East London ضغطاً بـ 1.7 xG منذ الدقيقة 40…"
+    },
+    "verdict": {
+      "en": "Despite Yorkshire Orange Black lead, North East London pressure with high xG since 40'…",
+      "es": "A pesar de la ventaja de Yorkshire Orange Black, la presión de North East London con un xG alto desde el minuto 40'…",
+      "ar": "رغم تقدم Yorkshire Orange Black، يضغط North East London بتوقعات أهداف عالية منذ الدقيقة 40…"
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "Despite Yorkshire Orange Black leading, North East London has 1.7 xG since 40', above the 1.0 threshold, showing pressure.",
+      "es": "Aunque Yorkshire Orange Black va ganando, North East London tiene un xG de 1,7 desde el minuto 40', por encima del umbral de 1,0, mostrando presión.",
+      "ar": "رغم تقدم Yorkshire Orange Black، يمتلك North East London 1.7 من توقعات الأهداف منذ الدقيقة 40، فوق عتبة 1.0، مما يدل على الضغط."
+    },
+    "casual": {
+      "en": "Even though Yorkshire Orange Black leads, North East London has created many good chances since 40'.",
+      "es": "Aunque Yorkshire Orange Black va adelante, North East London ha generado muchas buenas ocasiones desde el minuto 40'.",
+      "ar": "مع أن Yorkshire Orange Black متقدم، صنع North East London العديد من الفرص الجيدة منذ الدقيقة 40."
+    }
+  },
+  "source": {
+    "hype": "live",
+    "sceptic": "cache",
+    "verdict": "live",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
+  },
+  "evidence": {
+    "team": "nel",
+    "leader": "yob",
+    "minute": 70,
+    "window_from_minute": 40,
+    "trailer_xg_window": 1.7,
+    "leader_xg_window": 0.1,
+    "threshold": 1.0,
+    "score_home": 0,
+    "score_away": 2
+  },
+  "evidence_display": {
+    "team": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
+    "leader": {
+      "en": "Yorkshire Orange Black",
+      "es": "Yorkshire Orange Black",
+      "ar": "Yorkshire Orange Black"
+    },
+    "minute": {
+      "en": "70'",
+      "es": "70'",
+      "ar": "70"
+    },
+    "window_from_minute": {
+      "en": "40'",
+      "es": "40'",
+      "ar": "40"
+    },
+    "trailer_xg_window": {
+      "en": "1.7",
+      "es": "1,7",
+      "ar": "1.7"
+    },
+    "leader_xg_window": {
+      "en": "0.1",
+      "es": "0,1",
+      "ar": "0.1"
+    },
+    "threshold": {
+      "en": "1.0",
+      "es": "1,0",
+      "ar": "1.0"
+    },
+    "score_home": {
+      "en": "0",
+      "es": "0",
+      "ar": "0"
+    },
+    "score_away": {
+      "en": "2",
+      "es": "2",
+      "ar": "2"
+    }
+  }
+}

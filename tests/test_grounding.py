@@ -38,3 +38,14 @@ def test_unknown_placeholder_and_broken_braces_are_rejected():
 def test_spelled_numbers_are_flagged_not_rejected():
     text = ground("No one is tracking back, two shots from {shots}.", SHOWN, "en")
     assert number_words(text, "en") == ["one", "two"]
+
+
+@pytest.mark.parametrize("raw", ["North East London take {shots} shots.", "north east london take {shots} shots."])
+def test_a_team_name_typed_out_is_rejected(raw):
+    with pytest.raises(GroundingError, match=r"write \{team\} instead"):
+        ground(raw, SHOWN, "en")
+
+
+def test_a_team_name_inside_a_longer_word_and_digit_values_are_not_names():
+    shown = {**SHOWN, "team": {"en": "Leeds", "es": "Leeds", "ar": "Leeds"}}
+    assert ground("Leedsfield fans see {shots} shots at {xg_per_shot}.", shown, "en").startswith("Leedsfield")

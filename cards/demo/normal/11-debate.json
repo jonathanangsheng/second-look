@@ -9,9 +9,9 @@
   "window_from_minute": 30,
   "lines": {
     "hype": {
-      "en": "Yorkshire Orange Black lead and look comfortable. This one is done.",
-      "es": "Yorkshire Orange Black va por delante y parece tranquilo. Esto está hecho.",
-      "ar": "Yorkshire Orange Black متقدم ويبدو مرتاحًا. المباراة محسومة."
+      "en": "North East London dominating with 1.3 xG since 30' minutes",
+      "es": "North East London domina con 1,3 xG en los últimos 30' minutos",
+      "ar": "North East London يسيطرون مع 1.3 xG منذ 30 دقيقة"
     },
     "sceptic": {
       "en": "Since 30', North East London have 1.3 xG to 0.1. The score is lying.",
@@ -37,12 +37,12 @@
     }
   },
   "source": {
-    "hype": "template",
+    "hype": "live",
     "sceptic": "template",
     "verdict": "template",
     "personaliser": "template",
-    "es": "template",
-    "ar": "template"
+    "es": "live",
+    "ar": "live"
   },
   "evidence": {
     "team": "nel",

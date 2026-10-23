@@ -32,7 +32,7 @@ web/src/contracts.ts          TypeScript mirror of contracts.py (keep in sync)
 tests/fixtures/               sample cards and events that match the contracts
 tests/fakes.py                FakeLLM for every agent test (tests never call a real model)
 profiles/  data/seeds/  cards/  runtime data, not code
-scripts/                      one-off developer checks only (smoke_llm.py); user-facing commands are [project.scripts]
+scripts/                      one-off developer checks only (smoke_llm.py, backtranslate_qa.py); user-facing commands are [project.scripts]
 .github/workflows/ci.yml      uv sync, ruff check, ruff format --check, pytest, npm ci + build
 ```
 

@@ -1,0 +1,105 @@
+{
+  "seed": "demo",
+  "window": 9,
+  "t_start": 3000.0,
+  "t_end": 3012.0,
+  "kind": "debate",
+  "contradiction_id": "c_nel_volume_quality_50",
+  "prediction_id": null,
+  "window_from_minute": null,
+  "lines": {
+    "hype": {
+      "en": "North East London have taken 13 shots already, showing relentless attacking intent",
+      "es": "North East London ya han intentado 13 tiros, mostrando un ataque implacable",
+      "ar": "لقد أطلق North East London 13 تسديدة حتى الآن، مما يظهر نية هجومية لا تلين"
+    },
+    "sceptic": {
+      "en": "Despite 13 shots, North East London's low 0.032 reveals poor shot quality.",
+      "es": "A pesar de 13 tiros, el bajo 0,032 de North East London revela mala calidad en los disparos.",
+      "ar": "رغم 13 تسديدة، يكشف معدل 0.032 المنخفض لـ North East London عن ضعف جودة التسديدات."
+    },
+    "verdict": {
+      "en": "North East London have taken 13 shots but their low 0.032 suggests weak chances.",
+      "es": "North East London ha intentado 13 tiros pero su bajo 0,032 sugiere pocas oportunidades claras.",
+      "ar": "أطلق North East London 13 تسديدة لكن معدل 0.032 المنخفض يشير إلى فرص ضعيفة."
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "North East London have 13 shots but their xG per shot of 0.032 is below the 0.08 threshold, indicating weak chances.",
+      "es": "North East London ha intentado 13 tiros pero su xG por tiro de 0,032 está por debajo del umbral de 0,08, indicando pocas oportunidades claras.",
+      "ar": "لدى North East London 13 تسديدة لكن معدل xG لكل تسديدة البالغ 0.032 أقل من العتبة 0.08، مما يدل على فرص ضعيفة."
+    },
+    "casual": {
+      "en": "North East London have taken many shots but few look like good chances.",
+      "es": "North East London ha intentado muchos tiros pero pocos parecen buenas oportunidades.",
+      "ar": "أطلق North East London العديد من التسديدات لكن القليل منها يبدو فرصة جيدة."
+    }
+  },
+  "source": {
+    "hype": "live",
+    "sceptic": "cache",
+    "verdict": "live",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
+  },
+  "evidence": {
+    "team": "nel",
+    "minute": 50,
+    "shots": 13,
+    "xg_total": 0.42,
+    "xg_per_shot": 0.032,
+    "threshold": 0.08,
+    "avg_shot_distance_m": 25,
+    "score_home": 0,
+    "score_away": 1
+  },
+  "evidence_display": {
+    "team": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
+    "minute": {
+      "en": "50'",
+      "es": "50'",
+      "ar": "50"
+    },
+    "shots": {
+      "en": "13",
+      "es": "13",
+      "ar": "13"
+    },
+    "xg_total": {
+      "en": "0.42",
+      "es": "0,42",
+      "ar": "0.42"
+    },
+    "xg_per_shot": {
+      "en": "0.032",
+      "es": "0,032",
+      "ar": "0.032"
+    },
+    "threshold": {
+      "en": "0.08",
+      "es": "0,08",
+      "ar": "0.08"
+    },
+    "avg_shot_distance_m": {
+      "en": "25",
+      "es": "25",
+      "ar": "25"
+    },
+    "score_home": {
+      "en": "0",
+      "es": "0",
+      "ar": "0"
+    },
+    "score_away": {
+      "en": "1",
+      "es": "1",
+      "ar": "1"
+    }
+  }
+}

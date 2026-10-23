@@ -40,6 +40,16 @@ def test_every_prediction_is_resolved_by_full_time(seed):
     assert made == resolved
 
 
+@pytest.mark.parametrize("seed", ["demo", "random1"])
+def test_outcome_cards_quote_the_claim_their_call_made(seed):
+    """The quote is the prediction itself in every language, not the (possibly live) Verdict line."""
+    calls = {c.prediction_id: c for c in _cards(seed) if c.kind == "debate" and c.prediction_id}
+    outcomes = [c for c in _cards(seed) if c.kind in ("called_it", "missed_call")]
+    assert outcomes
+    for card in outcomes:
+        assert card.evidence_display["claim"] == calls[card.prediction_id].lines["verdict"]
+
+
 def test_random1_shows_a_genuine_missed_call():
     assert any(c.kind == "missed_call" for c in _cards("random1"))
 
@@ -61,7 +71,8 @@ def test_template_lines_fill_every_placeholder_and_stay_short(seed):
                 assert len(text.split()) <= 16, f"{lang}: {text}"
 
 
-def test_live_debate_card_swaps_english_lines_only_and_records_sources():
+def test_live_debate_card_merges_each_piece_with_its_own_fallback():
+    """Sceptic times out, Arabic fails: those keep template text; everything else ships live."""
     import asyncio
     import json
 
@@ -70,15 +81,57 @@ def test_live_debate_card_swaps_english_lines_only_and_records_sources():
     from second_look.pipeline import live_debate_card
 
     card = next(c for c in _cards("demo") if c.kind == "debate")
+    es = {
+        "hype": "{team}: ¡{shots} tiros!",
+        "verdict": "Ruido.",
+        "analyst": "{shots} tiros flojos.",
+        "casual": "Mucho ruido.",
+    }
     llm = (
-        FakeLLM().reply(json.dumps({"line": "{team}: {shots} shots!"})).timeout().reply(json.dumps({"line": "Noise."}))
+        FakeLLM()
+        .reply(json.dumps({"line": "{team}: {shots} shots!"}))
+        .timeout()
+        .reply(json.dumps({"line": "Noise."}))
+        .reply(json.dumps({"analyst": "{shots} weak shots.", "casual": "All noise."}))
+        .reply(json.dumps(es))
     )
-    live, flags = asyncio.run(live_debate_card(card, llm, cached=None))
+    live, _ = asyncio.run(live_debate_card(card, llm, cached=None, fail=frozenset({"ar"})))
+    shots = card.evidence_display["shots"]["es"]
     assert live.lines["hype"]["en"] == f"North East London: {card.evidence['shots']} shots!"
-    assert live.lines["sceptic"]["en"] == card.lines["sceptic"]["en"]  # timed out: template
-    assert (live.source["hype"], live.source["sceptic"], live.source["verdict"]) == ("live", "template", "live")
-    assert live.lines["hype"]["es"] == card.lines["hype"]["es"] and live.variants == card.variants  # planning #7
-    assert flags == []
+    assert live.lines["hype"]["es"] == f"North East London: ¡{shots} tiros!"
+    assert live.lines["sceptic"] == card.lines["sceptic"]  # timed out: template in every language
+    assert live.variants["casual"] == {**card.variants["casual"], "en": "All noise.", "es": "Mucho ruido."}
+    assert all(live.lines[s]["ar"] == card.lines[s]["ar"] for s in live.lines)  # Arabic failed alone
+    assert all(live.variants[p]["ar"] == card.variants[p]["ar"] for p in live.variants)
+    assert {k: live.source[k] for k in ("hype", "sceptic", "verdict", "personaliser", "es", "ar")} == {
+        "hype": "live",
+        "sceptic": "template",
+        "verdict": "live",
+        "personaliser": "live",
+        "es": "live",
+        "ar": "template",
+    }
+
+
+def test_live_debate_card_prefers_the_cached_card_for_failed_pieces():
+    import asyncio
+
+    from fakes import FakeLLM
+
+    from second_look.pipeline import live_debate_card
+
+    card = next(c for c in _cards("demo") if c.kind == "debate")
+    cached = card.model_copy(
+        update={
+            "variants": {**card.variants, "casual": {"en": "Cached.", "es": "En caché.", "ar": "مخزن."}},
+            "source": {**card.source, "personaliser": "live", "es": "live", "ar": "live"},
+        }
+    )
+    from second_look.agents import AGENTS
+
+    live, _ = asyncio.run(live_debate_card(card, FakeLLM(), cached=cached, fail=frozenset(AGENTS)))
+    assert live.variants["casual"] == cached.variants["casual"]
+    assert (live.source["personaliser"], live.source["es"], live.source["ar"]) == ("cache", "cache", "cache")
 
 
 def test_write_cards_keeps_existing_unless_forced(tmp_path):

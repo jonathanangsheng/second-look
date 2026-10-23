@@ -1,0 +1,105 @@
+{
+  "seed": "demo",
+  "window": 15,
+  "t_start": 4800.0,
+  "t_end": 4812.0,
+  "kind": "debate",
+  "contradiction_id": "c_nel_scoreline_xg_80",
+  "prediction_id": "pr_nel_80",
+  "window_from_minute": 50,
+  "lines": {
+    "hype": {
+      "en": "Despite trailing, North East London has an xG surge over 1.0 since 50'",
+      "es": "A pesar de ir por detrás, North East London ha tenido un aumento de xG superior a 1,0 desde el minuto 50'",
+      "ar": "على الرغم من التأخر، North East London يشهد ارتفاعًا في xG يتجاوز 1.0 منذ الدقيقة 50"
+    },
+    "sceptic": {
+      "en": "Despite the lead, North East London’s xG over the last window is below threshold…",
+      "es": "A pesar de la ventaja, el xG de North East London en la última ventana está por debajo del umbral…",
+      "ar": "رغم التقدم، فإن xG لفريق North East London في الفترة الأخيرة أقل من الحد المطلوب…"
+    },
+    "verdict": {
+      "en": "Despite trailing, North East London shows a strong xG surge since 50'.",
+      "es": "A pesar de ir por detrás, North East London muestra un fuerte aumento de xG desde el minuto 50'.",
+      "ar": "على الرغم من التأخر، يظهر North East London ارتفاعًا قويًا في xG منذ الدقيقة 50."
+    }
+  },
+  "variants": {
+    "analyst": {
+      "en": "Despite North East London trailing, their xG since 50' is 1.8, well above the leader's 0.1 and the 1.0 threshold. A goal is coming for North East London.",
+      "es": "Aunque North East London va por detrás, su xG desde el minuto 50' es de 1,8, muy por encima del 0,1 del líder y del umbral de 1,0. Se acerca un gol para North East London.",
+      "ar": "على الرغم من تأخر North East London، فإن xG لديهم منذ الدقيقة 50 هو 1.8، أعلى بكثير من 0.1 للمتصدر ومن عتبة 1.0. هدف قادم لـ North East London."
+    },
+    "casual": {
+      "en": "North East London is creating more chances since 50' even though they are behind. A goal is coming for North East London.",
+      "es": "North East London está generando más ocasiones desde el minuto 50' a pesar de ir por detrás. Se acerca un gol para North East London.",
+      "ar": "North East London يخلق فرصًا أكثر منذ الدقيقة 50 رغم تأخره. هدف قادم لـ North East London."
+    }
+  },
+  "source": {
+    "hype": "live",
+    "sceptic": "cache",
+    "verdict": "live",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
+  },
+  "evidence": {
+    "team": "nel",
+    "leader": "yob",
+    "minute": 80,
+    "window_from_minute": 50,
+    "trailer_xg_window": 1.8,
+    "leader_xg_window": 0.1,
+    "threshold": 1.0,
+    "score_home": 1,
+    "score_away": 2
+  },
+  "evidence_display": {
+    "team": {
+      "en": "North East London",
+      "es": "North East London",
+      "ar": "North East London"
+    },
+    "leader": {
+      "en": "Yorkshire Orange Black",
+      "es": "Yorkshire Orange Black",
+      "ar": "Yorkshire Orange Black"
+    },
+    "minute": {
+      "en": "80'",
+      "es": "80'",
+      "ar": "80"
+    },
+    "window_from_minute": {
+      "en": "50'",
+      "es": "50'",
+      "ar": "50"
+    },
+    "trailer_xg_window": {
+      "en": "1.8",
+      "es": "1,8",
+      "ar": "1.8"
+    },
+    "leader_xg_window": {
+      "en": "0.1",
+      "es": "0,1",
+      "ar": "0.1"
+    },
+    "threshold": {
+      "en": "1.0",
+      "es": "1,0",
+      "ar": "1.0"
+    },
+    "score_home": {
+      "en": "1",
+      "es": "1",
+      "ar": "1"
+    },
+    "score_away": {
+      "en": "2",
+      "es": "2",
+      "ar": "2"
+    }
+  }
+}

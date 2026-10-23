@@ -11,7 +11,7 @@
     "verdict": {
       "en": "Missed: no goal for Man Blue by 55'.",
       "es": "Fallado: ningún gol de Man Blue antes del 55'.",
-      "ar": "توقع خاطئ: لم يسجل Man Blue حتى الدقيقة 55."
+      "ar": "توقع خاطئ: لا هدف لـ Man Blue بحلول الدقيقة 55."
     }
   },
   "variants": {
@@ -58,6 +58,11 @@
       "en": "60'",
       "es": "60'",
       "ar": "60"
+    },
+    "claim": {
+      "en": "A goal is coming for Man Blue.",
+      "es": "Se viene un gol de Man Blue.",
+      "ar": "هدف قادم لفريق Man Blue."
     }
   }
 }

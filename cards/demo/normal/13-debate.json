@@ -9,40 +9,40 @@
   "window_from_minute": 40,
   "lines": {
     "hype": {
-      "en": "Yorkshire Orange Black lead and look comfortable. This one is done.",
-      "es": "Yorkshire Orange Black va por delante y parece tranquilo. Esto está hecho.",
-      "ar": "Yorkshire Orange Black متقدم ويبدو مرتاحًا. المباراة محسومة."
+      "en": "Yorkshire Orange Black lead with just 0.1 xG since 40' minutes, dominating the stats",
+      "es": "Yorkshire Orange Black lidera con solo 0,1 xG desde hace 40' minutos, dominando las estadísticas",
+      "ar": "يتقدم Yorkshire Orange Black فقط بـ 0.1 xG منذ الدقيقة 40، مسيطراً على الإحصائيات"
     },
     "sceptic": {
-      "en": "Since 40', North East London have 1.7 xG to 0.1. The score is lying.",
-      "es": "Desde el 40', North East London suma 1,7 xG contra 0,1. El marcador miente.",
-      "ar": "منذ الدقيقة 40، لدى North East London ‏1.7 مقابل 0.1. النتيجة تكذب."
+      "en": "Despite Yorkshire Orange Black’s lead, North East London’s 1.7 xG since 40' shows pressure…",
+      "es": "A pesar de la ventaja de Yorkshire Orange Black, los 1,7 xG de North East London desde 40' muestran presión…",
+      "ar": "رغم تقدم Yorkshire Orange Black، يظهر North East London ضغطاً بـ 1.7 xG منذ الدقيقة 40…"
     },
     "verdict": {
-      "en": "A goal is coming for North East London.",
-      "es": "Se viene un gol de North East London.",
-      "ar": "هدف قادم لفريق North East London."
+      "en": "Despite Yorkshire Orange Black lead, North East London pressure with 1.7 xG since 40'…",
+      "es": "A pesar del liderato de Yorkshire Orange Black, North East London presiona con 1,7 xG desde 40'…",
+      "ar": "رغم تقدم Yorkshire Orange Black، يضغط North East London بـ 1.7 xG منذ الدقيقة 40…"
     }
   },
   "variants": {
     "analyst": {
-      "en": "Rolling xG since 40': 1.7 against 0.1, past the 1.0 gap.",
-      "es": "xG desde el 40': 1,7 contra 0,1, por encima de 1,0.",
-      "ar": "الأهداف المتوقعة منذ الدقيقة 40: 1.7 مقابل 0.1، فوق فارق 1.0."
+      "en": "Despite Yorkshire Orange Black leading with 0.1 xG since 40', North East London has 1.7 xG exceeding the 1.0 threshold.",
+      "es": "Aunque Yorkshire Orange Black lidera con 0,1 xG desde 40', North East London tiene 1,7 xG que supera el umbral de 1,0.",
+      "ar": "رغم تقدم Yorkshire Orange Black بـ 0.1 xG منذ الدقيقة 40، يمتلك North East London 1.7 xG متجاوزاً عتبة 1.0."
     },
     "casual": {
-      "en": "The score says one thing. The chances say North East London will score.",
-      "es": "El marcador dice una cosa. Las ocasiones dicen que North East London marcará.",
-      "ar": "النتيجة تقول شيئًا، والفرص تقول إن North East London سيسجل."
+      "en": "Even though Yorkshire Orange Black leads, North East London is creating more chances since 40'.",
+      "es": "Aunque Yorkshire Orange Black va adelante, North East London está generando más ocasiones desde 40'.",
+      "ar": "مع أن Yorkshire Orange Black متقدم، إلا أن North East London يخلق فرصاً أكثر منذ الدقيقة 40."
     }
   },
   "source": {
-    "hype": "template",
-    "sceptic": "template",
-    "verdict": "template",
-    "personaliser": "template",
-    "es": "template",
-    "ar": "template"
+    "hype": "live",
+    "sceptic": "live",
+    "verdict": "live",
+    "personaliser": "live",
+    "es": "live",
+    "ar": "live"
   },
   "evidence": {
     "team": "nel",

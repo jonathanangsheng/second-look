@@ -89,7 +89,7 @@ TEMPLATES: dict[str, dict[str, T]] = {
         "verdict": {
             "en": "Missed: no goal for {team} by {by_minute}.",
             "es": "Fallado: ningún gol de {team} antes del {by_minute}.",
-            "ar": "توقع خاطئ: لم يسجل {team} حتى الدقيقة {by_minute}.",
+            "ar": "توقع خاطئ: لا هدف لـ {team} بحلول الدقيقة {by_minute}.",
         },
         "analyst": {
             "en": "Call made at {made_at_minute}, deadline {by_minute}, no goal.",
@@ -120,6 +120,11 @@ def display(evidence: dict, team_names: dict[str, str]) -> dict[str, T]:
         elif isinstance(value, int):
             out[key] = dict.fromkeys(LANGS, str(value))
     return out
+
+
+def claim(team_name: str) -> T:
+    """The prediction a scoreline_xg Verdict makes, in every language (team names read the same in all three)."""
+    return {lang: text.format(team=team_name) for lang, text in TEMPLATES["scoreline_xg"]["verdict"].items()}
 
 
 def render(key: str, evidence: dict, team_names: dict[str, str]) -> tuple[dict[str, T], dict[str, T], dict[str, T]]:

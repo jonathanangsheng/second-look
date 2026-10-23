@@ -2,7 +2,7 @@
 
 An AI sceptic for football. The scoreboard says one thing; Second Look checks whether the stat on screen is telling the whole story.
 
-Deterministic detectors find where a headline number misleads (lots of shots but little quality, a scoreline the chances don't support). Three agents then argue about it on a broadcast-style overlay: **Hype** reads the stat at face value, **Sceptic** rebuts it with the deeper number, and **Verdict** settles it, sometimes with a prediction that the match later proves right or wrong. Every number an agent says is checked against the evidence.
+Deterministic detectors find where a headline number misleads (lots of shots but little quality, a scoreline the chances don't support). Three agents then argue about it on a broadcast-style overlay: **Hype** reads the stat at face value, **Sceptic** rebuts it with the deeper number, and **Verdict** settles it, sometimes with a prediction that the match later proves right or wrong. A **Personaliser** rewrites the Verdict for analyst and casual viewers, and two **Translators** turn everything into Spanish and Arabic in parallel. Every number an agent says is checked against the evidence, and each agent falls back on its own if it fails.
 
 It runs on a replayed synthetic match, with analyst and casual views in English, Spanish and Arabic.
 
@@ -36,6 +36,8 @@ uv run second-look-cards --source live --seed demo --mode fail-sceptic
 
 Reruns resume where they stopped. Template cards need no provider: `uv run second-look-cards`.
 
+Then check the Spanish and Arabic by back-translation: `uv run python scripts/backtranslate_qa.py` writes the strings whose meaning changed to `qa/backtranslate.md` for review.
+
 ## Layout
 
 ```
@@ -45,7 +47,7 @@ src/second_look/   Python package
   detectors.py       volume-vs-quality and scoreline-vs-xG detectors, dedup and window pick
   ledger.py          predictions: fulfilled by a goal or expired at the deadline
   templates.py       deterministic EN/ES/AR card text
-  agents.py          Hype -> Sceptic -> Verdict workflow (Microsoft Agent Framework)
+  agents.py          Hype -> Sceptic -> Verdict -> Personaliser -> Translators ES || AR (Microsoft Agent Framework)
   grounding.py       numbers only through evidence placeholders
   llm.py             model client with ordered provider fallback
   pipeline.py        cards from events, card cache read/write

@@ -45,7 +45,7 @@ def template_cards(seed: str) -> list[Card]:
         if chosen := picker.pick(found, predicts):
             prediction = None
             if chosen.id in predicts:
-                claim = templates.TEMPLATES["scoreline_xg"]["verdict"]["en"].format(team=names[chosen.team])
+                claim = templates.claim(names[chosen.team])["en"]
                 prediction = ledger.make(chosen.team, boundary, claim)
             cards.append(_debate_card(seed, chosen, prediction, names))
     return sorted(cards, key=lambda c: c.t_start)
@@ -73,6 +73,8 @@ def _debate_card(seed: str, c: Contradiction, prediction: Prediction | None, nam
 def _outcome_card(seed: str, kind: str, p: Prediction, minute: int, t: float, names: dict[str, str]) -> Card:
     evidence = {"team": p.team, "made_at_minute": p.made_at_minute, "by_minute": p.by_minute, "minute": minute}
     lines, variants, shown = templates.render(kind, evidence, names)
+    # The prediction as it was made, for the outcome card's quote (the live Verdict line may not state it).
+    shown["claim"] = templates.claim(names[p.team])
     window = min(minute, FULL_TIME_MINUTE - 1) // config.WINDOW_MINUTES
     return Card(
         seed=seed,
@@ -97,25 +99,31 @@ def _all_template(lines: dict) -> dict:
 async def live_debate_card(
     card: Card, llm, cached: Card | None, fail: frozenset[str] = frozenset()
 ) -> tuple[Card, list[str]]:
-    """Replace a template debate card's English lines with the agents' (planning #6).
+    """Run the agents over a template debate card and merge whatever came back live.
 
-    Each line falls back on its own to the cached card's line, else the template line, with
-    that line's true source. Spanish, Arabic and the persona variants stay template until the
-    Personaliser and Translators land (planning #7).
+    Every piece falls back on its own, with its true source: a speaker line, the persona
+    variants (Personaliser) and each language (Translator) keep the cached card's text if
+    there is one, else the template's.
     """
-    from second_look.agents import SPEAKERS, new_state, run_debate
+    from second_look.agents import AGENTS, SPEAKERS, new_state, run_debate
 
+    def fallback_source(piece: str) -> str:
+        return "cache" if cached and cached.source.get(piece, "template") != "template" else "template"
+
+    base = cached or card
     detector = "scoreline_xg" if "_scoreline_xg_" in (card.contradiction_id or "") else "volume_quality"
-    fallback = {}
-    for s in SPEAKERS:
-        if cached and s in cached.lines:
-            fallback[s] = (cached.lines[s]["en"], "cache" if cached.source.get(s) != "template" else "template")
-        else:
-            fallback[s] = (card.lines[s]["en"], "template")
-    claim = card.lines["verdict"]["en"] if card.prediction_id else None
-    state = await run_debate(llm, new_state(detector, card.evidence, card.evidence_display, claim, fallback), fail=fail)
-    lines = {s: {**card.lines[s], "en": state.lines[s]} for s in SPEAKERS}
-    return card.model_copy(update={"lines": lines, "source": {**card.source, **state.source}}), state.flags
+    fallback = {s: (base.lines[s]["en"], fallback_source(s)) for s in SPEAKERS}
+    claim = templates.TEMPLATES["scoreline_xg"]["verdict"]["en"] if card.prediction_id else None  # placeholder form
+    state = await run_debate(llm, new_state(detector, card.evidence_display, claim, fallback), fail=fail)
+    lines = {s: {**base.lines[s], "en": state.lines[s]} for s in SPEAKERS}
+    variants = {p: dict(texts) for p, texts in base.variants.items()}
+    for persona, text in state.variants.items():
+        variants[persona]["en"] = text
+    for lang, pieces in state.translations.items():
+        for piece, text in pieces.items():
+            (lines if piece in lines else variants)[piece][lang] = text
+    source = {**card.source, **{k: fallback_source(k) for k in AGENTS}, **state.source}
+    return card.model_copy(update={"lines": lines, "variants": variants, "source": source}), state.flags
 
 
 def read_cards(seed: str, mode: CacheMode, root: Path = CARDS_DIR) -> dict[tuple[int, str], Card]:
