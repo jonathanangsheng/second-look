@@ -5,7 +5,7 @@ import type { Team } from "../shared";
 const TOUCHES = 5; // passes and dribbles of the current possession shown
 const HOLD_SECONDS = 30; // match seconds a possession stays drawn after its last touch
 const MARK_SECONDS = 30; // presses and tackles
-const SHOT_SECONDS = 60;
+const SHOT_SECONDS = 60; // shot lines
 
 type Props = { events: MatchEvent[]; t: number; home: Team; away: Team };
 
@@ -24,7 +24,11 @@ export function Pitch({ events, t, home, away }: Props) {
   const shots = shown.filter((e) => e.type === "shot" && t - e.t < SHOT_SECONDS);
   const shirt = (e: MatchEvent) => Number(e.player?.split("_").at(-1));
   const fade = (i: number) => 0.35 + (0.65 * (i + 1)) / thread.length;
-  const ball = live?.outcome === "complete" ? at(live.team, live.end_x!, live.end_y!) : undefined;
+  // No ball once a shot or a tackle has ended the move: it is no longer where the last pass put it.
+  const moveEnded = !!live && shown.some(
+    (e) => (e.type === "shot" || e.type === "tackle") && e.sequence_id === live.sequence_id && e.t >= live.t,
+  );
+  const ball = live?.outcome === "complete" && !moveEnded ? at(live.team, live.end_x!, live.end_y!) : undefined;
   return (
     <svg className="pitch" viewBox={`0 0 ${L} ${W}`} role="img" aria-label="Pitch replay">
       <rect width={L} height={W} fill="var(--turf)" />
@@ -61,7 +65,7 @@ export function Pitch({ events, t, home, away }: Props) {
       })}
       {thread.map((e, i) => {
         const [x, y] = at(e.team, e.x!, e.y!);
-        const { colors } = team(e.team);
+        const { colors, squad } = team(e.team);
         const onBall = i === thread.length - 1;
         return (
           <g key={e.id} opacity={fade(i)}>
@@ -70,7 +74,7 @@ export function Pitch({ events, t, home, away }: Props) {
             {onBall && (
               // Below the dot near the top edge, where the scorebug would cover it.
               <text x={x} y={y < 12 ? y + 4.8 : y - 3.2} fontSize="2.2" textAnchor="middle" fill="var(--bar)">
-                {team(e.team).squad[shirt(e) - 1]}
+                {squad[shirt(e) - 1]}
               </text>
             )}
           </g>

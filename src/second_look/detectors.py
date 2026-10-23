@@ -76,6 +76,31 @@ def scoreline_xg(state: MatchState) -> list[Contradiction]:
     ]
 
 
+def _ratio_contradiction(
+    state: MatchState, team: str, detector: str, ratio: float, max_ratio: float,
+    surface: StatValue, truth: StatValue, evidence: dict,
+) -> Contradiction:  # fmt: skip
+    """A ratio-rule finding: the evidence gains the ratio, its limit and the score; severity grows as the
+    ratio falls further under the limit."""
+    return Contradiction(
+        id=f"c_{team}_{detector}_{state.minute}",
+        detector=detector,
+        team=team,
+        minute=state.minute,
+        surface=surface,
+        truth=truth,
+        evidence={
+            **evidence,
+            "ratio": round(ratio, 2),
+            "max_ratio": max_ratio,
+            "score_home": state.home.goals,
+            "score_away": state.away.goals,
+        },
+        evidence_display={},
+        severity=round((max_ratio - ratio) / max_ratio, 3),
+    )
+
+
 def possession_penetration(state: MatchState) -> list[Contradiction]:
     """The ball, not the box: possession >= PP_MIN_POSSESSION, but box entries per possession-minute
     under PP_MAX_ENTRY_RATIO times the opponent's."""
@@ -90,28 +115,23 @@ def possession_penetration(state: MatchState) -> list[Contradiction]:
         if ratio >= config.PP_MAX_ENTRY_RATIO:
             continue
         found.append(
-            Contradiction(
-                id=f"c_{t.team}_possession_penetration_{state.minute}",
-                detector="possession_penetration",
-                team=t.team,
-                minute=state.minute,
-                surface=StatValue(label="possession %", value=round(share * 100)),
-                truth=StatValue(label="box entries per 10 possession minutes", value=round(t.box_entries_per_10, 1)),
-                evidence={
+            _ratio_contradiction(
+                state,
+                t.team,
+                "possession_penetration",
+                ratio,
+                config.PP_MAX_ENTRY_RATIO,
+                StatValue(label="possession %", value=round(share * 100)),
+                StatValue(label="box entries per 10 possession minutes", value=round(t.box_entries_per_10, 1)),
+                {
                     "team": t.team,
                     "opponent": opp.team,
                     "minute": state.minute,
                     "possession_pct": round(share * 100),
                     "box_entry_rate": round(t.box_entries_per_10, 1),
                     "opponent_box_entry_rate": round(opp.box_entries_per_10, 1),
-                    "ratio": round(ratio, 2),
-                    "max_ratio": config.PP_MAX_ENTRY_RATIO,
-                    "score_home": state.home.goals,
-                    "score_away": state.away.goals,
                 },
-                evidence_display={},
-                severity=round((config.PP_MAX_ENTRY_RATIO - ratio) / config.PP_MAX_ENTRY_RATIO, 3),
-            )
+            )  # fmt: skip
         )
     return found
 
@@ -129,27 +149,22 @@ def effort_game_state(state: MatchState) -> list[Contradiction]:
         if ratio >= config.EG_MAX_PRESS_RATIO:
             continue
         found.append(
-            Contradiction(
-                id=f"c_{t.team}_effort_game_state_{state.minute}",
-                detector="effort_game_state",
-                team=t.team,
-                minute=state.minute,
-                surface=StatValue(label="goal difference", value=t.goals - state.other(t.team).goals),
-                truth=StatValue(label="pressures per 5 min while behind", value=round(t.press_rate_behind, 1)),
-                evidence={
+            _ratio_contradiction(
+                state,
+                t.team,
+                "effort_game_state",
+                ratio,
+                config.EG_MAX_PRESS_RATIO,
+                StatValue(label="goal difference", value=t.goals - state.other(t.team).goals),
+                StatValue(label="pressures per 5 min while behind", value=round(t.press_rate_behind, 1)),
+                {
                     "team": t.team,
                     "minute": state.minute,
                     "press_rate_while_behind": round(t.press_rate_behind, 1),
                     "press_rate_while_level": round(t.press_rate_level, 1),
                     "minutes_spent_behind": t.minutes_behind,
-                    "ratio": round(ratio, 2),
-                    "max_ratio": config.EG_MAX_PRESS_RATIO,
-                    "score_home": state.home.goals,
-                    "score_away": state.away.goals,
                 },
-                evidence_display={},
-                severity=round((config.EG_MAX_PRESS_RATIO - ratio) / config.EG_MAX_PRESS_RATIO, 3),
-            )
+            )  # fmt: skip
         )
     return found
 
@@ -163,7 +178,7 @@ DETECTORS: tuple[Callable[[MatchState], list[Contradiction]], ...] = (
 
 
 # Head start in the per-window pick: the original detectors win close calls against the later ones.
-PRIORITY = {"volume_quality": config.DEDUP_SEVERITY_RISE, "scoreline_xg": config.DEDUP_SEVERITY_RISE}
+PRIORITY = dict.fromkeys(("volume_quality", "scoreline_xg"), config.PICK_HEAD_START)
 
 
 def run_all(state: MatchState) -> list[Contradiction]:

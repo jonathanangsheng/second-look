@@ -87,8 +87,9 @@ def _team_stats(events: list[Event], team: str, window_from: int) -> TeamStats:
             starts[e.sequence_id] = e.t
         elif e.type == "possession_end" and e.sequence_id in starts:
             possession_s += e.t - starts.pop(e.sequence_id)
-    pressing = [behind(e.t) for e in events if e.type == "pressure" and e.team == team]
-    minutes = [behind(m * 60.0) for m in range(max((e.minute for e in events), default=-1) + 1)]
+    # One flag per pressure and per match minute: was the team losing at that moment?
+    pressed_behind = [behind(e.t) for e in events if e.type == "pressure" and e.team == team]
+    minute_behind = [behind(m * 60.0) for m in range(max((e.minute for e in events), default=-1) + 1)]
     return TeamStats(
         team=team,
         shots=len(shots),
@@ -102,8 +103,8 @@ def _team_stats(events: list[Event], team: str, window_from: int) -> TeamStats:
             for e in events
             if e.team == team and e.type in ("pass", "carry") and e.outcome == "complete" and in_box(e.end_x, e.end_y)
         ),
-        pressures_behind=sum(pressing),
-        minutes_behind=sum(minutes),
-        pressures_level=len(pressing) - sum(pressing),
-        minutes_level=len(minutes) - sum(minutes),
+        pressures_behind=sum(pressed_behind),
+        minutes_behind=sum(minute_behind),
+        pressures_level=len(pressed_behind) - sum(pressed_behind),
+        minutes_level=len(minute_behind) - sum(minute_behind),
     )

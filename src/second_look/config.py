@@ -32,6 +32,7 @@ EG_MIN_MINUTES = 10  # effort_game_state: at least this long behind, and this lo
 EG_MAX_PRESS_RATIO = 0.7  # ...and pressing while behind under this times the earlier rate
 DEDUP_SEVERITY_RISE = 0.25  # a (team, detector) pair resurfaces only on this severity rise...
 DEDUP_MINUTES = 15  # ...or after this many match minutes
+PICK_HEAD_START = 0.25  # severity head start the original two detectors get in the per-window pick
 FOUNDRY_TOKEN_SCOPE = "https://cognitiveservices.azure.com/.default"
 
 
