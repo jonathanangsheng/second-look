@@ -4,15 +4,22 @@ An AI sceptic for football. The scoreboard says one thing; Second Look checks wh
 
 **Live replay:** https://second-look.victoriousbeach-1a6b5c87.eastus2.azurecontainerapps.io/ (the first visit after a quiet spell takes a few seconds while the app wakes up)
 
-Deterministic detectors find where a headline number misleads: lots of shots but little quality, or a scoreline the chances don't support. Five agents then work it through as a broadcast-style overlay:
+Deterministic detectors find where a headline number misleads: lots of shots but little quality, a scoreline the chances don't support, plenty of the ball but few trips into the box, or a team that stops pressing once it falls behind. Five agents then work it through as a broadcast-style overlay:
 
 - **Hype** reads the stat at face value.
 - **Sceptic** rebuts it with the deeper number.
 - **Verdict** settles it, sometimes with a prediction that the match later proves right or wrong.
-- **Personaliser** rewrites the Verdict for an analyst and for a casual fan.
+- **Personaliser** rewrites the Verdict for an analyst, for a casual fan and in the voice of each side's supporters.
 - **Translators** turn everything into Spanish and Arabic, in parallel.
 
 Every number an agent writes is checked against the evidence, and each agent falls back on its own if it fails, so the overlay is always complete.
+
+## On screen
+
+- **Scorebug** across the top: match clock, both teams and the score on each team's colours.
+- **Pitch**: the current move as the players on the ball (shirt numbers, with the name of the one on the ball), passes as solid lines and dribbles as dashed ones, the ball where the last pass ended. The other side's presses and tackles show as crosses, and recent shots as lines to goal, thicker for a better chance. A key under the pitch explains each mark.
+- **Lower third**: Hype, Sceptic and Verdict, with an evidence row that shows the surface stat, the deeper stat and the threshold between them.
+- **Toggles**: Analyst or Casual; Neutral or a club to support ("My club"), which swaps the Verdict for that club's supporter line, so the same finding reads as "we" from one side and "they" from the other; English, Spanish or Arabic (right to left).
 
 ## Data and disclaimer
 
@@ -49,8 +56,9 @@ flowchart LR
 
 | Technology | Where |
 |---|---|
-| Microsoft Agent Framework | The five-agent workflow with fan-out/fan-in (`agents.py`); optional OpenTelemetry tracing in the card builder |
+| Microsoft Agent Framework | The five-agent workflow with fan-out/fan-in (`agents.py`); its OpenTelemetry spans for every workflow run |
 | Microsoft Foundry | `gpt-4.1-mini` deployment behind every agent, reached through the OpenAI-compatible endpoint with Entra ID sign-in (`llm.py`) |
+| Azure Application Insights | Optional tracing of live card builds: each workflow run with every agent's model call, tokens and latency (`build_cards.py`, `uv run --extra tracing`) |
 | Azure Container Apps | Hosts the public replay, scaling between 0 and 1 replicas |
 | Azure Container Registry | Builds and stores the image (`az acr build`) |
 | GitHub Actions | CI: ruff, pytest and the web build on every push |
@@ -118,8 +126,8 @@ One hit in three. The misses stay in the replay on purpose: a sceptic that is ne
 | (i) a. Ingest synthetic events | The replay walks each seed's events in 5-minute windows (`pipeline.py`) |
 | (i) b. Interpret into stats | Per-team shots, xG, xG per shot, shot distance, rolling 30-minute xG, possession share, box entries and pressing rate by game state (`stats.py`) |
 | (i) c. Explain why it matters | Detectors name the misleading stat; Sceptic and Verdict explain it |
-| (i) d. Render on screen | Broadcast lower third, outcome cards and an evidence row with a rolling-xG sparkline, timed to the match clock |
-| (i) e. Personalise | Analyst and casual Verdicts, plus three languages |
+| (i) d. Render on screen | Scorebug, a pitch view of each move, broadcast lower third, outcome cards and an evidence row with a rolling-xG sparkline, timed to the match clock |
+| (i) e. Personalise | Analyst and casual Verdicts, a supporter's Verdict for the viewer's favourite club ("My club"), plus three languages |
 | (ii) Real-time intelligence | Window-by-window stats and detection, each card produced inside a 25-second budget. Player tagging, pass quality, speed metrics and auto-eventing are not covered |
 | (iii) Narrative generation | The debate, predictions and their payoff ("Called it", "Missed"). Full match recaps are not covered |
 | (iv) Explainability | The core of the project: every card shows the surface stat, the deeper stat and the threshold between them. Four detectors cover shot quality, the scoreline, control without penetration and effort by game state |
@@ -145,7 +153,7 @@ az containerapp create -n second-look -g <resource-group> --environment <environ
 src/second_look/   Python package
   sim.py             seeded match simulator (CLI: second-look-sim)
   stats.py           per-team aggregates at each 5-minute boundary
-  detectors.py       volume-vs-quality and scoreline-vs-xG detectors, dedup and window pick
+  detectors.py       the four detectors, dedup and window pick
   ledger.py          predictions: fulfilled by a goal or expired at the deadline
   templates.py       deterministic EN/ES/AR card text
   agents.py          Hype -> Sceptic -> Verdict -> Personaliser -> Translators ES || AR (Microsoft Agent Framework)
