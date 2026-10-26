@@ -58,6 +58,11 @@ def _team(team_id: str) -> dict:
     return {"id": p.id, "name": p.name, "short": p.short, "colors": list(p.colors), "squad": list(p.squad)}
 
 
+@app.get("/healthz")
+def healthz() -> dict:
+    return {"ok": True}
+
+
 @app.get("/api/seeds")
 def seeds() -> dict:
     chips = []

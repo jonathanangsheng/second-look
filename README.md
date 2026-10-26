@@ -2,6 +2,8 @@
 
 An AI sceptic for football. The scoreboard says one thing; Second Look checks whether the stat on screen is telling the whole story.
 
+This is a public replay demo over synthetic data, not a production platform: no sign-in, no live feed, and the cards were generated ahead of time.
+
 **Live replay:** https://second-look.victoriousbeach-1a6b5c87.eastus2.azurecontainerapps.io/ (the first visit after a quiet spell takes a few seconds while the app wakes up)
 
 Deterministic detectors find where a headline number misleads: lots of shots but little quality, a scoreline the chances don't support, plenty of the ball but few trips into the box, or a team that stops pressing once it falls behind. Five agents then work it through as a broadcast-style overlay:

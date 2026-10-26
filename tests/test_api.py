@@ -8,6 +8,10 @@ from second_look.contracts import card_path
 client = TestClient(api.app)
 
 
+def test_healthz():
+    assert client.get("/healthz").json() == {"ok": True}
+
+
 def test_seeds_list_teams_and_story_chips():
     body = client.get("/api/seeds").json()
     assert {s["seed"] for s in body["seeds"]} == {"demo", "random1", "even"}
