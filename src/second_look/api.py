@@ -2,19 +2,18 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import AsyncIterator, Callable
+from contextlib import asynccontextmanager
 from functools import cache
-from typing import Literal
+from typing import get_args
 
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 
 from second_look.config import CARDS_DIR, WEB_DIST
-from second_look.contracts import Card
+from second_look.contracts import CacheMode, Card
 from second_look.pipeline import load_events, read_cards
 from second_look.sim import SEEDS, load_profiles
-
-app = FastAPI(title="Second Look")
 
 
 @cache
@@ -24,7 +23,28 @@ def _events(seed: str) -> list[dict]:
 
 @cache
 def _cards(seed: str, mode: str) -> dict[tuple[int, str], Card]:
-    return read_cards(seed, mode, CARDS_DIR)  # explicit: tests monkeypatch api.CARDS_DIR
+    return read_cards(seed, mode, CARDS_DIR, strict=True)  # explicit: tests monkeypatch api.CARDS_DIR
+
+
+def check_data() -> None:
+    """Load every seed's events and cards up front, so a broken image fails at startup instead of serving gaps.
+    A seed may have no cards (nothing misleading happened), but every moment chip must find its card."""
+    for seed in SEEDS:
+        _events(seed)
+        for mode in get_args(CacheMode):
+            _cards(seed, mode)
+    missing = [label for seed, label, mode, matches in CHIPS if not any(matches(c) for c in _merged(seed, mode))]
+    if missing:
+        raise RuntimeError(f"no card for chips {missing} in {CARDS_DIR}")
+
+
+@asynccontextmanager
+async def _lifespan(_: FastAPI) -> AsyncIterator[None]:
+    check_data()
+    yield
+
+
+app = FastAPI(title="Second Look", lifespan=_lifespan)
 
 
 def _merged(seed: str, mode: str) -> list[Card]:
@@ -96,7 +116,7 @@ def events(seed: str) -> list[dict]:
 
 
 @app.get("/api/match/{seed}/cards")
-def cards(seed: str, mode: Literal["normal", "fail-sceptic"] = "normal") -> list[Card]:
+def cards(seed: str, mode: CacheMode = "normal") -> list[Card]:
     _known(seed)
     return _merged(seed, mode)
 

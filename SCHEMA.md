@@ -25,12 +25,12 @@ One JSON object per line, validated by `second_look.contracts.Event`. `null` fie
 | Field | Type | Notes |
 |---|---|---|
 | `id` | int | 0-based, in time order |
-| `t` | float | seconds since kick-off (second half starts at 2700) |
+| `t` | float | seconds since kick-off (second half starts at 2700); never decreases; a move past a half's end is stamped 2700 or 5400 |
 | `minute`, `period` | int | match minute; 1 or 2 |
 | `type` | string | `pass`, `carry`, `shot`, `pressure`, `tackle`, `possession_start`, `possession_end`, `goal`, `period` |
 | `team`, `player` | string | team id; player id `p_<team>_<1-11>` (squad order: GK, RB, CB, CB, LB, DM, CM, CM, RW, ST, LW) |
 | `sequence_id` | int | groups one possession |
-| `x`, `y` | float | metres, see coordinates |
+| `x`, `y` | float | metres, see coordinates (always present for shots) |
 | `end_x`, `end_y` | float | pass and carry destinations (always present for those types) |
 | `outcome` | string | `complete`/`incomplete` (pass, carry), `saved`/`off_target`/`blocked`/`goal` (shot), `won` (tackle) |
 | `xg` | float | shots only, 0.01–0.95 |

@@ -5,20 +5,27 @@ import { Sparkline } from "./Sparkline";
 
 type Props = { card: Card; lang: Lang; events: MatchEvent[]; match: Match; t: number };
 
+const WORDS = {
+  en: { shots: "Shots", perShot: "xG/shot", threshold: "Threshold", gap: "Gap", possession: "Possession", entries: "Box entries", vs: "vs", ratio: "Ratio", pressing: "Pressing", behind: "behind", before: "before" },
+  es: { shots: "Tiros", perShot: "xG/tiro", threshold: "Umbral", gap: "Diferencia", possession: "Posesión", entries: "Entradas al área", vs: "vs", ratio: "Ratio", pressing: "Presión", behind: "perdiendo", before: "antes" },
+  ar: { shots: "التسديدات", perShot: "xG/تسديدة", threshold: "الحد", gap: "الفارق", possession: "الاستحواذ", entries: "دخول المنطقة", vs: "مقابل", ratio: "النسبة", pressing: "الضغط", behind: "متأخراً بالنتيجة", before: "قبل ذلك" },
+} satisfies Record<Lang, Record<string, string>>;
+
 export function EvidenceRow({ card, lang, events, match, t }: Props) {
   const d = (key: string) => card.evidence_display?.[key]?.[lang] ?? "";
+  const w = WORDS[lang];
   const cells = {
-    volume_quality: [`Shots ${d("shots")}`, `xG/shot ${d("xg_per_shot")}`, `Threshold ${d("threshold")}`],
-    scoreline_xg: [`${d("trailer")} xG ${d("trailer_xg_window")}`, `${d("leader")} xG ${d("leader_xg_window")}`, `Gap ≥ ${d("threshold")}`],
+    volume_quality: [`${w.shots} ${d("shots")}`, `${w.perShot} ${d("xg_per_shot")}`, `${w.threshold} ${d("threshold")}`],
+    scoreline_xg: [`${d("trailer")} xG ${d("trailer_xg_window")}`, `${d("leader")} xG ${d("leader_xg_window")}`, `${w.gap} ≥ ${d("threshold")}`],
     possession_penetration: [
-      `Possession ${d("possession_pct")}`,
-      `Box entries ${d("box_entry_rate")} vs ${d("opponent_box_entry_rate")}`,
-      `Ratio ${d("ratio")} < ${d("max_ratio")}`,
+      `${w.possession} ${d("possession_pct")}`,
+      `${w.entries} ${d("box_entry_rate")} ${w.vs} ${d("opponent_box_entry_rate")}`,
+      `${w.ratio} ${d("ratio")} < ${d("max_ratio")}`,
     ],
     effort_game_state: [
-      `Pressing ${d("press_rate_while_behind")} behind`,
-      `${d("press_rate_while_level")} before`,
-      `Ratio ${d("ratio")} < ${d("max_ratio")}`,
+      `${w.pressing} ${d("press_rate_while_behind")} ${w.behind}`,
+      `${d("press_rate_while_level")} ${w.before}`,
+      `${w.ratio} ${d("ratio")} < ${d("max_ratio")}`,
     ],
   }[card.detector];
   return (

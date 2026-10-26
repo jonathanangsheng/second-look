@@ -1,5 +1,6 @@
 """Replay API: seeds and chips, events, cards with the fail-sceptic merge."""
 
+import pytest
 from fastapi.testclient import TestClient
 
 from second_look import api
@@ -55,6 +56,27 @@ def test_fail_sceptic_cards_replace_normal_ones_in_the_same_window(tmp_path, mon
         assert "Failure recovery" in {c["label"] for c in client.get("/api/seeds").json()["chips"]}
     finally:
         api._cards.cache_clear()
+
+
+def test_startup_check_fails_on_a_chip_without_a_card_or_a_malformed_card(tmp_path, monkeypatch):
+    monkeypatch.setattr(api, "CARDS_DIR", tmp_path)
+    api._cards.cache_clear()
+    try:
+        with pytest.raises(RuntimeError, match="no card for chips"):
+            api.check_data()
+        bad = card_path(tmp_path, "demo", "normal", 1, "debate")
+        bad.parent.mkdir(parents=True)
+        bad.write_text("{", encoding="utf-8")
+        api._cards.cache_clear()
+        with pytest.raises(ValueError, match="unreadable card"):
+            api.check_data()
+    finally:
+        api._cards.cache_clear()
+
+
+def test_the_committed_data_passes_the_startup_check():
+    with TestClient(api.app) as started:  # runs the lifespan startup check
+        assert started.get("/healthz").status_code == 200
 
 
 def test_the_ui_page_is_never_cached_but_hashed_assets_can_be(tmp_path):

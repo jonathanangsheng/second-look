@@ -29,7 +29,7 @@ export interface MatchEvent {
   team: string;
   player?: string | null;
   sequence_id?: number | null;
-  x?: number | null; // metres, attacking left to right for `team`
+  x?: number | null; // metres, attacking left to right for `team`; required for shot
   y?: number | null;
   end_x?: number | null; // required for pass and carry
   end_y?: number | null;

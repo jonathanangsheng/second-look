@@ -170,7 +170,7 @@ def test_read_cards_skips_a_truncated_file(tmp_path):
     cards = list(_cards("demo"))
     write_cards(cards, "demo", root=tmp_path)
     broken = card_path(tmp_path, "demo", "normal", cards[0].window, cards[0].kind)
-    broken.write_text(broken.read_text(encoding="utf-8")[:40], encoding="utf-8")
+    broken.write_bytes(broken.read_bytes()[:40] + b"\xd8")  # cut short mid-character
     with pytest.warns(UserWarning, match="skipping unreadable card"):
         found = read_cards("demo", "normal", tmp_path)
     assert len(found) == len(cards) - 1 and (cards[0].window, cards[0].kind) not in found

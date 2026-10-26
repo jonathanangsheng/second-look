@@ -62,8 +62,8 @@ class Event(_Strict):
     def _type_fields(self) -> Event:
         if self.type in ("pass", "carry") and (self.end_x is None or self.end_y is None):
             raise ValueError(f"{self.type} events need end_x and end_y")
-        if self.type == "shot" and self.xg is None:
-            raise ValueError("shot events need xg")
+        if self.type == "shot" and (self.xg is None or self.x is None or self.y is None):
+            raise ValueError("shot events need xg, x and y")
         return self
 
 

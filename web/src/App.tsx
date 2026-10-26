@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { LowerThird } from "./components/LowerThird";
 import { OutcomeCard } from "./components/OutcomeCard";
 import { Pitch } from "./components/Pitch";
@@ -21,7 +21,6 @@ const ordinal = (n: number) => `${n}${["th", "st", "nd", "rd"][n % 100 >= 11 && 
 export default function App() {
   const [meta, setMeta] = useState<Meta | null>(null);
   const [seed, setSeed] = useState("demo");
-  const [mode, setMode] = useState<CacheMode>("normal");
   const [events, setEvents] = useState<MatchEvent[]>([]);
   const [cards, setCards] = useState<Card[]>([]);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
@@ -31,21 +30,26 @@ export default function App() {
   const [chip, setChip] = useState(0);
   const { t, setT, playing, speed, setSpeed, instant, seek, togglePlay, stop } = usePlayback(cards);
 
+  // Newest load wins; chips compare against it, not rendered state (two clicks in one frame both see stale state).
+  const latest = useRef<{ seed: string; mode: CacheMode; at: number; done: boolean } | null>(null);
   const load = useCallback(async (s: string, m: CacheMode, at: number) => {
+    const req = { seed: s, mode: m, at, done: false };
+    latest.current = req;
     setStatus("loading");
     try {
       const [ev, cs] = await Promise.all([
         getJSON<MatchEvent[]>(`/api/match/${s}/events`),
         getJSON<Card[]>(`/api/match/${s}/cards?mode=${m}`),
       ]);
+      if (req !== latest.current) return;
+      req.done = true;
       setEvents(ev);
       setCards(cs);
       setSeed(s);
-      setMode(m);
       setT(at);
       setStatus("ready");
     } catch {
-      setStatus("error");
+      if (req === latest.current) setStatus("error");
     }
   }, [setT]);
 
@@ -71,12 +75,19 @@ export default function App() {
     return () => removeEventListener("resize", fit);
   }, []);
 
+  // Retry the request that failed, which may not be the match on screen.
+  const retry = () => {
+    const failed = latest.current;
+    return meta && failed ? load(failed.seed, failed.mode, failed.at) : boot();
+  };
+
   const goChip = async (i: number) => {
     const c = meta?.chips[i];
     if (!c) return;
     stop();
     setChip(i);
-    if (c.seed !== seed || c.mode !== mode) await load(c.seed, c.mode, c.t);
+    const want = latest.current;
+    if (!want?.done || c.seed !== want.seed || c.mode !== want.mode) await load(c.seed, c.mode, c.t);
     else setT(c.t);
   };
 
@@ -165,7 +176,7 @@ export default function App() {
               {status === "error" ? (
                 <div className="lower-third message">
                   <p>Couldn't load this match.</p>
-                  <button onClick={() => void (meta ? load(seed, mode, t) : boot())}>Retry</button>
+                  <button onClick={() => void retry()}>Retry</button>
                 </div>
               ) : status === "loading" ? (
                 <div className="lower-third message"><p>Loading match…</p></div>

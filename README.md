@@ -69,7 +69,7 @@ flowchart LR
 
 ### Replay (no credentials)
 
-Needs [uv](https://docs.astral.sh/uv/) and Node 20.19+ or 22.12+ (Vite 8).
+Needs [uv](https://docs.astral.sh/uv/) and Node 24.22.1+.
 
 ```bash
 uv sync
@@ -109,7 +109,7 @@ Then check the Spanish and Arabic by back-translation: `uv run python scripts/ba
 |---|---|---|
 | `demo` | North East London v Yorkshire Orange Black | **Scripted.** Goals are placed by hand (YOB about 22' and 51', NEL 78'), and NEL's style is set per spell: lots of the ball but few box entries and long-range shots to 35', less pressing once behind, box chances from 54'. The detectors and agents are not scripted: every card comes from running them over these events. |
 | `random1` | Man Blue v East Anglia Town | Unscripted (seed 26). Goals are drawn from each shot's xG. |
-| `even` | two evenly matched profiles | Unscripted (seed 11). No detector fires, which is the point: no misleading stat, no card. |
+| `even` | two evenly matched profiles | Unscripted (seed 11). The shot and scoreline detectors stay quiet, which is the point: no misleading headline, no card. One effort card appears at 50'. |
 
 ### How the predictions did
 

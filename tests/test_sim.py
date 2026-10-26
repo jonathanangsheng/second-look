@@ -5,7 +5,7 @@ import re
 import pytest
 
 from second_look.config import ROOT, SEEDS_DIR
-from second_look.sim import SEEDS, load_profiles, simulate, simulate_seed, xg
+from second_look.sim import HALF_SECONDS, SEEDS, load_profiles, simulate, simulate_seed, xg
 
 # Distinctive real club words; whole-word match so "Village" doesn't trip "Villa".
 # fmt: off
@@ -20,8 +20,11 @@ REAL_CLUB_WORDS = (
 @pytest.mark.parametrize("name", sorted(SEEDS))
 def test_committed_seed_file_matches_a_fresh_simulation(name):
     committed = (SEEDS_DIR / name / "events.jsonl").read_text(encoding="utf-8")
-    fresh = "".join(e.model_dump_json(exclude_none=True) + "\n" for e in simulate_seed(name))
+    events = simulate_seed(name)
+    fresh = "".join(e.model_dump_json(exclude_none=True) + "\n" for e in events)
     assert committed == fresh, f"data/seeds/{name} is stale: run `uv run second-look-sim --write-seeds`"
+    times = [e.t for e in events]
+    assert times == sorted(times) and times[-1] <= 2 * HALF_SECONDS  # time never goes backwards or past full time
 
 
 def test_same_seed_same_events_different_seed_different_events():

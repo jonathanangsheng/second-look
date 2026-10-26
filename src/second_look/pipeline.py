@@ -141,16 +141,19 @@ async def live_debate_card(
     return card.model_copy(update=update), state.flags
 
 
-def read_cards(seed: str, mode: CacheMode, root: Path = CARDS_DIR) -> dict[tuple[int, str], Card]:
+def read_cards(seed: str, mode: CacheMode, root: Path = CARDS_DIR, strict: bool = False) -> dict[tuple[int, str], Card]:
     """Cached cards for a seed and mode, keyed by (window, kind). Empty if none are cached.
 
-    An unreadable file (e.g. cut short by an interrupted write) is skipped with a warning, so a live build redoes it.
+    An unreadable file (e.g. cut short by an interrupted write) is skipped with a warning, so a live build redoes it;
+    `strict` raises instead, for serving.
     """
     cards = {}
     for path in sorted((root / seed / mode).glob("*.json")):
         try:
-            card = Card.model_validate_json(path.read_text(encoding="utf-8"))
+            card = Card.model_validate_json(path.read_bytes())  # bytes: a cut-off UTF-8 character is invalid JSON too
         except ValidationError as exc:
+            if strict:
+                raise ValueError(f"unreadable card {path}") from exc
             warnings.warn(f"skipping unreadable card {path}: {exc.error_count()} error(s)", stacklevel=2)
             continue
         cards[card.window, card.kind] = card

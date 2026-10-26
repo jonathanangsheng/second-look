@@ -55,6 +55,11 @@ def test_shot_without_xg_is_rejected():
         Event.model_validate(_event(type="shot", end_x=None, end_y=None))
 
 
+def test_shot_without_location_is_rejected():
+    with pytest.raises(ValidationError, match="x and y"):
+        Event.model_validate(_event(type="shot", xg=0.1, x=None, end_x=None, end_y=None))
+
+
 def test_coordinates_outside_the_pitch_are_rejected():
     with pytest.raises(ValidationError):
         Event.model_validate(_event(x=106.0))

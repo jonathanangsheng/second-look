@@ -196,6 +196,10 @@ class _Match:
             )
         )
 
+    def _tick(self, seconds: float) -> None:
+        # A move that runs past the end of a half finishes at the whistle, so time never goes backwards.
+        self.t = min(self.t + seconds, self.period * HALF_SECONDS)
+
     def _other(self, team: str) -> str:
         return self.away if team == self.home else self.home
 
@@ -221,7 +225,7 @@ class _Match:
         x, y = self.rng.uniform(20, 45), self.rng.uniform(10, PITCH_WIDTH_M - 10)
         shot_considered = False  # one shot decision per final-third entry
         while True:
-            self.t += self.rng.uniform(2.5, 6.0)
+            self._tick(self.rng.uniform(2.5, 6.0))
             if self.rng.random() < opp.pressures_per_5min * 4.0 / 300:
                 self._emit(
                     "pressure",
@@ -269,7 +273,7 @@ class _Match:
                 break
             x, y = ex, ey
         self._emit("possession_end", team, sequence_id=seq)
-        self.t += self.rng.uniform(1.0, 4.0)
+        self._tick(self.rng.uniform(1.0, 4.0))
 
     def _shot(self, team: str, p: Profile, seq: int, x: float, y: float, *, scores: bool) -> None:
         d = min(35.0, max(6.0, self.rng.gauss(p.shot_distance_mean_m, p.shot_distance_sd_m)))
